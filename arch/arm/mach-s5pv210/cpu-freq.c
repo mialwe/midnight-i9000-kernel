@@ -64,7 +64,7 @@ static struct cpufreq_frequency_table freq_table[] = {
 extern int exp_UV_mV[6];
 unsigned int freq_uv_table[6][3] = {
 	//frequency, stock voltage, current voltage
-	{1200000, 1275, 1275},
+	{1200000, 1275, 1300},
 	{1000000, 1275, 1275},
 	{800000, 1200, 1250},
 	{400000, 1050, 1050},
