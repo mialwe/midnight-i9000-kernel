@@ -39,6 +39,13 @@
 #include "s3cfb_mdnie.h"
 #include "s3cfb_ielcd.h"
 
+#if defined(CONFIG_FB_S3C_CMC623)
+#include "tune_cmc623.h"
+#endif
+
+
+
+
 
 
 static struct resource *s3c_mdnie_mem;
@@ -46,6 +53,7 @@ static void __iomem *s3c_mdnie_base;
 
 #define C110_MDNIE_ADDR	0xfae00000
 
+#define s3c_mdnie_readw(addr)             __raw_readw((s3c_mdnie_base + addr))
 #define s3c_mdnie_readl(addr)             __raw_readl((s3c_mdnie_base + addr))
 #define s3c_mdnie_writel(val,addr)        __raw_writel(val,(s3c_mdnie_base + addr))
 
@@ -54,7 +62,10 @@ static char banner[] __initdata = KERN_INFO "S3C MDNIE Driver, (c) 2010 Samsung 
 
 struct clk		*mdnie_clock;
 
-// #define MDNIE_TUNING
+#define DEBUG_MDNIE
+
+//#define MDNIE_TUNING
+//#define MDNIE_TUNINGMODE_FOR_BACKLIGHT
 
 /*********** for debug **********************************************************/
 #if 0 
@@ -70,137 +81,61 @@ struct clk		*mdnie_clock;
 #define TRUE 1
 #define FALSE 0
 
-static u16 pre_0x0100 = 0;
-
-#if defined(CONFIG_ARIES_LATONA)
-extern void on_cabc(void);
-#endif
-
-static DEFINE_MUTEX(mdnie_use);
-
 
 typedef struct {
 	u16 addr;
 	u16 data;
 } mDNIe_data_type;
 
+typedef enum
+{
+	mDNIe_UI_MODE,
+	mDNIe_VIDEO_MODE,
+	mDNIe_VIDEO_WARM_MODE,
+	mDNIe_VIDEO_COLD_MODE,
+	mDNIe_CAMERA_MODE,
+	mDNIe_NAVI,
+	mDNIe_DMB_MODE,
+	mDNIe_VT_MODE,
+	mDNIe_GALLERY_MODE,
+}Lcd_mDNIe_UI;
+
 struct class *mdnieset_ui_class;
 struct device *switch_mdnieset_ui_dev;
 struct class *mdnieset_outdoor_class;
 struct device *switch_mdnieset_outdoor_dev;
 
-#ifdef MDNIE_TUNING
-#include "s3cfb_mdnie_tune_value.h"
-#else
+mDNIe_data_type mDNIe_None[]= 
+{
+	END_SEQ, 0x0000,
+};
+
 #include "s3cfb_mdnie_value.h"
-#endif
+
+
 
 Lcd_mDNIe_UI current_mDNIe_UI = mDNIe_UI_MODE; // mDNIe Set Status Checking Value.
 u8 current_mDNIe_OutDoor_OnOff = FALSE;
 
 int mDNIe_Tuning_Mode = FALSE;
 
-#ifdef CONFIG_FB_S3C_MDNIE_TUNINGMODE_FOR_BACKLIGHT
-#if 0
+#ifdef MDNIE_TUNINGMODE_FOR_BACKLIGHT
 u16 mDNIe_data_ui[50] = {0};
 u16 mDNIe_data_300cd_level1[50] = {0};
 u16 mDNIe_data_300cd_level2[50] = {0};
+
 u16 mDNIe_data_ui_down[50] = {0};
-#else
 
-extern int pre_val;
 
-u16 mDNIe_data_ui[]=
-{
-#if defined(CONFIG_ARIES_LATONA)
-	0x0084,0x0020, //algorithm selection + mcm
-	0x0090,0x0000, //decontour th.
-	0x0094,0x0fff, //directional th.
-	0x0098,0x005c, //simplicity th.
-	0x009c,0x0ff0, //de 127, ce off
-	0x00ac,0x0200, //skin detect off, cs 512
-	0x00b4,0x0100, //de th.
-	0x0120,0x0064, //MCM 10000K
-	0x0140,0x8d00, //cb
-	0x0148,0x0073, //cr
-	0x0134,0xFFF8, //LSF 248
-	END_SEQ, 0x0000,
-#else
-	0x0084, 0x0040,
-	0x0090, 0x0000,
-	0x0094, 0x0fff,
-	0x0098, 0x005C,
-	0x009C, 0x0ff0,
-	0x00AC, 0x0080,
-	0x00B4, 0x0180,
-	0x00C0, 0x0400,
-	0x00C4, 0x7200,
-	0x00C8, 0x008D,
-	0x00D0, 0x00C0,
-	0x0100, 0x0000,
-	END_SEQ, 0x0000,
-#endif
-};
-
-u16 mDNIe_data_300cd_level1[]=
-{
-	0x0084, 0x0080,
-	0x0090, 0x0000,
-	0x0094, 0x0fff,
-	0x0098, 0x005C,
-	0x009C, 0x0ff0,
-	0x00AC, 0x0080,
-	0x00B4, 0x0180,
-	0x00C0, 0x0400,
-	0x00C4, 0x7200,
-	0x00C8, 0x008D,
-	0x00D0, 0x00C0,
-	0x0100, 0x4020,
-	END_SEQ, 0x0000,
-};
-#if 0
-u16 mDNIe_data_300cd_level2[]=
-{
-	0x0084, 0x0080,
-	0x0090, 0x0000,
-	0x0094, 0x0fff,
-	0x0098, 0x005C,
-	0x009C, 0x0ff0,
-	0x00AC, 0x00E0,
-	0x00B4, 0x01C2,
-	0x00C0, 0x0400,
-	0x00C4, 0x7200,
-	0x00C8, 0x008D,
-	0x00D0, 0x0100,
-	0x0100, 0x6060,
-	END_SEQ, 0x0000,
-};
-#endif
-u16 mDNIe_data_ui_down[]=
-{
-	0x0084, 0x0080,
-	0x0090, 0x0000,
-	0x0094, 0x0fff,
-	0x0098, 0x005C,
-	0x009C, 0x0ff0,
-	0x00AC, 0x0080,
-	0x00B4, 0x0180,
-	0x00C0, 0x0400,
-	0x00C4, 0x7200,
-	0x00C8, 0x008D,
-	0x00D0, 0x00C0,
-	0x0100, 0x0000,
-	0x0084, 0x0040,
-	END_SEQ, 0x0000,
-};
-#endif
 
 u16 *pmDNIe_Gamma_set[] = {                         
 	mDNIe_data_ui,//0
 	mDNIe_data_300cd_level1,//01
-	//mDNIe_data_300cd_level2,//02
-	mDNIe_data_ui_down,//02
+	mDNIe_data_300cd_level2,//02
+	mDNIe_data_ui_down,
  };
+
+int level_outdoor = 0;
 
 #endif
 
@@ -226,11 +161,10 @@ int mDNIe_data_level4_cnt = 0;
 int mDNIe_data_level5_cnt = 0;
 
 
-u16 mDNIe_data[100] = {0};
+u16 mDNIe_data[200] = {0};
 
 
-unsigned short *test[1];
-//extern unsigned short *test[1];
+extern unsigned short *test[1];
 int mdnie_tuning_load = 0;
 EXPORT_SYMBOL(mdnie_tuning_load);
 
@@ -322,7 +256,7 @@ void mDNIe_txtbuf_to_parsing_for_lightsensor(void)
 EXPORT_SYMBOL(mDNIe_txtbuf_to_parsing_for_lightsensor);
 
 #endif
-
+//************************** SPEEDMOD COLOR ****************************
 //sysfs support for SpeedMod
 void update_color_temp();
 unsigned short color_temp = 0;
@@ -360,6 +294,9 @@ static struct miscdevice speedmodk_mdnie_device = {
 		.name = "speedmodk_mdnie",
 };
 // sysfs support for SpeedMod end
+// *********************************************************************
+
+
 
 int s3c_mdnie_hw_init(void)
 {
@@ -381,24 +318,26 @@ int s3c_mdnie_hw_init(void)
 
 	/* clock */
 
-	mdnie_clock = clk_get(NULL,"sclk_mdnie"); //to change sclk
+//	mdnie_clock = clk_get(NULL,"mdnie");
+//	mdnie_clock = clk_get(NULL,"mdnie_sel");
+//	mdnie_clock = clk_get(NULL,"mout_mdnie_pwm");
+	mdnie_clock = clk_get(NULL,"sclk_mdnie");
+	
 	if (IS_ERR(mdnie_clock)) {
 		printk("failed to get mdnie clock source\n");
 		return -EINVAL;
 	}
 
 	printk("MDNIE  INIT SUCCESS Addr : 0x%p\n",s3c_mdnie_base);
-	
-	// register speedmod sysfs
+//************************** SPEEDMOD COLOR ****************************
 	misc_register(&speedmodk_mdnie_device);
 	if (sysfs_create_group(&speedmodk_mdnie_device.this_device->kobj, &speedmodk_mdnie_group) < 0)
 	{
 		printk("%s sysfs_create_group fail\n", __FUNCTION__);
 		pr_err("Failed to create sysfs group for device (%s)!\n", speedmodk_mdnie_device.name);
 	}
-
+//**********************************************************************
 	return 0;
-
 }
 
 
@@ -457,6 +396,40 @@ int s3c_mdnie_set_size(unsigned int hsize, unsigned int vsize)
 	return 0;
 }
 
+void mDNIe_gamma_set(void)   // P1_KOR_LSJ : DE26
+{
+	printk("mDNIe_gamma_set :: [START] \n");
+
+    s3c_mdnie_writel(0x0000,S3C_MDNIE_rR36);	// DeConTh off
+    s3c_mdnie_writel(0x0FFF,S3C_MDNIE_rR37);	// DirTh off
+    s3c_mdnie_writel(0x005C,S3C_MDNIE_rR38);	// SimplTh off
+    s3c_mdnie_writel(0x0012,S3C_MDNIE_rR39);	// 0x0012,  DE CEonoff CEdark AMOLED ---- 0000 000|0| 000|0
+    s3c_mdnie_writel(0x0280,S3C_MDNIE_rR43);	// 0x0000,  skinoff CSoff
+    s3c_mdnie_writel(0x0000,S3C_MDNIE_rR45);	// 0x03FF,  DETh ---- --00 0000 0000
+
+    printk("mDNIe_gamma_set :: [END] \n");
+}
+EXPORT_SYMBOL(mDNIe_gamma_set);
+
+void mDNIe_gamma_set_DMB(void)   // P1_KOR_LSJ : DE26
+{
+	printk("mDNIe_gamma_set_DMB :: [START] \n");
+
+    s3c_mdnie_writel(0x0000,S3C_MDNIE_rR36);	// DeConTh off
+    s3c_mdnie_writel(0x0FFF,S3C_MDNIE_rR37);	// DirTh off
+    s3c_mdnie_writel(0x005C,S3C_MDNIE_rR38);	// SimplTh off
+    s3c_mdnie_writel(0x0FFA,S3C_MDNIE_rR39);	// 0x0012,  DE CEonoff CEdark AMOLED ---- 0000 000|0| 000|0
+    s3c_mdnie_writel(0x0160,S3C_MDNIE_rR43);	// 0x0000,  skinoff CSoff
+    s3c_mdnie_writel(0x0000,S3C_MDNIE_rR45);	// 0x03FF,  DETh ---- --00 0000 0000
+    s3c_mdnie_writel(0x01B6,S3C_MDNIE_rR52);	// PCC skin
+    s3c_mdnie_writel(0x3F5F,S3C_MDNIE_rR53);
+    s3c_mdnie_writel(0x3CEA,S3C_MDNIE_rR54);
+    s3c_mdnie_writel(0x0000,S3C_MDNIE_rR1);
+
+    printk("mDNIe_gamma_set_DMB :: [END] \n");
+}
+EXPORT_SYMBOL(mDNIe_gamma_set_DMB);
+
 int s3c_mdnie_setup(void)
 {
 
@@ -470,12 +443,11 @@ int s3c_mdnie_setup(void)
 
 void mDNIe_Mode_Change(mDNIe_data_type *mode)
 {
-	mutex_lock(&mdnie_use);
 
 	if(mDNIe_Tuning_Mode == TRUE)
 	{
-		gprintk("mDNIe_Mode_Change [mDNIe_Tuning_Mode = TRUE, API is Return] \n");
-		//return;
+		printk("mDNIe_Mode_Change [mDNIe_Tuning_Mode = TRUE, API is Return] \n");
+		return;
 	}
 	else
 	{
@@ -483,13 +455,11 @@ void mDNIe_Mode_Change(mDNIe_data_type *mode)
 		while ( mode->addr != END_SEQ)
 		{
 			s3c_mdnie_writel(mode->data, mode->addr);
-			gprintk("[mDNIe] mDNIe_tuning_initialize: addr(0x%x), data(0x%x)  \n",mode->addr, mode->data);	
+			gprintk(KERN_INFO "[mDNIe] mDNIe_tuning_initialize: addr(0x%x), data(0x%x)  \n",mode->addr, mode->data);	
 			mode++;
 		}
 		s3c_mdnie_unmask();
 	}
-
-	mutex_unlock(&mdnie_use);
 }
 
 void mDNIe_Set_Mode(Lcd_mDNIe_UI mode, u8 mDNIe_Outdoor_OnOff)
@@ -499,52 +469,63 @@ void mDNIe_Set_Mode(Lcd_mDNIe_UI mode, u8 mDNIe_Outdoor_OnOff)
 		switch(mode)
 		{
 			case mDNIe_UI_MODE:
+				//mDNIe_Mode_Change(mDNIe_UI);
 				if (color_temp == 0) mDNIe_Mode_Change(mDNIe_UI);
 				else if (color_temp == 1) mDNIe_Mode_Change(COLD_mDNIe_UI);
 				else mDNIe_Mode_Change(WARM_mDNIe_UI);
 			break;
 
 			case mDNIe_VIDEO_MODE:
+				//mDNIe_Mode_Change(mDNIe_Outdoor_Mode);
 				if (color_temp == 0) mDNIe_Mode_Change(mDNIe_Outdoor_Mode);
 				else if (color_temp == 1) mDNIe_Mode_Change(COLD_mDNIe_Outdoor_Mode);
 				else mDNIe_Mode_Change(WARM_mDNIe_Outdoor_Mode);
 			break;
 
 			case mDNIe_VIDEO_WARM_MODE:
+				//mDNIe_Mode_Change(mDNIe_Video_WO_Mode);
 				if (color_temp == 0) mDNIe_Mode_Change(mDNIe_Video_WO_Mode);
 				else if (color_temp == 1) mDNIe_Mode_Change(COLD_mDNIe_Video_WO_Mode);
 				else mDNIe_Mode_Change(WARM_mDNIe_Video_WO_Mode);
 			break;
 
 			case mDNIe_VIDEO_COLD_MODE:
+				//mDNIe_Mode_Change(mDNIe_Video_CO_Mode);
 				if (color_temp == 0) mDNIe_Mode_Change(mDNIe_Video_CO_Mode);
 				else if (color_temp == 1) mDNIe_Mode_Change(COLD_mDNIe_Video_CO_Mode);
 				else mDNIe_Mode_Change(WARM_mDNIe_Video_CO_Mode);
 			break;
 			
 			case mDNIe_CAMERA_MODE:
+				//mDNIe_Mode_Change(mDNIe_Camera_Outdoor_Mode);
 				if (color_temp == 0) mDNIe_Mode_Change(mDNIe_Camera_Outdoor_Mode);
 				else if (color_temp == 1) mDNIe_Mode_Change(COLD_mDNIe_Camera_Outdoor_Mode);
 				else mDNIe_Mode_Change(WARM_mDNIe_Camera_Outdoor_Mode);
 			break;
 
 			case mDNIe_NAVI:
+				//mDNIe_Mode_Change(mDNIe_Outdoor_Mode);
 				if (color_temp == 0) mDNIe_Mode_Change(mDNIe_Outdoor_Mode);
 				else if (color_temp == 1) mDNIe_Mode_Change(COLD_mDNIe_Outdoor_Mode);
 				else mDNIe_Mode_Change(WARM_mDNIe_Outdoor_Mode);
 			break;
-#if defined(CONFIG_ARIES_LATONA)
-			case mDNIe_GALLERY:
-				mDNIe_Mode_Change(mDNIe_Gallery);
+
+			case mDNIe_DMB_MODE:
+				mDNIe_Mode_Change(mDNIe_None);
 			break;
-#endif
+
+			case mDNIe_VT_MODE:
+			case mDNIe_GALLERY_MODE:
+				mDNIe_Mode_Change(mDNIe_None);
+			break;
 		}
 
 		current_mDNIe_UI = mode;
-
+		#if 0
 		if(current_mDNIe_UI == mDNIe_UI_MODE)
 			current_mDNIe_OutDoor_OnOff = FALSE;
 		else
+		#endif	
 			current_mDNIe_OutDoor_OnOff = TRUE;
 	}
 	else
@@ -552,63 +533,44 @@ void mDNIe_Set_Mode(Lcd_mDNIe_UI mode, u8 mDNIe_Outdoor_OnOff)
 		switch(mode)
 		{
 			case mDNIe_UI_MODE:
-				if (color_temp == 0) mDNIe_Mode_Change(mDNIe_UI);
-				else if (color_temp == 1) mDNIe_Mode_Change(COLD_mDNIe_UI);
-				else mDNIe_Mode_Change(WARM_mDNIe_UI);
+				mDNIe_Mode_Change(mDNIe_UI);
 			break;
 
 			case mDNIe_VIDEO_MODE:
-				if (color_temp == 0) mDNIe_Mode_Change(mDNIe_Video);
-				else if (color_temp == 1) mDNIe_Mode_Change(COLD_mDNIe_Video);
-				else mDNIe_Mode_Change(WARM_mDNIe_Video);
+				mDNIe_Mode_Change(mDNIe_Video);
 			break;
 
 			case mDNIe_VIDEO_WARM_MODE:
-				if (color_temp == 0) mDNIe_Mode_Change(mDNIe_Video_Warm);
-				else if (color_temp == 1) mDNIe_Mode_Change(COLD_mDNIe_Video_Warm);
-				else mDNIe_Mode_Change(WARM_mDNIe_Video_Warm);
+				mDNIe_Mode_Change(mDNIe_Video_Warm);
 			break;
 
 			case mDNIe_VIDEO_COLD_MODE:
-				if (color_temp == 0) mDNIe_Mode_Change(mDNIe_Video_Cold);
-				else if (color_temp == 1) mDNIe_Mode_Change(COLD_mDNIe_Video_Cold);
-				else mDNIe_Mode_Change(WARM_mDNIe_Video_Cold);
+				mDNIe_Mode_Change(mDNIe_Video_Cold);
 			break;
 			
 			case mDNIe_CAMERA_MODE:
-				if (color_temp == 0) mDNIe_Mode_Change(mDNIe_Camera);
-				else if (color_temp == 1) mDNIe_Mode_Change(COLD_mDNIe_Camera);
-				else mDNIe_Mode_Change(WARM_mDNIe_Camera);
+				mDNIe_Mode_Change(mDNIe_Camera);
 			break;
 
 			case mDNIe_NAVI:
-				if (color_temp == 0) mDNIe_Mode_Change(mDNIe_UI);
-				else if (color_temp == 1) mDNIe_Mode_Change(COLD_mDNIe_UI);
-				else mDNIe_Mode_Change(WARM_mDNIe_UI);
+				mDNIe_Mode_Change(mDNIe_UI);
 			break;
 
-#if defined(CONFIG_ARIES_LATONA)
-			case mDNIe_GALLERY:
-				mDNIe_Mode_Change(mDNIe_Gallery);
+			case mDNIe_DMB_MODE:
+				mDNIe_Mode_Change(mDNIe_None);
 			break;
-#endif
+
+			case mDNIe_VT_MODE:
+			case mDNIe_GALLERY_MODE:
+				mDNIe_Mode_Change(mDNIe_None);
+			break;
 		}
 		
 		current_mDNIe_UI = mode;
 		current_mDNIe_OutDoor_OnOff = FALSE;
 	}	
 
-#if defined(CONFIG_ARIES_LATONA)
-	on_cabc();
-#endif
-
-
-	pre_0x0100 = 0;
-#ifdef CONFIG_FB_S3C_MDNIE_TUNINGMODE_FOR_BACKLIGHT
-	pre_val = -1;
-#endif	/* CONFIG_FB_S3C_MDNIE_TUNINGMODE_FOR_BACKLIGHT */
-
-	gprintk("[mDNIe] mDNIe_Set_Mode: current_mDNIe_UI(%d), current_mDNIe_OutDoor_OnOff(%d)  \n",current_mDNIe_UI, current_mDNIe_OutDoor_OnOff);	
+	printk("[mDNIe] mDNIe_Set_Mode: current_mDNIe_UI(%d), current_mDNIe_OutDoor_OnOff(%d)  \n",current_mDNIe_UI, current_mDNIe_OutDoor_OnOff);	
 }
 EXPORT_SYMBOL(mDNIe_Set_Mode);
 
@@ -621,9 +583,9 @@ EXPORT_SYMBOL(mDNIe_Mode_Set);
 static ssize_t mdnieset_ui_file_cmd_show(struct device *dev,
         struct device_attribute *attr, char *buf)
 {
-	printk("called %s \n",__func__);
-
 	int mdnie_ui = 0;
+
+	printk("called %s \n",__func__);
 
 	switch(current_mDNIe_UI)
 	{
@@ -650,13 +612,19 @@ static ssize_t mdnieset_ui_file_cmd_show(struct device *dev,
 
 		case mDNIe_NAVI:
 			mdnie_ui = 5;
-                        break;
+			break;
 
-#if defined(CONFIG_ARIES_LATONA)
-		case mDNIe_GALLERY:
+		case mDNIe_DMB_MODE:
 			mdnie_ui = 6;
 			break;
-#endif
+
+		case mDNIe_VT_MODE:
+			mdnie_ui = 7;
+			break;
+
+		case mDNIe_GALLERY_MODE:
+			mdnie_ui = 8;
+			break;
 	}
 	return sprintf(buf,"%u\n",mdnie_ui);
 }
@@ -668,7 +636,7 @@ static ssize_t mdnieset_ui_file_cmd_store(struct device *dev,
 	
     sscanf(buf, "%d", &value);
 
-	//printk(KERN_INFO "[mdnie set] in mdnieset_ui_file_cmd_store, input value = %d \n",value);
+	printk(KERN_INFO "[mdnie set] in mdnieset_ui_file_cmd_store, input value = %d \n",value);
 
 	switch(value)
 	{
@@ -695,22 +663,34 @@ static ssize_t mdnieset_ui_file_cmd_store(struct device *dev,
 		case SIG_MDNIE_NAVI:
 			current_mDNIe_UI = mDNIe_NAVI;
 			break;
-#if defined(CONFIG_ARIES_LATONA)
-		case SIG_MDNIE_GALLERY:
-			current_mDNIe_UI = mDNIe_GALLERY;
+
+		case SIG_MDNIE_DMB_MODE:
+			current_mDNIe_UI = mDNIe_DMB_MODE;
 			break;
-#endif			
+
+		case SIG_MDNIE_VT_MODE:
+			current_mDNIe_UI = mDNIe_VT_MODE;
+			break;
+			
+		case SIG_MDNIE_GALLERY_MODE:
+			current_mDNIe_UI = mDNIe_GALLERY_MODE;
+			break;
+			
 		default:
 			printk("\nmdnieset_ui_file_cmd_store value is wrong : value(%d)\n",value);
 			break;
 	}
 
 	mDNIe_Set_Mode(current_mDNIe_UI, current_mDNIe_OutDoor_OnOff);
+
+#if defined(CONFIG_FB_S3C_CMC623)
+	cmc623_Set_Mode_Ext((Lcd_CMC623_UI_mode)current_mDNIe_UI, current_mDNIe_OutDoor_OnOff);
+#endif
 		
 	return size;
 }
 
-static DEVICE_ATTR(mdnieset_ui_file_cmd,0664, mdnieset_ui_file_cmd_show, mdnieset_ui_file_cmd_store);
+static DEVICE_ATTR(mdnieset_ui_file_cmd,0666, mdnieset_ui_file_cmd_show, mdnieset_ui_file_cmd_store);
 
 static ssize_t mdnieset_outdoor_file_cmd_show(struct device *dev,
         struct device_attribute *attr, char *buf)
@@ -727,7 +707,7 @@ static ssize_t mdnieset_outdoor_file_cmd_store(struct device *dev,
 	
     sscanf(buf, "%d", &value);
 
-	//printk(KERN_INFO "[mdnie set] in mdnieset_outdoor_file_cmd_store, input value = %d \n",value);
+	printk(KERN_INFO "[mdnie set] in mdnieset_outdoor_file_cmd_store, input value = %d \n",value);
 
 	if(value)
 	{
@@ -739,11 +719,39 @@ static ssize_t mdnieset_outdoor_file_cmd_store(struct device *dev,
 	}
 
 	mDNIe_Set_Mode(current_mDNIe_UI, current_mDNIe_OutDoor_OnOff);
+
+#if defined(CONFIG_FB_S3C_CMC623)
+	cmc623_Set_Mode_Ext((Lcd_CMC623_UI_mode)current_mDNIe_UI, current_mDNIe_OutDoor_OnOff);
+#endif
 			
 	return size;
 }
 
-static DEVICE_ATTR(mdnieset_outdoor_file_cmd,0664, mdnieset_outdoor_file_cmd_show, mdnieset_outdoor_file_cmd_store);
+static DEVICE_ATTR(mdnieset_outdoor_file_cmd,0666, mdnieset_outdoor_file_cmd_show, mdnieset_outdoor_file_cmd_store);
+
+static ssize_t mdnieset_region_file_cmd_show(struct device *dev,
+        struct device_attribute *attr, char *buf)
+{
+	printk("called %s \n",__func__);
+
+	return sprintf(buf,"%u\n",0);
+}
+
+static ssize_t mdnieset_region_file_cmd_store(struct device *dev,
+        struct device_attribute *attr, const char *buf, size_t size)
+{
+	int value,x1,y1,x2,y2;
+	
+    sscanf(buf, "%d%d%d%d%d", &value,&x1,&x2,&y1,&y2);
+
+#if defined(CONFIG_FB_S3C_CMC623)
+	cmc623_Set_Region(value,x1,x2,y1,y2);
+#endif
+			
+	return size;
+}
+
+static DEVICE_ATTR(mdnieset_region_file_cmd,0666, mdnieset_region_file_cmd_show, mdnieset_region_file_cmd_store);
 
 void init_mdnie_class(void)
 {
@@ -757,6 +765,9 @@ void init_mdnie_class(void)
 
 	if (device_create_file(switch_mdnieset_ui_dev, &dev_attr_mdnieset_ui_file_cmd) < 0)
 		pr_err("Failed to create device file(%s)!\n", dev_attr_mdnieset_ui_file_cmd.attr.name);
+
+	if (device_create_file(switch_mdnieset_ui_dev, &dev_attr_mdnieset_region_file_cmd) < 0)
+		pr_err("Failed to create device file(%s)!\n", dev_attr_mdnieset_region_file_cmd.attr.name);
 
 	mdnieset_outdoor_class = class_create(THIS_MODULE, "mdnieset_outdoor");
 	if (IS_ERR(mdnieset_outdoor_class))
@@ -772,8 +783,8 @@ void init_mdnie_class(void)
 EXPORT_SYMBOL(init_mdnie_class);
 
 
-
 #ifdef MDNIE_TUNING
+static u16 pre_0x0100 = 0;
 static u16 pre_0x00AC = 0;
 
 static int pre_adc_level = 0;
@@ -1035,179 +1046,6 @@ void mDNIe_tuning_set(void)
 	s3c_mdnie_unmask();
 }
 
-#if defined(CONFIG_ARIES_LATONA)
-static int parse_text(char * src, int len)
-{
-	int i,count, ret;
-	int index=0;
-	char * str_line[100];
-	char * sstart;
-	char * c;
-	unsigned int data1, data2;
-
-	c = src;
-	count = 0;
-	sstart = c;
-    
-	for(i=0; i<len; i++,c++) 
-    {
-		char a = *c;
-		if(a=='\r' || a=='\n') 
-        {
-			if(c > sstart) 
-            {
-				str_line[count] = sstart;
-				count++;
-			}
-			*c='\0';
-			sstart = c+1;
-		}
-	}
-    
-	if(c > sstart) 
-    {
-		str_line[count] = sstart;
-		count++;
-	}
-
-	printk("----------------------------- Total number of lines:%d\n", count);
-
-	for(i=0; i<count; i++) 
-    {
-		printk("line:%d, [start]%s[end]\n", i, str_line[i]);
-		ret = sscanf(str_line[i], "0x%x,0x%x\n", &data1, &data2);
-		printk("Result => [0x%2x 0x%4x] %s\n", data1, data2, (ret==2)?"Ok":"Not available");
-		if(ret == 2) 
-        {   
-			mDNIe_data[index++] = (u16)data1;
-			mDNIe_data[index++]  = (u16)data2;
-		}
-	}
-	return index;
-}
-
-static int parse_text2(char * src, int len)
-{
-	int i,count, ret, real_count;
-	int index=0;
-	char * str_line[1000];
-	char * sstart;
-	char * c;
-	char mode_name[20];
-	unsigned int data1, data2;
-	mDNIe_data_type *mode;
-
-	c = src;
-	count = 0;
-	sstart = c;
-	real_count = 0;
-    
-	for(i=0; i<len; i++,c++) 
-    {
-		char a = *c;
-		if(a=='\r' || a=='\n') 
-        {
-			if(c > sstart) 
-            {
-				str_line[count] = sstart;
-				count++;
-			}
-			*c='\0';
-			sstart = c+1;
-			
-			real_count++;
-		}
-	}
-    
-	if(c > sstart) 
-    {
-		str_line[count] = sstart;
-		count++;
-	}
-
-	printk("----------------------------- Total number of lines:%d\n", count);
-	
-	for(i=0; i<count; i++) 
-    {
-		ret = sscanf(str_line[i], "mDNIe_data_type %s[]= \n", mode_name);
-		if(ret == 1)
-		{
-			*(strchr(mode_name,'[')) = 0;
-			
-			if(strcmp(mode_name,"mDNIe_Video")==0)
-			{
-				mode = mDNIe_Video;
-			}
-			else if(strcmp(mode_name,"mDNIe_Camera")==0)
-			{
-				mode = mDNIe_Camera;
-			}
-			else if(strcmp(mode_name,"mDNIe_Camera_Outdoor_Mode")==0)
-			{
-				mode = mDNIe_Camera_Outdoor_Mode;
-			}
-			else if(strcmp(mode_name,"mDNIe_UI")==0)
-			{
-				mode = mDNIe_UI;
-			}
-			else if(strcmp(mode_name,"mDNIe_Video_Warm")==0)
-			{
-				mode = mDNIe_Video_Warm;
-			}
-			else if(strcmp(mode_name,"mDNIe_Video_WO_Mode")==0)
-			{
-				mode = mDNIe_Video_WO_Mode;
-			}
-			else if(strcmp(mode_name,"mDNIe_Video_Cold")==0)
-			{
-				mode = mDNIe_Video_Cold;
-			}
-			else if(strcmp(mode_name,"mDNIe_Video_CO_Mode")==0)
-			{
-				mode = mDNIe_Video_CO_Mode;
-			}
-			else if(strcmp(mode_name,"mDNIe_Outdoor_Mode")==0)
-			{
-				mode = mDNIe_Outdoor_Mode;
-			}
-			else if(strcmp(mode_name,"mDNIe_Gallery")==0)
-			{
-				mode = mDNIe_Gallery;
-			}
-			else
-			{
-				mode = 0;
-			}
-			//printk("mode name : %s - %x\n",mode_name,mode);
-		}
-
-		while(*str_line[i] == '\t' || *str_line[i] == ' ')
-		{
-			str_line[i]++;
-		}
-		printk("line:%d, [start]%s[end]\n", i, str_line[i]);
-		ret = sscanf(str_line[i], "0x%x,0x%x\n", &data1, &data2);
-		printk("Result => [0x%2x 0x%4x] %s\n", data1, data2, (ret==2)?"Ok":"Not available");
-		if(ret == 2 && mode != 0) 
-        {
-			mode->addr = (u16)data1;
-			mode->data = (u16)data2;
-			mode++;
-		}
-
-		if(str_line[i][0] == '}')
-		{
-			if(mode != 0)
-			{
-				mode->addr = (u16)END_SEQ;
-				mode->data = (u16)0x0000;
-			}
-		}
-	}
-	return real_count+1;
-}
-
-#endif
 
 void mDNIe_txtbuf_to_parsing(void)
 {
@@ -1225,189 +1063,55 @@ void mDNIe_txtbuf_to_parsing(void)
 	mDNIe_Tuning_Mode = TRUE;
 }
 EXPORT_SYMBOL(mDNIe_txtbuf_to_parsing);
-
-#if defined(CONFIG_ARIES_LATONA)
-int mDNIe_txtbuf_to_parsing2(void)
-{
-	struct file *filp;
-	char	*dp;
-	long	l, i ;
-	loff_t  pos;
-	int     ret, num,type;
-	mm_segment_t fs;
-
-	printk("cmc623_load_data start!\n");
-
-	fs = get_fs();
-	set_fs(get_ds());
-
-	filp = filp_open("sdcard/external_sd/s3cfb_mdnie_value.h", O_RDONLY, 0);
-	type = 2;
-	
-	if(IS_ERR(filp))
-	{
-		filp = filp_open("sdcard/external_sd/mdnie_tune", O_RDONLY, 0);
-		type = 1;
-
-		if(IS_ERR(filp)) 
-		{
-			printk("file open error:%d\n", (s32)filp);
-
-			return -1;
-		}
-	}
-
-	l = filp->f_path.dentry->d_inode->i_size;
-	printk("Size of the file : %ld(bytes)\n", l);
-
-	//dp = kmalloc(l, GFP_KERNEL);
-	dp = kmalloc(l+10, GFP_KERNEL);		// add cushion
-	if(dp == NULL) 
-    {
-		printk("Out of Memory!\n");
-		filp_close(filp, current->files);
-		return -1;
-	}
-	pos = 0;
-	memset(dp, 0, l);
-    printk("== Before vfs_read ======\n");
-	ret = vfs_read(filp, (char __user *)dp, l, &pos);   // P1_LSJ : DE08 : ?�기??죽음 
-    printk("== After vfs_read ======\n");
-
-	if(ret != l) 
-    {
-		printk("<CMC623> Failed to read file (ret = %d)\n", ret);
-		kfree(dp);
-		filp_close(filp, current->files);
-		return -1;
-	}
-
-	filp_close(filp, current->files);
-
-	set_fs(fs);
-/*
-	for(i=0; i<l; i++)
-    {   
-		printk("%x ", dp[i]);
-    }
-	printk("\n");
-//*/	
-	if(type == 1)
-	{
-		num = parse_text(dp, l);
-
-		if(!num) 
-		{
-			printk("Nothing to parse!\n");
-			kfree(dp);
-			return -1;
-		}
-			
-		printk("------ Jun Total number of parsed lines: %d\n", num);
-
-		mDNIe_data[num] = END_SEQ;
-
-		printk("read ok\n");
-		mDNIe_tuning_set();
-		printk("tuning set ok\n");
-
-		mDNIe_Tuning_Mode = TRUE;
-	}
-	else if(type == 2)
-	{
-		num = parse_text2(dp, l);
-		printk("read ok\n");
-		mDNIe_Set_Mode(current_mDNIe_UI,current_mDNIe_OutDoor_OnOff);
-		num *= 2;
-		printk("tuning set ok\n");
-
-		mDNIe_Tuning_Mode = FALSE;
-	}
-
-	kfree(dp);
-	
-	return num / 2;
-}
-EXPORT_SYMBOL(mDNIe_txtbuf_to_parsing2);
 #endif
 
-#endif
-
-#ifdef CONFIG_FB_S3C_MDNIE_TUNINGMODE_FOR_BACKLIGHT
+#ifdef MDNIE_TUNINGMODE_FOR_BACKLIGHT
 int mdnie_tuning_backlight = 0;
 
-extern int IsLDIEnabled(void);
 void mDNIe_Mode_set_for_backlight(u16 *buf)
 {
 	u32 i = 0;
 	int cnt = 0;
 
-	if(IsLDIEnabled())
-	{
-		mutex_lock(&mdnie_use);
+	if(mdnie_tuning_backlight){
+		s3c_mdnie_mask();
 
-		//if(mdnie_tuning_backlight)
+		while ((*(buf+i)) != END_SEQ)
 		{
-			s3c_mdnie_mask();
-
-			while ((*(buf+i)) != END_SEQ)
+			if((*(buf+i)) == 0x0100)
 			{
-				if((*(buf+i)) == 0x0100)
-				{
-					if(pre_0x0100 < (*(buf+(i+1)))){
-						while ((pre_0x0100 < (*(buf+(i+1))))&&(pre_0x0100 <= 0x4020)&&(pre_0x0100 >= 0x0000))
-						{
-							s3c_mdnie_writel(pre_0x0100, (*(buf+i)));
-							gprintk("[mDNIe] mDNIe_tuning_initialize: addr(0x%x), data(0x%x)  \n",(*(buf+i)),pre_0x0100);
-
-							if((pre_0x0100 & 0x00ff) == 0x20)
-							{
-								pre_0x0100 = ((pre_0x0100 & 0xff00) + (0x8<<8)) | (0x20);
-							}
-							else
-							{
-								pre_0x0100 = ((pre_0x0100 & 0xff00) + (0x8<<8)) | ((pre_0x0100 & 0x00ff) + (0x4));
-							}
-							msleep(20);
-						}
+				if(pre_0x0100 < (*(buf+(i+1)))){
+					while ((pre_0x0100 < (*(buf+(i+1))))&&(pre_0x0100 <= 0x6060)&&(pre_0x0100 >= 0x0000))
+					{
+						s3c_mdnie_writel(pre_0x0100, (*(buf+i)));
+						printk("[mDNIe] mDNIe_tuning_initialize: addr(0x%x), data(0x%x)  \n",(*(buf+i)),pre_0x0100);
+						pre_0x0100 = ((pre_0x0100 & 0xff00) + (0x1<<8)) | ((pre_0x0100 & 0x00ff) + (0x1));
 					}
-					else if(pre_0x0100 > (*(buf+(i+1)))){
-						while (pre_0x0100 > (*(buf+(i+1)))&&(pre_0x0100 >= 0x0000)&&(pre_0x0100 <= 0x4020))
-						{
-							s3c_mdnie_writel(pre_0x0100, (*(buf+i)));
-							gprintk("[mDNIe] mDNIe_tuning_initialize: addr(0x%x), data(0x%x)  \n",(*(buf+i)),pre_0x0100);
-							
-							if((pre_0x0100 & 0x00ff) == 0x00)
-							{
-								pre_0x0100 = ((pre_0x0100 & 0xff00) - (0x8<<8)) | (0x00);
-							}
-							else
-							{
-								pre_0x0100 = ((pre_0x0100 & 0xff00) - (0x8<<8)) | ((pre_0x0100 & 0x00ff) - (0x4));
-							}
-							msleep(20);
-						}
+				}
+				else if(pre_0x0100 > (*(buf+(i+1)))){
+					while (pre_0x0100 > (*(buf+(i+1)))&&(pre_0x0100 >= 0x0000)&&(pre_0x0100 <= 0x6060))
+					{
+						s3c_mdnie_writel(pre_0x0100, (*(buf+i)));
+						printk("[mDNIe] mDNIe_tuning_initialize: addr(0x%x), data(0x%x)  \n",(*(buf+i)),pre_0x0100);
+						pre_0x0100 = ((pre_0x0100 & 0xff00) - (0x1<<8)) | ((pre_0x0100 & 0x00ff) - (0x1));
 					}
-					s3c_mdnie_writel((*(buf+i+1)), (*(buf+i)));
-					pre_0x0100 = (*(buf+i+1));
 				}
-				else
-				{
-					s3c_mdnie_writel((*(buf+i+1)), (*(buf+i)));
-				}
-				gprintk("[mDNIe] mDNIe_Mode_set_for_backlight : addr(0x%x), data(0x%x)  \n",(*(buf+i)),(*(buf+(i+1))));	
-				i+=2;
+				s3c_mdnie_writel((*(buf+i+1)), (*(buf+i)));
+				pre_0x0100 = (*(buf+i+1));
 			}
-
-			s3c_mdnie_unmask();
+			else
+			{
+				s3c_mdnie_writel((*(buf+i+1)), (*(buf+i)));
+			}
+			printk("[mDNIe] mDNIe_Mode_set_for_backlight : addr(0x%x), data(0x%x)  \n",(*(buf+i)),(*(buf+(i+1))));	
+			i+=2;
 		}
 
-		mutex_unlock(&mdnie_use);
-	}	
+		s3c_mdnie_unmask();
+	}
 }
 EXPORT_SYMBOL(mDNIe_Mode_set_for_backlight);
 
-#if 0
 void mDNIe_txtbuf_to_parsing_for_backlight(void)
 {
 	int i = 0;
@@ -1451,8 +1155,97 @@ void mDNIe_txtbuf_to_parsing_for_backlight(void)
 	mDNIe_Mode_set_for_backlight(pmDNIe_Gamma_set[0]);
 }
 EXPORT_SYMBOL(mDNIe_txtbuf_to_parsing_for_backlight);
+
 #endif
+
+
+// value: 0 ~ 100
+void s5p_mdine_pwm_brightness(int value)
+{
+	u32 reg, data;
+
+#ifdef DEBUG_MDNIE
+	if((s3c_mdnie_readw(0x0084) & 0x0010) != 0x0010)
+		{
+		printk("%s: reg(0x0084) is not 0x0010\n", __func__);
+		}
+	if(s3c_mdnie_readw(0x0198) != 0x0000)
+		{
+		printk("%s: reg(0x0198) is not 0x0000\n", __func__);
+		}
+	if((s3c_mdnie_readw(0x019C) & 0xff00) != 0xC000)
+		{
+		printk("%s: reg(0x019C) is not 0xC000\n", __func__);
+		}
 #endif
+	
+	if(value<0)
+		data = 0;
+	else if(value>100)
+		data = 100;
+	else
+		data = value;
+
+	reg = s3c_mdnie_readw(0x019C);
+	reg &= ~0x00ff;
+	reg |= 0x00ff & data;
+	s3c_mdnie_writel(reg,0x019C);
+}
+EXPORT_SYMBOL(s5p_mdine_pwm_brightness);
+
+void s5p_mdine_pwm_enable(int on)
+{
+	u16 data;
+
+	printk("%s:%d\n", __func__, on);
+
+	if(on)
+		{
+//		data = s3c_mdnie_readw(0x0084);
+//		data = data | 0x0010;		
+//		s3c_mdnie_writel(data,0x0084);		// on
+
+		s3c_mdnie_writel(0x0000,0x0198);	// CABC disable
+
+		data = s3c_mdnie_readw(0x019C);
+		data = (data & ~0xFF00) | 0xC000;	// PWM on
+		s3c_mdnie_writel(data,0x019C);		// 
+		}
+	else
+		{
+		data = s3c_mdnie_readw(0x0084);
+		data = data & ~0x0010;	
+		s3c_mdnie_writel(data,0x0084);		// off
+		}
+}
+EXPORT_SYMBOL(s5p_mdine_pwm_enable);
+
+void s5p_mdine_cabc_enable(int on)
+{
+	u16 data;
+
+	printk("%s:%d\n", __func__, on);
+
+	if(on)
+		{
+		data = s3c_mdnie_readw(0x0084);
+		data = data | 0x0010;		
+		s3c_mdnie_writel(data,0x0084);		// on
+
+		s3c_mdnie_writel(0x0002,0x0198);	// CABC enable
+
+		data = s3c_mdnie_readw(0x019C);
+		data = (data & ~0xFF00) | 0x8000;	//PWM off
+		s3c_mdnie_writel(data,0x019C);		// 
+		}
+	else
+		{
+		data = s3c_mdnie_readw(0x0084);
+		data = data & ~0x0010;	
+		s3c_mdnie_writel(data,0x0084);		// off
+		}
+}
+EXPORT_SYMBOL(s5p_mdine_cabc_enable);
 
 int s3c_mdnie_init_global(struct s3cfb_global *s3cfb_ctrl)
 {
@@ -1462,10 +1255,19 @@ int s3c_mdnie_init_global(struct s3cfb_global *s3cfb_ctrl)
 
 	s3c_mdnie_set_size(s3cfb_ctrl->lcd->width,s3cfb_ctrl->lcd->height);
 
+#if defined(CONFIG_FB_S3C_CMC623)
+ 	#if defined(MDNIE_TUNING)
+  		mDNIe_Tuning_Mode = FALSE;
+ 	#endif
+	mDNIe_Mode_Change(mDNIe_UI);
+#else
 	mDNIe_Set_Mode(current_mDNIe_UI, current_mDNIe_OutDoor_OnOff); //Add
-	
+#endif
+
 	s3c_ielcd_logic_start();
 	s3c_ielcd_init_global(s3cfb_ctrl);
+
+	s5p_mdine_pwm_enable(1);
 
 	return 0;
 
