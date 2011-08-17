@@ -34,7 +34,7 @@
 #define ENDDEF			0x2000
 #define DEFMASK		0xFF00
 #define DIM_BL	20
-#define MIN_BL	20
+#define MIN_BL	30
 #define MAX_BL	255
 #define MAX_GAMMA_VALUE	24
 
