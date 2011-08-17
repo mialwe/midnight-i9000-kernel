@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////
 // SpeedMod Neutral
 //////////////////////////////////////////////////////////
-#define CT00CM	0x0040	//MCM 0x0064=10000k 5B=9100K 43=6700K 3A=5500K
+#define CT00CM	0x0043	//MCM 0x0064=10000k 5B=9100K 43=6700K 3A=5500K
 
 #define CTHIGHVAL1		0x0138,0x8383, //CBCB
 #define CTHIGHVAL2		0x013C,0x8383, //CBCB
@@ -83,7 +83,7 @@ mDNIe_data_type mDNIe_UI[]=
 	0x0094,0x0fff, //directional th.
 	0x0098,0x005c, //simplicity th.
 	0x009c,0x0011, //0x01f0 de 15, ce off //0x00f0 de 7, ce off //0x0010 de 0, ce off //de off, ce off
-	0x00ac,0x00100, //20 // 30, //skin detect off, cs 32
+	0x00ac,0x0040, //20 // 30, //skin detect off, cs 32
 	0x00b4,0x0100, //de th.
 	0x0120,CT00CM, //MCM 10000K
 	CTHIGHVAL1
