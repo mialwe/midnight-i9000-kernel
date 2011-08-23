@@ -17,7 +17,7 @@ config SND_VOODOO_HP_LEVEL_CONTROL
 config SND_VOODOO_HP_LEVEL
 	int "default level at boot 0-62"
 	depends on SND_VOODOO_HP_LEVEL_CONTROL
-	default 54 if MACH_ARIES=y || M110S=y
+	default 54 if MACH_HERRING=y || M110S=y
 	default 47
 	range 0 62
 	help
@@ -57,5 +57,4 @@ config SND_VOODOO_DEVELOPMENT
 	help
 	  Allow to codec dump registers and load register-address/value batchs
 	  Powerful but also dangerous tool
-
 
