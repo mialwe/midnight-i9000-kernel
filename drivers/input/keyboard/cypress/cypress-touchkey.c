@@ -52,6 +52,8 @@
 
 #define DEVICE_NAME "melfas_touchkey"
 
+struct cypress_touchkey_devdata *bln_devdata; // keep a reference to the devdata
+
 #ifdef CONFIG_KEYPAD_CYPRESS_TOUCH_BLN
 #include <linux/miscdevice.h>
 #define BACKLIGHTNOTIFICATION_VERSION 8
@@ -59,7 +61,6 @@
 bool bln_enabled = false; // indicates if BLN function is enabled/allowed (default: false, app enables it on boot)
 bool bln_notification_ongoing= false; // indicates ongoing LED Notification
 bool bln_blink_enabled = false;	// indicates blink is set
-struct cypress_touchkey_devdata *bln_devdata; // keep a reference to the devdata
 #endif
 
 static struct timer_list bl_timer;
