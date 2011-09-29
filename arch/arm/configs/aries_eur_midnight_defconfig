@@ -81,7 +81,7 @@ CONFIG_RT_GROUP_SCHED=y
 # CONFIG_RELAY is not set
 # CONFIG_NAMESPACES is not set
 CONFIG_BLK_DEV_INITRD=y
-CONFIG_INITRAMFS_SOURCE="/home/cywhale/android/sgs1/kerneldev/initramfs-hc"
+CONFIG_INITRAMFS_SOURCE="/home/cywhale/android/sgs1/kerneldev/initramfs-hc-jvs"
 CONFIG_INITRAMFS_ROOT_UID=0
 CONFIG_INITRAMFS_ROOT_GID=0
 CONFIG_RD_GZIP=y
@@ -971,7 +971,7 @@ CONFIG_IFB=y
 # CONFIG_BONDING is not set
 # CONFIG_MACVLAN is not set
 # CONFIG_EQUALIZER is not set
-CONFIG_TUN=y
+CONFIG_TUN=m
 # CONFIG_VETH is not set
 # CONFIG_NET_ETHERNET is not set
 CONFIG_NETDEV_1000=y
