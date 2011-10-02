@@ -61,5 +61,6 @@ enum {
 extern void s5pv210_lock_dvfs_high_level(uint nToken, uint perf_level);
 extern void s5pv210_unlock_dvfs_high_level(unsigned int nToken);
 #endif
-
+void s5pv210_change_high_1200(void);
+void s5pv210_change_high_1300(void);
 #endif /* __ASM_ARCH_CPU_FREQ_H */
