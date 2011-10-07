@@ -32,9 +32,9 @@
 #define dprintk(msg...) cpufreq_debug_printk(CPUFREQ_DEBUG_CORE, \
 						"cpufreq-core", msg)
 
-int exp_UV_mV[6];
-extern unsigned int freq_uv_table[6][3];
-int enabled_freqs[6] = { 1, 1, 1, 1, 1, 1, 1 };
+int exp_UV_mV[5];
+extern unsigned int freq_uv_table[5][3];
+int enabled_freqs[5] = { 1, 1, 1, 1, 1, 1 };
 
 /**
  * The "cpufreq driver" - the arch- or hardware-dependent low

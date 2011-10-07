@@ -112,14 +112,6 @@ static struct dbs_tuners {
 #define MN_UP 1
 #define MN_DOWN 2
 
-static int mn_freqs_1300[7][3]={
-    {1300000,1300000,1000000},
-    {1000000,1300000,800000},
-    {800000,1000000,400000},
-    {400000,800000,200000},
-    {200000,400000,100000},
-    {100000,200000,100000}
-};
 static int mn_freqs_1200[7][3]={
     {1200000,1200000,1000000},
     {1000000,1200000,800000},
@@ -129,13 +121,6 @@ static int mn_freqs_1200[7][3]={
     {100000,200000,100000}
 };
 
-static int mn_get_next_freq_1300(int curfreq, int updown) {
-    int i=0;
-    for(i = 0; i < 6; i++)
-        if(curfreq == mn_freqs_1300[i][MN_FREQ])
-            return mn_freqs_1300[i][updown]; // updown 1|2
-    return (curfreq);                   // not found
-    }
 static int mn_get_next_freq_1200(int curfreq, int updown) {
     int i=0;
     for(i = 0; i < 6; i++)
@@ -565,10 +550,7 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 		//	this_dbs_info->requested_freq = policy->max;
         
 #ifdef MN_SMOOTH
-        if (policy->max == 1300000)
-            this_dbs_info->requested_freq = mn_get_next_freq_1300(policy->cur, MN_UP);
-        else
-            this_dbs_info->requested_freq = mn_get_next_freq_1200(policy->cur, MN_UP);
+        this_dbs_info->requested_freq = mn_get_next_freq_1200(policy->cur, MN_UP);
 #endif            
 		__cpufreq_driver_target(policy, this_dbs_info->requested_freq,
 			CPUFREQ_RELATION_H);
@@ -593,10 +575,7 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 		if (policy->cur == policy->min)
 			return;
 #ifdef MN_SMOOTH 
-        if (policy->max == 1300000)
-            this_dbs_info->requested_freq = mn_get_next_freq_1300(policy->cur, MN_DOWN);
-        else
-            this_dbs_info->requested_freq = mn_get_next_freq_1200(policy->cur, MN_DOWN);
+        this_dbs_info->requested_freq = mn_get_next_freq_1200(policy->cur, MN_DOWN);
 #endif
 		__cpufreq_driver_target(policy, this_dbs_info->requested_freq,
 				CPUFREQ_RELATION_H);
