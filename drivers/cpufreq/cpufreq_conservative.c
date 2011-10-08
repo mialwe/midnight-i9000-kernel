@@ -29,8 +29,8 @@
  * It helps to keep variable names smaller, simpler
  */
 
-#define DEF_FREQUENCY_UP_THRESHOLD		(60)
-#define DEF_FREQUENCY_DOWN_THRESHOLD		(45)
+#define DEF_FREQUENCY_UP_THRESHOLD		(55)
+#define DEF_FREQUENCY_DOWN_THRESHOLD		(35)
 
 /*
  * The polling frequency of this governor depends on the capability of
@@ -121,11 +121,33 @@ static int mn_freqs_1200[7][3]={
     {100000,200000,100000}
 };
 
-static int mn_get_next_freq_1200(int curfreq, int updown) {
+static int mn_freqs_power_1200[7][3]={
+    {1200000,1200000,1000000},
+    {1000000,1200000,800000},
+    {800000,1200000,400000},
+    {400000,1000000,200000},
+    {200000,800000,100000},
+    {100000,400000,100000}
+};
+
+static int mn_get_next_freq_1200(unsigned int curfreq, unsigned int updown, unsigned int load) {
     int i=0;
-    for(i = 0; i < 6; i++)
-        if(curfreq == mn_freqs_1200[i][MN_FREQ])
-            return mn_freqs_1200[i][updown]; // updown 1|2
+    if (load < 65)
+    {
+        for(i = 0; i < 6; i++)
+        {
+            if(curfreq == mn_freqs_1200[i][MN_FREQ])
+                return mn_freqs_1200[i][updown]; // updown 1|2
+        }
+    }
+    else
+    {
+        for(i = 0; i < 6; i++)
+        {
+            if(curfreq == mn_freqs_power_1200[i][MN_FREQ])
+                return mn_freqs_power_1200[i][updown]; // updown 1|2
+        }
+    }
     return (curfreq);                   // not found
     }
 #endif
@@ -550,7 +572,7 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 		//	this_dbs_info->requested_freq = policy->max;
         
 #ifdef MN_SMOOTH
-        this_dbs_info->requested_freq = mn_get_next_freq_1200(policy->cur, MN_UP);
+            this_dbs_info->requested_freq = mn_get_next_freq_1200(policy->cur, MN_UP,max_load);
 #endif            
 		__cpufreq_driver_target(policy, this_dbs_info->requested_freq,
 			CPUFREQ_RELATION_H);
@@ -575,7 +597,7 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 		if (policy->cur == policy->min)
 			return;
 #ifdef MN_SMOOTH 
-        this_dbs_info->requested_freq = mn_get_next_freq_1200(policy->cur, MN_DOWN);
+        this_dbs_info->requested_freq = mn_get_next_freq_1200(policy->cur, MN_DOWN,0);
 #endif
 		__cpufreq_driver_target(policy, this_dbs_info->requested_freq,
 				CPUFREQ_RELATION_H);
