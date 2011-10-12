@@ -32,9 +32,9 @@
 #define dprintk(msg...) cpufreq_debug_printk(CPUFREQ_DEBUG_CORE, \
 						"cpufreq-core", msg)
 
-int exp_UV_mV[5];
-extern unsigned int freq_uv_table[5][3];
-int enabled_freqs[5] = { 1, 1, 1, 1, 1, 1 };
+int exp_UV_mV[6] = { 0, 0, 0, 0, 0, 0 };
+extern unsigned int freq_uv_table[6][3];
+int enabled_freqs[6] = { 1, 1, 1, 1, 1, 1 };
 
 /**
  * The "cpufreq driver" - the arch- or hardware-dependent low
@@ -660,17 +660,17 @@ static ssize_t show_UV_mV_table(struct cpufreq_policy *policy, char *buf) {
 	return sprintf(buf, "%d %d %d %d %d %d\n", exp_UV_mV[0], exp_UV_mV[1], exp_UV_mV[2], exp_UV_mV[3], exp_UV_mV[4], exp_UV_mV[5]);
 }
 
-static ssize_t store_UV_mV_table(struct cpufreq_policy *policy,
-					const char *buf, size_t count) {
+static ssize_t store_UV_mV_table(struct cpufreq_policy *policy, const char *buf, size_t count) 
+{
+    unsigned int ret = -EINVAL;
 
-	unsigned int ret = -EINVAL;
-
-	ret = sscanf(buf, "%d %d %d %d %d %d", &exp_UV_mV[0], &exp_UV_mV[1], &exp_UV_mV[2], &exp_UV_mV[3], &exp_UV_mV[4], &exp_UV_mV[5]);
-	if(ret != 1) {
-		return -EINVAL;
-	}
-	else
-		return count;
+    ret = sscanf(buf, "%d %d %d %d %d %d", &exp_UV_mV[0], &exp_UV_mV[1], &exp_UV_mV[2], &exp_UV_mV[3], &exp_UV_mV[4], &exp_UV_mV[5]);
+    if(ret != 6) {
+        return -EINVAL;
+    }
+    else {
+        return count;
+    }    
 }
 
 static ssize_t show_frequency_voltage_table(struct cpufreq_policy *policy,
