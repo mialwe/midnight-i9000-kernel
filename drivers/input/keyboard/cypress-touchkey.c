@@ -19,6 +19,8 @@
  *
  */
 #include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/timer.h>
 #include <linux/init.h>
 #include <linux/i2c.h>
 #include <linux/slab.h>
@@ -38,7 +40,16 @@
 #define OLD_BACKLIGHT_ON	0x1
 #define OLD_BACKLIGHT_OFF	0x2
 
+#define BACKLIGHT_TIMEOUT  500
+
 #define DEVICE_NAME "cypress-touchkey"
+
+int bl_on = 0;
+
+struct cypress_touchkey_devdata *bl_devdata;
+static struct timer_list bl_timer;
+static void bl_off(struct work_struct *bl_off_work);
+static DECLARE_WORK(bl_off_work, bl_off);
 
 struct cypress_touchkey_devdata {
 	struct i2c_client *client;
@@ -50,6 +61,7 @@ struct cypress_touchkey_devdata {
 	bool is_dead;
 	bool is_powering_on;
 	bool has_legacy_keycode;
+    bool is_sleeping;
 };
 
 static int i2c_touchkey_read_byte(struct cypress_touchkey_devdata *devdata,
@@ -103,6 +115,19 @@ static void all_keys_up(struct cypress_touchkey_devdata *devdata)
 						devdata->pdata->keycode[i], 0);
 
 	input_sync(devdata->input_dev);
+}
+
+static void bl_off(struct work_struct *bl_off_work)
+{
+  if (bl_devdata == NULL || unlikely(bl_devdata->is_dead) ||
+    bl_devdata->is_powering_on || bl_on || bl_devdata->is_sleeping)
+    return;
+  i2c_touchkey_write_byte(bl_devdata, bl_devdata->backlight_off);
+}
+
+void bl_timer_callback(unsigned long data)
+{
+  schedule_work(&bl_off_work);
 }
 
 static int recovery_routine(struct cypress_touchkey_devdata *devdata)
@@ -177,6 +202,7 @@ static irqreturn_t touchkey_interrupt_thread(int irq, void *touchkey_devdata)
 	}
 
 	input_sync(devdata->input_dev);
+    mod_timer(&bl_timer, jiffies + msecs_to_jiffies(BACKLIGHT_TIMEOUT));
 err:
 	return IRQ_HANDLED;
 }
@@ -227,6 +253,8 @@ static void cypress_touchkey_early_resume(struct early_suspend *h)
 	devdata->is_dead = false;
 	enable_irq(devdata->client->irq);
 	devdata->is_powering_on = false;
+    devdata->is_sleeping = false;
+    mod_timer(&bl_timer, jiffies + msecs_to_jiffies(BACKLIGHT_TIMEOUT));
 }
 #endif
 
@@ -331,6 +359,8 @@ static int cypress_touchkey_probe(struct i2c_client *client,
 
 	devdata->is_powering_on = false;
 
+    setup_timer(&bl_timer, bl_timer_callback, 0);
+
 	return 0;
 
 err_req_irq:
@@ -360,6 +390,7 @@ static int __devexit i2c_touchkey_remove(struct i2c_client *client)
 	free_irq(client->irq, devdata);
 	all_keys_up(devdata);
 	input_unregister_device(devdata->input_dev);
+    del_timer(&bl_timer);
 	kfree(devdata);
 	return 0;
 }

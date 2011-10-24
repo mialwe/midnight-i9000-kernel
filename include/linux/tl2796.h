@@ -25,4 +25,3 @@ struct s5p_panel_data {
 	const u16 *acl_init;
 	int gamma_table_size;
 };
-
