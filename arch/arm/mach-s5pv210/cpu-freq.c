@@ -472,13 +472,14 @@ static int s5pv210_cpufreq_target(struct cpufreq_policy *policy,
 		goto out;
 	}
 
+#if 0
 #ifdef CONFIG_DVFS_LIMIT
 	if (g_dvfs_high_lock_token) {
 		if (index > g_dvfs_high_lock_limit)
 			index = g_dvfs_high_lock_limit;
 	}
 #endif
-
+#endif
 	arm_clk = freq_table[index].frequency;
 
 	s3c_freqs.freqs.new = arm_clk;
@@ -755,7 +756,7 @@ static int __init s5pv210_cpufreq_driver_init(struct cpufreq_policy *policy)
 
 	cpufreq_frequency_table_get_attr(freq_table, policy->cpu);
 
-	policy->cpuinfo.transition_latency = 40000;	/* 1us */
+	policy->cpuinfo.transition_latency = 20000;	/* 1us */
 
 	rate = clk_get_rate(mpu_clk);
 	i = 0;
