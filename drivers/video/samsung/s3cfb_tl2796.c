@@ -39,7 +39,9 @@
 
 #define NUM_GAMMA_REGS	21
 
-int hacky_v1_offset[3] = {-14, -17, -18};
+//int hacky_v1_offset[3] = {-52, -55, -46};
+int hacky_v1_offset[3] = {-30, -30, -33};
+int min_brightness = 1;
 
 // MIDNIGHT lower-brightness adjustments 
 // 0 = driver default, 3 = Midnight default, 4 = lowest
@@ -256,20 +258,12 @@ static void setup_gamma_regs(struct s5p_lcd *lcd, u16 gamma_regs[])
      * It's an ugly hack but it seems to work ok for now.
      * 
      * Tweak this with values from 0 (default driver settings) to
-     * 4 (darkest adjustment) like this:
+     * 6 (darkest adjustment) like this:
      * echo YOUR_VALUE > /sys/class/misc/rgbb_multiplier/brightness_multiplier
      */ 
-    u8 brightness_orig = lcd->bl;
+    u8 brightness_orig = lcd->bl; 
     brightness = brightness - ((255 / brightness) * bmult) + bmult;
-    
-    /* MIDNIGHT: check for overflow and "green tint brightness level ranges " 
-     * 1-4 and 6-11.
-     * maybe this ranges could be used, too after dynamically changing 
-     * the rgb multipliers for this range... => TODO
-     */
-    if( (brightness < 12) || (brightness > brightness_orig)){
-        brightness = 5;
-	}
+    brightness = (brightness > brightness_orig || brightness < min_brightness) ? min_brightness : brightness;
     
     const struct tl2796_gamma_adj_points *bv = lcd->gamma_adj_points;
 
@@ -296,10 +290,16 @@ static void setup_gamma_regs(struct s5p_lcd *lcd, u16 gamma_regs[])
 			else
 				adj = 140;
 		}
-		// record gamma 0
-		//gamma_regs[c] = adj | 0x100;
-        gamma_regs[c] = ((adj + hacky_v1_offset[c]) > 0 && (adj <=255)) ? (adj + hacky_v1_offset[c]) | 0x100 : adj | 0x100;
-		// calculate brightness value for color c
+        
+        // record gamma 0
+        // MIDNIGHT: take care of gamma_regs overflow resulting in completely green screen
+        if((adj + hacky_v1_offset[c]) <  adj){
+            gamma_regs[c] = ((adj + hacky_v1_offset[c]) > 0 && (adj <=255)) ? (adj + hacky_v1_offset[c]) | 0x100 : adj | 0x100;
+        }else{
+            gamma_regs[c] = 0 | 0x100;
+        }
+        
+        // calculate brightness value for color c
 		v255 = vx[5] = gamma_lookup(lcd, brightness, bv->v255, c);
 		adj = 600 - 120 - DIV_ROUND_CLOSEST(600 * v255, v0);
 		adj -= lcd->gamma_reg_offsets.v[c][5];
@@ -751,6 +751,22 @@ static void tl2796_read_mtp_info(struct s5p_lcd *lcd)
 	tl2796_adjust_brightness_from_mtp(lcd);
 }
 
+static ssize_t min_brightness_show(struct device *dev, struct device_attribute *attr, char *buf)
+{
+	return sprintf(buf, "%u\n", min_brightness);
+}
+
+static ssize_t min_brightness_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)
+{
+	u32 value;
+	if (sscanf(buf, "%u", &value) == 1)
+	{
+		min_brightness = value;
+		update_brightness(lcd_);
+	}
+	return size;
+}
+
 static ssize_t brightness_multiplier_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
 	return sprintf(buf, "%u\n", bmult);
@@ -815,12 +831,14 @@ static ssize_t blue_multiplier_store(struct device *dev, struct device_attribute
 	return size;
 }
 
+static DEVICE_ATTR(min_brightness, S_IRUGO | S_IWUGO, min_brightness_show, min_brightness_store);
 static DEVICE_ATTR(brightness_multiplier, S_IRUGO | S_IWUGO, brightness_multiplier_show, brightness_multiplier_store);
 static DEVICE_ATTR(red_multiplier, S_IRUGO | S_IWUGO, red_multiplier_show, red_multiplier_store);
 static DEVICE_ATTR(green_multiplier, S_IRUGO | S_IWUGO, green_multiplier_show, green_multiplier_store);
 static DEVICE_ATTR(blue_multiplier, S_IRUGO | S_IWUGO, blue_multiplier_show, blue_multiplier_store);
 
 static struct attribute *midnight_color_attributes[] = {
+	&dev_attr_min_brightness.attr,
 	&dev_attr_brightness_multiplier.attr,
 	&dev_attr_red_multiplier.attr,
 	&dev_attr_green_multiplier.attr,
