@@ -112,19 +112,17 @@ static struct dbs_tuners {
 #define MN_UP 1
 #define MN_DOWN 2
 
-static int mn_freqs_1200[7][3]={
-    {1200000,1200000,1000000},
-    {1000000,1200000,800000},
+static int mn_freqs_1200[5][3]={
+    {1000000,1000000,800000},
     {800000,1000000,400000},
     {400000,800000,200000},
     {200000,400000,100000},
     {100000,200000,100000}
 };
 
-static int mn_freqs_power_1200[7][3]={
-    {1200000,1200000,1000000},
-    {1000000,1200000,800000},
-    {800000,1200000,400000},
+static int mn_freqs_power_1200[5][3]={
+    {1000000,1000000,800000},
+    {800000,1000000,400000},
     {400000,1000000,200000},
     {200000,800000,100000},
     {100000,400000,100000}
@@ -132,9 +130,9 @@ static int mn_freqs_power_1200[7][3]={
 
 static int mn_get_next_freq_1200(unsigned int curfreq, unsigned int updown, unsigned int load) {
     int i=0;
-    if (load < 65)
+    if (load < 50)
     {
-        for(i = 0; i < 6; i++)
+        for(i = 0; i < 5; i++)
         {
             if(curfreq == mn_freqs_1200[i][MN_FREQ])
                 return mn_freqs_1200[i][updown]; // updown 1|2
@@ -142,7 +140,7 @@ static int mn_get_next_freq_1200(unsigned int curfreq, unsigned int updown, unsi
     }
     else
     {
-        for(i = 0; i < 6; i++)
+        for(i = 0; i < 5; i++)
         {
             if(curfreq == mn_freqs_power_1200[i][MN_FREQ])
                 return mn_freqs_power_1200[i][updown]; // updown 1|2
