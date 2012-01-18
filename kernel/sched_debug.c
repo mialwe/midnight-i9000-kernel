@@ -136,7 +136,7 @@ print_task(struct seq_file *m, struct rq *rq, struct task_struct *p)
 
 	SEQ_printf(m, "\n");
 }
-
+#if 0
 static void print_rq(struct seq_file *m, struct rq *rq, int rq_cpu)
 {
 	struct task_struct *g, *p;
@@ -233,6 +233,7 @@ void print_rt_rq(struct seq_file *m, int cpu, struct rt_rq *rt_rq)
 #undef P
 }
 
+
 static void print_cpu(struct seq_file *m, int cpu)
 {
 	struct rq *rq = cpu_rq(cpu);
@@ -292,7 +293,7 @@ static void print_cpu(struct seq_file *m, int cpu)
 #undef P
 #endif
 	spin_lock_irqsave(&sched_debug_lock, flags);
-	print_cfs_stats(m, cpu);
+	//print_cfs_stats(m, cpu);
 	print_rt_stats(m, cpu);
 
 	rcu_read_lock();
@@ -300,7 +301,7 @@ static void print_cpu(struct seq_file *m, int cpu)
 	rcu_read_unlock();
 	spin_unlock_irqrestore(&sched_debug_lock, flags);
 }
-
+#endif
 static const char *sched_tunable_scaling_names[] = {
 	"none",
 	"logaritmic",
@@ -336,8 +337,8 @@ static int sched_debug_show(struct seq_file *m, void *v)
 		sysctl_sched_tunable_scaling,
 		sched_tunable_scaling_names[sysctl_sched_tunable_scaling]);
 
-	for_each_online_cpu(cpu)
-		print_cpu(m, cpu);
+	//for_each_online_cpu(cpu)
+	//	print_cpu(m, cpu);
 
 	SEQ_printf(m, "\n");
 
