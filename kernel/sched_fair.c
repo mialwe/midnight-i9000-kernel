@@ -108,10 +108,8 @@ static inline struct rq *rq_of(struct cfs_rq *cfs_rq)
 
 static inline struct task_struct *task_of(struct sched_entity *se)
 {
-#if 0
 #ifdef CONFIG_SCHED_DEBUG
 	WARN_ON_ONCE(!entity_is_task(se));
-#endif
 #endif
 	return container_of(se, struct task_struct, se);
 }
@@ -714,7 +712,6 @@ static void enqueue_sleeper(struct cfs_rq *cfs_rq, struct sched_entity *se)
 
 static void check_spread(struct cfs_rq *cfs_rq, struct sched_entity *se)
 {
-#if 0    
 #ifdef CONFIG_SCHED_DEBUG
 	s64 d = se->vruntime - cfs_rq->min_vruntime;
 
@@ -723,7 +720,6 @@ static void check_spread(struct cfs_rq *cfs_rq, struct sched_entity *se)
 
 	if (d > 3*sysctl_sched_latency)
 		schedstat_inc(cfs_rq, nr_spread_over);
-#endif
 #endif
 }
 
@@ -3697,7 +3693,6 @@ static const struct sched_class fair_sched_class = {
 #endif
 };
 
-#if 0
 #ifdef CONFIG_SCHED_DEBUG
 static void print_cfs_stats(struct seq_file *m, int cpu)
 {
@@ -3708,5 +3703,4 @@ static void print_cfs_stats(struct seq_file *m, int cpu)
 		print_cfs_rq(m, cpu, cfs_rq);
 	rcu_read_unlock();
 }
-#endif
 #endif
