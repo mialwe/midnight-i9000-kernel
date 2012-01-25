@@ -44,10 +44,12 @@
 #elif defined(CONFIG_ARIES_NTT)
 #include "logo_rgb24_wvga_portrait_docomo.h"
 #endif
-#ifdef CONFIG_FB_S3C_MDNIE
-#include "s3cfb_mdnie.h"
 #include <linux/delay.h>
 #include <mach/regs-clock.h>
+#ifdef CONFIG_FB_S3C_MDNIE
+#include "s3cfb_mdnie.h"
+//#include <linux/delay.h>
+//#include <mach/regs-clock.h>
 #endif
 
 /*
