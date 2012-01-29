@@ -29,8 +29,8 @@
  * It helps to keep variable names smaller, simpler
  */
 
-#define DEF_FREQUENCY_UP_THRESHOLD		(55)
-#define DEF_FREQUENCY_DOWN_THRESHOLD		(35)
+#define DEF_FREQUENCY_UP_THRESHOLD		(70)
+#define DEF_FREQUENCY_DOWN_THRESHOLD		(40)
 
 /*
  * The polling frequency of this governor depends on the capability of
@@ -42,7 +42,7 @@
  * this governor will not work.
  * All times here are in uS.
  */
-#define MIN_SAMPLING_RATE_RATIO			(2)
+#define MIN_SAMPLING_RATE_RATIO			(1)
 
 static unsigned int min_sampling_rate;
 
@@ -112,16 +112,18 @@ static struct dbs_tuners {
 #define MN_UP 1
 #define MN_DOWN 2
 
-static int mn_freqs_1200[5][3]={
-    {1000000,1000000,800000},
+static int mn_freqs_1200[6][3]={
+    {1200000,1200000,1000000},
+    {1000000,1200000,800000},
     {800000,1000000,400000},
     {400000,800000,200000},
     {200000,400000,100000},
     {100000,200000,100000}
 };
 
-static int mn_freqs_power_1200[5][3]={
-    {1000000,1000000,800000},
+static int mn_freqs_power_1200[6][3]={
+    {1200000,1200000,1000000},
+    {1000000,1200000,800000},
     {800000,1000000,400000},
     {400000,1000000,200000},
     {200000,800000,100000},
@@ -132,7 +134,7 @@ static int mn_get_next_freq_1200(unsigned int curfreq, unsigned int updown, unsi
     int i=0;
     if (load < 85)
     {
-        for(i = 0; i < 5; i++)
+        for(i = 0; i < 6; i++)
         {
             if(curfreq == mn_freqs_1200[i][MN_FREQ])
                 return mn_freqs_1200[i][updown]; // updown 1|2
@@ -140,7 +142,7 @@ static int mn_get_next_freq_1200(unsigned int curfreq, unsigned int updown, unsi
     }
     else
     {
-        for(i = 0; i < 5; i++)
+        for(i = 0; i < 6; i++)
         {
             if(curfreq == mn_freqs_power_1200[i][MN_FREQ])
                 return mn_freqs_power_1200[i][updown]; // updown 1|2
@@ -703,7 +705,7 @@ static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 			 * governor, thus we are bound to jiffes/HZ
 			 */
 			min_sampling_rate =
-				MIN_SAMPLING_RATE_RATIO * jiffies_to_usecs(10);
+				MIN_SAMPLING_RATE_RATIO * jiffies_to_usecs(5); // orig: 10
 			/* Bring kernel and HW constraints together */
 			min_sampling_rate = max(min_sampling_rate,
 					MIN_LATENCY_MULTIPLIER * latency);
