@@ -23,6 +23,7 @@
 #include <linux/tick.h>
 #include <linux/ktime.h>
 #include <linux/sched.h>
+#include <linux/earlysuspend.h>
 
 /*
  * dbs is used in this file as a shortform for demandbased switching
@@ -45,6 +46,10 @@
 #define MIN_SAMPLING_RATE_RATIO			(1)
 
 static unsigned int min_sampling_rate;
+
+// raise sampling rate to SR*multiplier on blank screen
+static unsigned int sampling_rate_awake;
+#define SAMPLING_RATE_SLEEP_MULTIPLIER (3)
 
 #define LATENCY_MULTIPLIER			(1000)
 #define MIN_LATENCY_MULTIPLIER			(100)
@@ -642,6 +647,26 @@ static inline void dbs_timer_exit(struct cpu_dbs_info_s *dbs_info)
 	cancel_delayed_work_sync(&dbs_info->work);
 }
 
+static void powersave_early_suspend(struct early_suspend *handler)
+{
+  mutex_lock(&dbs_mutex);
+  dbs_tuners_ins.sampling_rate *= SAMPLING_RATE_SLEEP_MULTIPLIER;
+  mutex_unlock(&dbs_mutex);
+}
+
+static void powersave_late_resume(struct early_suspend *handler)
+{
+  mutex_lock(&dbs_mutex);
+  dbs_tuners_ins.sampling_rate = sampling_rate_awake;
+  mutex_unlock(&dbs_mutex);
+}
+
+static struct early_suspend _powersave_early_suspend = {
+  .suspend = powersave_early_suspend,
+  .resume = powersave_late_resume,
+  .level = EARLY_SUSPEND_LEVEL_BLANK_SCREEN,
+};
+
 static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 				   unsigned int event)
 {
@@ -712,7 +737,7 @@ static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 			dbs_tuners_ins.sampling_rate =
 				max(min_sampling_rate,
 				    latency * LATENCY_MULTIPLIER);
-
+            sampling_rate_awake = dbs_tuners_ins.sampling_rate;
 			cpufreq_register_notifier(
 					&dbs_cpufreq_notifier_block,
 					CPUFREQ_TRANSITION_NOTIFIER);
@@ -720,7 +745,7 @@ static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 		mutex_unlock(&dbs_mutex);
 
 		dbs_timer_init(this_dbs_info);
-
+        register_early_suspend(&_powersave_early_suspend);
 		break;
 
 	case CPUFREQ_GOV_STOP:
@@ -745,6 +770,7 @@ static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 			sysfs_remove_group(cpufreq_global_kobject,
 					   &dbs_attr_group);
 
+        unregister_early_suspend(&_powersave_early_suspend);
 		break;
 
 	case CPUFREQ_GOV_LIMITS:

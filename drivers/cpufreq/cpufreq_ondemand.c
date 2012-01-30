@@ -22,6 +22,7 @@
 #include <linux/tick.h>
 #include <linux/ktime.h>
 #include <linux/sched.h>
+#include <linux/earlysuspend.h>
 
 /*
  * dbs is used in this file as a shortform for demandbased switching
@@ -37,6 +38,10 @@
 #define MICRO_FREQUENCY_MIN_SAMPLE_RATE		(9500)
 #define MIN_FREQUENCY_UP_THRESHOLD		(11)
 #define MAX_FREQUENCY_UP_THRESHOLD		(100)
+
+// raise sampling rate to SR*multiplier on blank screen
+static unsigned int sampling_rate_awake;
+#define SAMPLING_RATE_SLEEP_MULTIPLIER (3)
 
 /*
  * The polling frequency of this governor depends on the capability of
@@ -749,6 +754,26 @@ static int should_io_be_busy(void)
 	return 0;
 }
 
+static void powersave_early_suspend(struct early_suspend *handler)
+{
+  mutex_lock(&dbs_mutex);
+  dbs_tuners_ins.sampling_rate *= SAMPLING_RATE_SLEEP_MULTIPLIER;
+  mutex_unlock(&dbs_mutex);
+}
+
+static void powersave_late_resume(struct early_suspend *handler)
+{
+  mutex_lock(&dbs_mutex);
+  dbs_tuners_ins.sampling_rate = sampling_rate_awake;
+  mutex_unlock(&dbs_mutex);
+}
+
+static struct early_suspend _powersave_early_suspend = {
+  .suspend = powersave_early_suspend,
+  .resume = powersave_late_resume,
+  .level = EARLY_SUSPEND_LEVEL_BLANK_SCREEN,
+};
+
 static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 				   unsigned int event)
 {
@@ -818,6 +843,7 @@ static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 
 		mutex_init(&this_dbs_info->timer_mutex);
 		dbs_timer_init(this_dbs_info);
+        register_early_suspend(&_powersave_early_suspend);
 		break;
 
 	case CPUFREQ_GOV_STOP:
@@ -831,7 +857,7 @@ static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 		if (!dbs_enable)
 			sysfs_remove_group(cpufreq_global_kobject,
 					   &dbs_attr_group);
-
+        unregister_early_suspend(&_powersave_early_suspend);
 		break;
 
 	case CPUFREQ_GOV_LIMITS:
