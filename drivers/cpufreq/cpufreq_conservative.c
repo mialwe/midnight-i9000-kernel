@@ -137,7 +137,7 @@ static int mn_freqs_power_1200[6][3]={
 
 static int mn_get_next_freq_1200(unsigned int curfreq, unsigned int updown, unsigned int load) {
     int i=0;
-    if (load < 85)
+    if (load < 75)
     {
         for(i = 0; i < 6; i++)
         {
