@@ -257,11 +257,12 @@ static void setup_gamma_regs(struct s5p_lcd *lcd, u16 gamma_regs[])
      * low brightness than at mid/high levels. 
      * It's an ugly hack but it seems to work ok for now.
      * 
-     * Tweak this with values from 0 (default driver settings) to
+     * Tweak this with values from 1 (default driver settings) to
      * 6 (darkest adjustment) like this:
      * echo YOUR_VALUE > /sys/class/misc/rgbb_multiplier/brightness_multiplier
      */ 
     u8 brightness_orig = lcd->bl; 
+    brightness = (brightness <= 0) ? 1 : brightness; // just to be sure...
     brightness = brightness - ((255 / brightness) * bmult) + bmult;
     brightness = (brightness > brightness_orig || brightness < min_brightness) ? min_brightness : brightness;
     
