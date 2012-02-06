@@ -17,7 +17,6 @@ bool dump_trace = false;
 
 int eprintf(int level, const char *fmt, ...)
 {
-#if 0
 	va_list args;
 	int ret = 0;
 
@@ -31,8 +30,6 @@ int eprintf(int level, const char *fmt, ...)
 	}
 
 	return ret;
-#endif
-    return 0;
 }
 
 int dump_printf(const char *fmt, ...)
