@@ -40,7 +40,7 @@
 #define NUM_GAMMA_REGS	21
 
 //int hacky_v1_offset[3] = {-52, -55, -46};
-int hacky_v1_offset[3] = {-30, -30, -33};
+int hacky_v1_offset[3] = {-15, -15, -17};
 int min_brightness = 1;
 
 // MIDNIGHT lower-brightness adjustments 
