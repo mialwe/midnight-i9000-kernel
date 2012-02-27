@@ -48,8 +48,6 @@
 #define BACKLIGHT_ON		0x1
 #define BACKLIGHT_OFF		0x2
 
-#define BACKLIGHT_TIMEOUT  500
-
 #define DEVICE_NAME "melfas_touchkey"
 
 struct cypress_touchkey_devdata *bln_devdata; // keep a reference to the devdata
@@ -62,6 +60,8 @@ bool bln_enabled = false; // indicates if BLN function is enabled/allowed (defau
 bool bln_notification_ongoing= false; // indicates ongoing LED Notification
 bool bln_blink_enabled = false;	// indicates blink is set
 #endif
+
+static int backlight_timeout = 500; // ms, led timeout, stock 1600
 
 static struct timer_list bl_timer;
 static void bl_off(struct work_struct *bl_off_work);
@@ -233,7 +233,7 @@ static irqreturn_t touchkey_interrupt_thread(int irq, void *touchkey_devdata)
 					!!(data & (1U << i)));
 			}
 			input_sync(devdata->input_dev);
-            mod_timer(&bl_timer, jiffies + msecs_to_jiffies(BACKLIGHT_TIMEOUT));
+            mod_timer(&bl_timer, jiffies + msecs_to_jiffies(backlight_timeout));
 		}
 	}
 err:
@@ -296,7 +296,7 @@ static void cypress_touchkey_early_resume(struct early_suspend *h)
 	devdata->is_dead = false;
 	enable_irq(devdata->client->irq);
 	devdata->is_powering_on = false;
-    mod_timer(&bl_timer, jiffies + msecs_to_jiffies(BACKLIGHT_TIMEOUT));
+    mod_timer(&bl_timer, jiffies + msecs_to_jiffies(backlight_timeout));
 }
 #endif
 
@@ -707,6 +707,25 @@ static ssize_t blink_control_write(struct device *dev, struct device_attribute *
 	return size;
 }
 
+static ssize_t timeout_read(struct device *dev, struct device_attribute *attr, char *buf) {
+	return sprintf(buf,"%u\n", backlight_timeout);
+}
+
+static ssize_t timeout_write(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)
+{
+	unsigned int data;
+
+	if(sscanf(buf, "%u\n", &data) == 1) {
+		if(data >= 100 || data <= 1600){
+            backlight_timeout = data;
+		} else
+			pr_info("%s: wrong input %u, using %u\n", __FUNCTION__, data,backlight_timeout);
+	} else
+		pr_info("%s: input error, using %u\n", __FUNCTION__,backlight_timeout);
+
+	return size;
+}
+
 static ssize_t backlightnotification_version(struct device *dev, struct device_attribute *attr, char *buf) {
 	return sprintf(buf, "%u\n", BACKLIGHTNOTIFICATION_VERSION);
 }
@@ -715,12 +734,14 @@ static DEVICE_ATTR(blink_control, S_IRUGO | S_IWUGO , blink_control_read, blink_
 static DEVICE_ATTR(enabled, S_IRUGO | S_IWUGO , backlightnotification_status_read, backlightnotification_status_write);
 static DEVICE_ATTR(notification_led, S_IRUGO | S_IWUGO , notification_led_status_read, notification_led_status_write);
 static DEVICE_ATTR(version, S_IRUGO , backlightnotification_version, NULL);
+static DEVICE_ATTR(timeout, S_IRUGO | S_IWUGO , timeout_read, timeout_write);
 
 static struct attribute *bln_interface_attributes[] = {
 		&dev_attr_blink_control.attr,
 		&dev_attr_enabled.attr,
 		&dev_attr_notification_led.attr,
 		&dev_attr_version.attr,
+		&dev_attr_timeout.attr,
 		NULL
 };
 
