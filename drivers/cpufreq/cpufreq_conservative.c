@@ -30,7 +30,7 @@
 
 // cpu load trigger
 #ifdef MN_SMOOTH
-#define DEF_SMOOTH_UP (70)
+#define DEF_SMOOTH_UP (75)
 #endif
 
 /*
