@@ -67,7 +67,7 @@ extern int exp_UV_mV[7];
 unsigned int freq_uv_table[7][3] = {
 	//frequency, stock voltage, current voltage
 	{1200000, 1350, 1350},
-	{1128000, 1300, 1300},
+	{1128000, 1310, 1310},
 	{1000000, 1275, 1275},
 	{800000, 1200, 1200},
 	{400000, 1050, 1050},
