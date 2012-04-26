@@ -29,9 +29,7 @@
 #define MN_SMOOTH 1
 
 // cpu load trigger
-#ifdef MN_SMOOTH
 #define DEF_SMOOTH_UP (75)
-#endif
 
 /*
  * dbs is used in this file as a shortform for demandbased switching
@@ -39,7 +37,7 @@
  */
 
 #define DEF_FREQUENCY_UP_THRESHOLD		(60)
-#define DEF_FREQUENCY_DOWN_THRESHOLD		(40)
+#define DEF_FREQUENCY_DOWN_THRESHOLD		(39)
 
 /*
  * The polling frequency of this governor depends on the capability of
@@ -51,12 +49,16 @@
  * this governor will not work.
  * All times here are in uS.
  */
-#define MIN_SAMPLING_RATE_RATIO			(1)
+#define MIN_SAMPLING_RATE_RATIO			(2)
 
 static unsigned int min_sampling_rate;
 
 // raise sampling rate to SR*multiplier on blank screen
 static unsigned int sampling_rate_awake;
+static unsigned int up_threshold_awake;
+static unsigned int down_threshold_awake;
+static unsigned int smooth_up_awake;
+
 #define SAMPLING_RATE_SLEEP_MULTIPLIER (3)
 
 #define LATENCY_MULTIPLIER			(1000)
@@ -100,18 +102,15 @@ static struct dbs_tuners {
 	unsigned int down_threshold;
 	unsigned int ignore_nice;
 	unsigned int freq_step;
-#ifdef MN_SMOOTH
     unsigned int smooth_up;
-#endif
+
 } dbs_tuners_ins = {
 	.up_threshold = DEF_FREQUENCY_UP_THRESHOLD,
 	.down_threshold = DEF_FREQUENCY_DOWN_THRESHOLD,
 	.sampling_down_factor = DEF_SAMPLING_DOWN_FACTOR,
 	.ignore_nice = 0,
 	.freq_step = 5,
-#ifdef MN_SMOOTH
     .smooth_up = DEF_SMOOTH_UP,
-#endif
 };
 
 /**
@@ -129,7 +128,6 @@ static struct dbs_tuners {
  * echo VALUE > /sys/devices/system/cpu/cpufreq/conservative/smooth_up                
  */
 
-#ifdef MN_SMOOTH
 #define MN_FREQ 0
 #define MN_UP 1
 #define MN_DOWN 2
@@ -174,7 +172,6 @@ static int mn_get_next_freq(unsigned int curfreq, unsigned int updown, unsigned 
     }
     return (curfreq); // not found
     }
-#endif
 
 static inline cputime64_t get_cpu_idle_time_jiffy(unsigned int cpu,
 							cputime64_t *wall)
@@ -376,7 +373,6 @@ static ssize_t store_freq_step(struct kobject *a, struct attribute *b,
 	return count;
 }
 
-#ifdef MN_SMOOTH
 static ssize_t store_smooth_up(struct kobject *a,
 					  struct attribute *b,
 					  const char *buf, size_t count)
@@ -391,7 +387,6 @@ static ssize_t store_smooth_up(struct kobject *a,
 	dbs_tuners_ins.smooth_up = input;
 	return count;
 }
-#endif
 
 define_one_global_rw(sampling_rate);
 define_one_global_rw(sampling_down_factor);
@@ -399,10 +394,8 @@ define_one_global_rw(up_threshold);
 define_one_global_rw(down_threshold);
 define_one_global_rw(ignore_nice_load);
 define_one_global_rw(freq_step);
-
-#ifdef MN_SMOOTH
 define_one_global_rw(smooth_up);
-#endif
+
 static struct attribute *dbs_attributes[] = {
 	&sampling_rate_min.attr,
 	&sampling_rate.attr,
@@ -410,11 +403,8 @@ static struct attribute *dbs_attributes[] = {
 	&down_threshold.attr,
 	&ignore_nice_load.attr,
 	&freq_step.attr,
-#ifdef MN_SMOOTH
 	&smooth_up.attr,
-#else
 	&up_threshold.attr,
-#endif
 	NULL
 };
 
@@ -506,19 +496,7 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 		if (this_dbs_info->requested_freq == policy->max)
 			return;
 
-#ifdef MN_SMOOTH
         this_dbs_info->requested_freq = mn_get_next_freq(policy->cur, MN_UP, max_load);
-#else
-		freq_target = (dbs_tuners_ins.freq_step * policy->max) / 100;
-
-		/* max freq cannot be less than 100. But who knows.... */
-		if (unlikely(freq_target == 0))
-			freq_target = 5;
-
-		this_dbs_info->requested_freq += freq_target;
-		if (this_dbs_info->requested_freq > policy->max)
-			this_dbs_info->requested_freq = policy->max;
-#endif 
 
 		__cpufreq_driver_target(policy, this_dbs_info->requested_freq,
 			CPUFREQ_RELATION_H);
@@ -531,7 +509,6 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 	 * policy. To be safe, we focus 10 points under the threshold.
 	 */
 	if (max_load < (dbs_tuners_ins.down_threshold - 10)) {
-		freq_target = (dbs_tuners_ins.freq_step * policy->max) / 100;
 
 		/*
 		 * if we cannot reduce the frequency anymore, break out early
@@ -539,13 +516,8 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 		if (policy->cur == policy->min)
 			return;
 
-#ifdef MN_SMOOTH
         this_dbs_info->requested_freq = mn_get_next_freq(policy->cur, MN_DOWN, max_load);
-#else
-		this_dbs_info->requested_freq -= freq_target;
-		if (this_dbs_info->requested_freq < policy->min)
-			this_dbs_info->requested_freq = policy->min;
-#endif
+
 		__cpufreq_driver_target(policy, this_dbs_info->requested_freq,
 				CPUFREQ_RELATION_H);
 		return;
@@ -591,7 +563,14 @@ static inline void dbs_timer_exit(struct cpu_dbs_info_s *dbs_info)
 static void powersave_early_suspend(struct early_suspend *handler)
 {
   mutex_lock(&dbs_mutex);
+  sampling_rate_awake = dbs_tuners_ins.sampling_rate;
+  up_threshold_awake = dbs_tuners_ins.up_threshold;
+  down_threshold_awake = dbs_tuners_ins.down_threshold;
+  smooth_up_awake = dbs_tuners_ins.smooth_up;
   dbs_tuners_ins.sampling_rate *= SAMPLING_RATE_SLEEP_MULTIPLIER;
+  dbs_tuners_ins.up_threshold = 90;
+  dbs_tuners_ins.down_threshold = 44;
+  dbs_tuners_ins.smooth_up = 100;
   mutex_unlock(&dbs_mutex);
 }
 
@@ -599,6 +578,9 @@ static void powersave_late_resume(struct early_suspend *handler)
 {
   mutex_lock(&dbs_mutex);
   dbs_tuners_ins.sampling_rate = sampling_rate_awake;
+  dbs_tuners_ins.up_threshold = up_threshold_awake;
+  dbs_tuners_ins.down_threshold = down_threshold_awake;
+  dbs_tuners_ins.smooth_up = smooth_up_awake;
   mutex_unlock(&dbs_mutex);
 }
 
@@ -665,7 +647,7 @@ static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 			 * governor, thus we are bound to jiffes/HZ
 			 */
 			min_sampling_rate =
-				MIN_SAMPLING_RATE_RATIO * jiffies_to_usecs(5);
+				MIN_SAMPLING_RATE_RATIO * jiffies_to_usecs(3);
 			/* Bring kernel and HW constraints together */
 			min_sampling_rate = max(min_sampling_rate,
 					MIN_LATENCY_MULTIPLIER * latency);
@@ -673,6 +655,9 @@ static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 				max(min_sampling_rate,
 				    latency * LATENCY_MULTIPLIER);
             sampling_rate_awake = dbs_tuners_ins.sampling_rate;
+            up_threshold_awake = dbs_tuners_ins.up_threshold;
+            down_threshold_awake = dbs_tuners_ins.down_threshold;
+            smooth_up_awake = dbs_tuners_ins.smooth_up;
 			cpufreq_register_notifier(
 					&dbs_cpufreq_notifier_block,
 					CPUFREQ_TRANSITION_NOTIFIER);
