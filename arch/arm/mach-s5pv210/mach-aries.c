@@ -299,7 +299,6 @@ static struct s3cfb_lcd s6e63m0 = {
 	},
 };
 
-/*
 #if 0
 #define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMC0 (14745 * SZ_1K)
 #define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMC1 (9900 * SZ_1K)
@@ -312,34 +311,30 @@ static struct s3cfb_lcd s6e63m0 = {
 #define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_GPU1 (3300 * SZ_1K)
 #define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_ADSP (6144 * SZ_1K)
 #define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_TEXTSTREAM (3000 * SZ_1K)
+#else	// optimized settings, 19th Jan.2011
+#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMC0 (8688 * SZ_1K)
+//#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMC1 (9900 * SZ_1K)
+#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMC1 (5632 * SZ_1K)
+#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMC2 (8688 * SZ_1K)
+#if !defined(CONFIG_ARIES_NTT)   
+#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_MFC0 (13312 * SZ_1K)
+#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_MFC1 (21504 * SZ_1K)
+#else    /* NTT - support playing 1080p */
+#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_MFC0 (36864 * SZ_1K)
+#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_MFC1 (36864 * SZ_1K)
 #endif
-*/
-/*
-#if 0
-#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMC0 (11264 * SZ_1K) // (11264 * SZ_1K) //(12288 * SZ_1K)
-#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMC1 (5120 * SZ_1K)  // 6144 // (5000 * SZ_1K)  //(9900 * SZ_1K)
-#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMC2 (11264 * SZ_1K) // (11264 * SZ_1K) //(12288 * SZ_1K)
-#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_MFC0 (32768 * SZ_1K)
-#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_MFC1 (32768 * SZ_1K)
-#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMD (3072 * SZ_1K) // (3000 * SZ_1K) //(3000 * SZ_1K)
-#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_JPEG (4096 * SZ_1K) // (5012 * SZ_1K) //(5012 * SZ_1K)
-#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_PMEM (3072 * SZ_1K) // (2048 * SZ_1K) //(5632 * SZ_1K)(5550 * SZ_1K)
-#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_GPU1 (3300 * SZ_1K) // (3300 * SZ_1K) //(3300 * SZ_1K)
-#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_ADSP (1536 * SZ_1K) // (1500 * SZ_1K) //(1500 * SZ_1K)
-#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_TEXTSTREAM (3000 * SZ_1K) //(3000 * SZ_1K) //(3000 * SZ_1K)
+#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMD (3000 * SZ_1K)
+#ifdef CONFIG_VIDEO_RECORDING_JPEG_ENC
+#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_JPEG (14100 * SZ_1K)
+#else
+#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_JPEG (5012 * SZ_1K)
 #endif
-*/
-#define S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMC0 (11264 * SZ_1K)
-#define S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMC1 (5632 * SZ_1K)
-#define S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMC2 (11264 * SZ_1K)
-#define S5PV210_VIDEO_SAMSUNG_MEMSIZE_MFC0 (32768 * SZ_1K)
-#define S5PV210_VIDEO_SAMSUNG_MEMSIZE_MFC1 (32768 * SZ_1K)
-#define S5PV210_VIDEO_SAMSUNG_MEMSIZE_FIMD (2560 * SZ_1K)
-#define S5PV210_VIDEO_SAMSUNG_MEMSIZE_JPEG (3586 * SZ_1K)
-#define S5PV210_VIDEO_SAMSUNG_MEMSIZE_PMEM (2048 * SZ_1K)
-#define S5PV210_VIDEO_SAMSUNG_MEMSIZE_GPU1 (3000 * SZ_1K)
-#define S5PV210_VIDEO_SAMSUNG_MEMSIZE_ADSP (1500 * SZ_1K)
-#define S5PV210_VIDEO_SAMSUNG_MEMSIZE_TEXTSTREAM (3000 * SZ_1K)
+#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_PMEM (675 * SZ_1K)
+#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_GPU1 (3300 * SZ_1K)
+#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_ADSP (0 * SZ_1K)
+#define  S5PV210_VIDEO_SAMSUNG_MEMSIZE_TEXTSTREAM (3000 * SZ_1K)
+#endif
+
 
 static struct s5p_media_device aries_media_devs[] = {
 	[0] = {
@@ -2190,8 +2185,13 @@ static struct s3c_platform_fimc fimc_plat_lsi = {
 
 #ifdef CONFIG_VIDEO_JPEG_V2
 static struct s3c_platform_jpeg jpeg_plat __initdata = {
-	.max_main_width	= 800,
+#ifdef CONFIG_VIDEO_RECORDING_JPEG_ENC
+	.max_main_width		= 1280,
+	.max_main_height	= 960,
+#else
+	.max_main_width		= 800,
 	.max_main_height	= 480,
+#endif
 	.max_thumb_width	= 320,
 	.max_thumb_height	= 240,
 };
@@ -2318,11 +2318,20 @@ static struct i2c_board_info i2c_devs8[] __initdata = {
 static int fsa9480_init_flag = 0;
 static bool mtp_off_status;
 
+#ifdef CONFIG_USB_ANDROID_SAMSUNG_COMPOSITE
+extern u16 askonstatus;
+void fsa9480_usb_cb(bool attached)
+#else
 static void fsa9480_usb_cb(bool attached)
+#endif
 {
 	struct usb_gadget *gadget = platform_get_drvdata(&s3c_device_usbgadget);
 
+#ifdef CONFIG_USB_ANDROID_SAMSUNG_COMPOSITE
+	if ((gadget) && (askonstatus != 0xabcd)) {
+#else
 	if (gadget) {
+#endif
 		if (attached)
 			usb_gadget_vbus_connect(gadget);
 		else
@@ -2452,7 +2461,11 @@ static void max17040_power_supply_unregister(struct power_supply *psy)
 static struct max17040_platform_data max17040_pdata = {
 	.power_supply_register = max17040_power_supply_register,
 	.power_supply_unregister = max17040_power_supply_unregister,
+#if defined(CONFIG_ARIES_NTT)
+	.rcomp_value = 0xC000,
+#else
 	.rcomp_value = 0xB000,
+#endif
 };
 
 static struct i2c_board_info i2c_devs9[] __initdata = {
