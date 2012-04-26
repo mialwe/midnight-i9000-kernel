@@ -124,7 +124,6 @@ static void early_suspend(struct work_struct *work)
 	queue_work(sync_work_queue, &sync_system_work);
 
 #if defined(CONFIG_CPU_DIDLE) && defined(CONFIG_CPU_FREQ)
-#if 0
 	if (s5p_rp_is_running) {
 		struct cpufreq_policy *policy = cpufreq_cpu_get(0);
 		if (policy == NULL)
@@ -132,7 +131,6 @@ static void early_suspend(struct work_struct *work)
 		cpufreq_driver_target(policy, ULP_FREQ, DISABLE_FURTHER_CPUFREQ);
 		dvfs_fixed_by_rp = true;
 	}
-#endif
 #endif
 
 abort:
@@ -163,7 +161,6 @@ static void late_resume(struct work_struct *work)
 	}
 
 #if defined(CONFIG_CPU_DIDLE) && defined(CONFIG_CPU_FREQ)
-#if 0
 	if (dvfs_fixed_by_rp) {
 		struct cpufreq_policy *policy = cpufreq_cpu_get(0);
 		if (policy == NULL)
@@ -171,7 +168,6 @@ static void late_resume(struct work_struct *work)
 		cpufreq_driver_target(policy, ULP_FREQ, ENABLE_FURTHER_CPUFREQ);
 		dvfs_fixed_by_rp = false;
 	}
-#endif
 #endif
 
 	if (debug_mask & DEBUG_SUSPEND)
