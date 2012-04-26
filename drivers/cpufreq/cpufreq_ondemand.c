@@ -31,7 +31,7 @@
 
 #define DEF_FREQUENCY_DOWN_DIFFERENTIAL		(10)
 #define DEF_FREQUENCY_UP_THRESHOLD		(75)
-#define DEF_SAMPLING_DOWN_FACTOR               (2) // orig 1
+#define DEF_SAMPLING_DOWN_FACTOR               (1) // orig 1
 #define MAX_SAMPLING_DOWN_FACTOR               (100000)
 #define MICRO_FREQUENCY_DOWN_DIFFERENTIAL	(3)
 #define MICRO_FREQUENCY_UP_THRESHOLD		(85)
@@ -837,10 +837,11 @@ static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 			dbs_tuners_ins.sampling_rate =
 				max(min_sampling_rate,
 				    latency * LATENCY_MULTIPLIER);
-			dbs_tuners_ins.io_is_busy = should_io_be_busy();
+			sampling_rate_awake = dbs_tuners_ins.sampling_rate;
+            dbs_tuners_ins.io_is_busy = should_io_be_busy();
 		}
 		mutex_unlock(&dbs_mutex);
-
+        
 		mutex_init(&this_dbs_info->timer_mutex);
 		dbs_timer_init(this_dbs_info);
         register_early_suspend(&_powersave_early_suspend);

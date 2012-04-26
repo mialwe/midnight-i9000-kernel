@@ -30,7 +30,7 @@
 
 // cpu load trigger
 #ifdef MN_SMOOTH
-#define DEF_SMOOTH_UP (70)
+#define DEF_SMOOTH_UP (75)
 #endif
 
 /*
@@ -51,7 +51,7 @@
  * this governor will not work.
  * All times here are in uS.
  */
-#define MIN_SAMPLING_RATE_RATIO			(2)
+#define MIN_SAMPLING_RATE_RATIO			(1)
 
 static unsigned int min_sampling_rate;
 
