@@ -175,7 +175,7 @@ void qt_Power_Config_Init(void)
     power_config.idleacqint = 64;
 
     /* Set Active Acquisition Interval to 16 ms. */
-    ;//dprintk("\n[TSP]%s real board \n",__func__);
+    // dprintk("\n[TSP]%s real board \n",__func__);
     power_config.actvacqint = 255;        // 16 ->13 20100407
 
 
@@ -186,7 +186,7 @@ void qt_Power_Config_Init(void)
     /* Write power config to chip. */
     if (write_power_config(power_config) != CFG_WRITE_OK)
     {
-        ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+        // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
     }
 }
 
@@ -215,7 +215,7 @@ void qt_Acquisition_Config_Init(void)
 
     if (write_acquisition_config(acquisition_config) != CFG_WRITE_OK)
     {
-        ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+        // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
     }
 }
 
@@ -280,7 +280,7 @@ void qt_Multitouchscreen_Init(void)
     
     if (write_multitouchscreen_config(0, touchscreen_config) != CFG_WRITE_OK)
     {
-        ;//dprintk("[TSP] qt_Multitouchscreen_Init Configuration Fail!!! , Line %d \n\r", __LINE__);
+        // dprintk("[TSP] qt_Multitouchscreen_Init Configuration Fail!!! , Line %d \n\r", __LINE__);
     }
 }
 
@@ -298,7 +298,7 @@ void qt_Multitouchscreen_stylus_Init(void)
     
     if (write_multitouchscreen_config(0, touchscreen_config) != CFG_WRITE_OK)
     {
-        ;//dprintk("[TSP] qt_Multitouchscreen_stylus_Init Configuration Fail!!! , Line %d \n\r", __LINE__);
+        // dprintk("[TSP] qt_Multitouchscreen_stylus_Init Configuration Fail!!! , Line %d \n\r", __LINE__);
     }
 }
 
@@ -315,7 +315,7 @@ void qt_Multitouchscreen_normal_Init(void)
     
     if (write_multitouchscreen_config(0, touchscreen_config) != CFG_WRITE_OK)
     {
-        ;//dprintk("[TSP] qt_Multitouchscreen_stylus_Init Configuration Fail!!! , Line %d \n\r", __LINE__);
+        // dprintk("[TSP] qt_Multitouchscreen_stylus_Init Configuration Fail!!! , Line %d \n\r", __LINE__);
     }
 }
 #endif
@@ -345,7 +345,7 @@ void qt_KeyArray_Init(void)
 
     if (write_keyarray_config(0, keyarray_config) != CFG_WRITE_OK)
     {
-        ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+        // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
     }
 }
 
@@ -368,7 +368,7 @@ void qt_ComcConfig_Init(void)
     {
         if (write_comc_config(0, comc_config) != CFG_WRITE_OK)
         {
-            ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+            // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
         }
     }
 }
@@ -400,7 +400,7 @@ void qt_Gpio_Pwm_Init(void)
 
     if (write_gpio_config(0, gpiopwm_config) != CFG_WRITE_OK)
     {
-        ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+        // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
     }
 }
 
@@ -438,7 +438,7 @@ void qt_Grip_Face_Suppression_Config_Init(void)
         if (write_gripsuppression_config(0, gripfacesuppression_config) !=
             CFG_WRITE_OK)
         {
-            ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+            // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
         }
     }
 }
@@ -484,7 +484,7 @@ void qt_Noise_Suppression_Config_Init(void)
     {
         if (write_noisesuppression_config(0,noise_suppression_config) != CFG_WRITE_OK)
         {
-            ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+            // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
         }
     }
 }
@@ -516,7 +516,7 @@ void qt_Proximity_Config_Init(void)
     {
         if (write_proximity_config(0, proximity_config) != CFG_WRITE_OK)
         {
-            ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+            // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
         }
     }
 }
@@ -557,7 +557,7 @@ void qt_One_Touch_Gesture_Config_Init(void)
         if (write_onetouchgesture_config(0, onetouch_gesture_config) !=
             CFG_WRITE_OK)
         {
-            ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+            // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
         }
     }
 }
@@ -585,7 +585,7 @@ void qt_Selftest_Init(void)
     {
         if (write_selftest_config(0,selftest_config) != CFG_WRITE_OK)
         {
-            ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+            // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
         }
     }
 }
@@ -618,7 +618,7 @@ void qt_Two_touch_Gesture_Config_Init(void)
         if (write_twotouchgesture_config(0, twotouch_gesture_config) !=
             CFG_WRITE_OK)
         {
-            ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+            // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
         }
     }
 }
@@ -650,7 +650,7 @@ void qt_CTE_Config_Init(void)
     {
         if (write_CTE_config(cte_config) != CFG_WRITE_OK)
         {
-            ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+            // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
         }
     }
 }
@@ -686,7 +686,7 @@ uint8_t reset_chip(void)
 {
     uint8_t data = 1u;
 
-    ;//dprintk("\n[TSP][%s] \n", __func__);
+    // dprintk("\n[TSP][%s] \n", __func__);
    cal_check_flag = 1u; //20100309s
     return(write_mem(command_processor_address + RESET_OFFSET, 1, &data));
 }
@@ -717,12 +717,12 @@ uint8_t calibrate_chip(void)
         acquisition_config.atchcalst = 0;
         acquisition_config.atchcalsthr = 0; 
 
-        ;//dprintk("[TSP] reset acq atchcalst=%d, atchcalsthr=%d\n", acquisition_config.atchcalst, acquisition_config.atchcalsthr );
+        // dprintk("[TSP] reset acq atchcalst=%d, atchcalsthr=%d\n", acquisition_config.atchcalst, acquisition_config.atchcalsthr );
 
         /* Write temporary acquisition config to chip. */
         if (write_acquisition_config(acquisition_config) != CFG_WRITE_OK) {
             /* "Acquisition config write failed!\n" */
-            ;//dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
+            // dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
             ret = WRITE_MEM_FAILED; /* calling function should retry calibration call */
         }
 
@@ -1705,21 +1705,21 @@ void quantum_touch_probe(void)
 #ifdef QT_FIRMUP_ENABLE
     if (init_touch_driver( QT602240_I2C_ADDR ) == DRIVER_SETUP_OK) {
         /* "\nTouch device found\n" */
-        ;//dprintk("\n[TSP] Touch device found\n");
+        // dprintk("\n[TSP] Touch device found\n");
     }
     else {
         /* "\nTouch device NOT found\n" */
-        ;//dprintk("\n[TSP][ERROR] Touch device NOT found\n");
+        // dprintk("\n[TSP][ERROR] Touch device NOT found\n");
         return ;
     }
 #else
     if (init_touch_driver( QT602240_I2C_ADDR , (void *) &message_handler) == DRIVER_SETUP_OK) {
         /* "\nTouch device found\n" */
-        ;//dprintk("\n[TSP] Touch device found\n");
+        // dprintk("\n[TSP] Touch device found\n");
     }
     else {
         /* "\nTouch device NOT found\n" */
-        ;//dprintk("\n[TSP][ERROR] Touch device NOT found\n");
+        // dprintk("\n[TSP][ERROR] Touch device NOT found\n");
         return ;
     }
 #endif
@@ -1730,39 +1730,39 @@ void quantum_touch_probe(void)
     get_build_number(&build);
 
 
-    ;//dprintk("Version:        0x%x\n\r", tsp_version);
-    ;//dprintk("Family:           0x%x\n\r", family_id);
-    ;//dprintk("Variant:        0x%x\n\r", variant);
-    ;//dprintk("Build number:   0x%x\n\r", build);
+    // dprintk("Version:        0x%x\n\r", tsp_version);
+    // dprintk("Family:           0x%x\n\r", family_id);
+    // dprintk("Variant:        0x%x\n\r", variant);
+    // dprintk("Build number:   0x%x\n\r", build);
 
-    ;//dprintk("Matrix X size : %d\n\r", info_block->info_id.matrix_x_size);
-    ;//dprintk("Matrix Y size : %d\n\r", info_block->info_id.matrix_y_size);
+    // dprintk("Matrix X size : %d\n\r", info_block->info_id.matrix_x_size);
+    // dprintk("Matrix Y size : %d\n\r", info_block->info_id.matrix_y_size);
 
     if(calculate_infoblock_crc(&crc) != CRC_CALCULATION_OK)
     {
-        ;//dprintk("Calculating CRC failed, skipping check!\n\r");
+        // dprintk("Calculating CRC failed, skipping check!\n\r");
     }
     else
     {
-        ;//dprintk("Calculated CRC:\t");
+        // dprintk("Calculated CRC:\t");
         write_message_to_usart((uint8_t *) &crc, 4);
-        ;//dprintk("\n\r");
+        // dprintk("\n\r");
     }
 
 
     stored_crc = get_stored_infoblock_crc();
-    ;//dprintk("Stored CRC:\t");
+    // dprintk("Stored CRC:\t");
     write_message_to_usart((uint8_t *) &stored_crc, 4);
-    ;//dprintk("\n\r");
+    // dprintk("\n\r");
 
 
     if (stored_crc != crc)
     {
-        ;//dprintk("Warning: info block CRC value doesn't match the calculated!\n\r");
+        // dprintk("Warning: info block CRC value doesn't match the calculated!\n\r");
     }
     else
     {
-        ;//dprintk("Info block CRC value OK.\n\n\r");
+        // dprintk("Info block CRC value OK.\n\n\r");
 
     }
 
@@ -1805,22 +1805,22 @@ void quantum_touch_probe(void)
 
     /* Backup settings to NVM. */
     if (backup_config() != WRITE_MEM_OK) {
-        ;//dprintk("Failed to backup, exiting...\n\r");
+        // dprintk("Failed to backup, exiting...\n\r");
         return;
     }
 
 #else
-    ;//dprintk("Chip setup sequence was bypassed!\n\r");
+    // dprintk("Chip setup sequence was bypassed!\n\r");
 #endif /* OPTION_WRITE_CONFIG */
 
     /* reset the touch IC. */
     if (reset_chip() != WRITE_MEM_OK) {
-        ;//dprintk("Failed to reset, exiting...\n\r");
+        // dprintk("Failed to reset, exiting...\n\r");
         return;
     }
     else {
         msleep(60);
-        ;//dprintk("Chip reset OK!\n\r");
+        // dprintk("Chip reset OK!\n\r");
 
     }
 
@@ -1852,7 +1852,7 @@ uint8_t init_touch_driver(uint8_t I2C_address)
     info_id_t *id;
     uint8_t status;
 
-    ;//dprintk("[QT] %s start\n",__func__);
+    // dprintk("[QT] %s start\n",__func__);
     /* Set the message handler function pointer. */ 
     //application_message_handler = handler;
 
@@ -1889,35 +1889,35 @@ uint8_t init_touch_driver(uint8_t I2C_address)
     for (i = 0; i < id->num_declared_objects; i++) {
         status = read_mem(current_address, 1, &(object_table[i]).object_type);
         if (status != READ_MEM_OK) {
-            ;//dprintk("[TSP][ERROR] 4\n");
+            // dprintk("[TSP][ERROR] 4\n");
             return(DRIVER_SETUP_INCOMPLETE);
         }
         current_address++;
 
         status = read_U16(current_address, &object_table[i].i2c_address);
         if (status != READ_MEM_OK) {
-            ;//dprintk("[TSP][ERROR] 5\n");
+            // dprintk("[TSP][ERROR] 5\n");
             return(DRIVER_SETUP_INCOMPLETE);
         }
         current_address += 2;
 
         status = read_mem(current_address, 1, (U8*)&object_table[i].size);
         if (status != READ_MEM_OK) {
-            ;//dprintk("[TSP][ERROR] 6\n");
+            // dprintk("[TSP][ERROR] 6\n");
             return(DRIVER_SETUP_INCOMPLETE);
         }
         current_address++;
 
         status = read_mem(current_address, 1, &object_table[i].instances);
         if (status != READ_MEM_OK) {
-            ;//dprintk("[TSP][ERROR] 7\n");
+            // dprintk("[TSP][ERROR] 7\n");
             return(DRIVER_SETUP_INCOMPLETE);
         }
         current_address++;
 
         status = read_mem(current_address, 1, &object_table[i].num_report_ids);
         if (status != READ_MEM_OK) {
-            ;//dprintk("[TSP][ERROR] 8\n");
+            // dprintk("[TSP][ERROR] 8\n");
             return(DRIVER_SETUP_INCOMPLETE);
         }
         current_address++;
@@ -1932,7 +1932,7 @@ uint8_t init_touch_driver(uint8_t I2C_address)
 
     /* Check that message processor was found. */
     if (max_message_length == 0) {
-        ;//dprintk("[TSP][ERROR] 9\n");
+        // dprintk("[TSP][ERROR] 9\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
 
@@ -1943,21 +1943,21 @@ uint8_t init_touch_driver(uint8_t I2C_address)
 
     status = read_mem(crc_address, 1u, &tmp);
     if (status != READ_MEM_OK) {
-        ;//dprintk("[TSP][ERROR] 11\n");
+        // dprintk("[TSP][ERROR] 11\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
     info_block->CRC = tmp;
 
     status = read_mem(crc_address + 1u, 1u, &tmp);
     if (status != READ_MEM_OK) {
-        ;//dprintk("[TSP][ERROR] 12\n");
+        // dprintk("[TSP][ERROR] 12\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
     info_block->CRC |= (tmp << 8u);
 
     status = read_mem(crc_address + 2, 1, &info_block->CRC_hi);
     if (status != READ_MEM_OK) {
-        ;//dprintk("[TSP][ERROR] 13\n");
+        // dprintk("[TSP][ERROR] 13\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
 
@@ -1965,14 +1965,14 @@ uint8_t init_touch_driver(uint8_t I2C_address)
     message_processor_address = get_object_address(GEN_MESSAGEPROCESSOR_T5, 0);
 
     if (message_processor_address == 0) {
-        ;//dprintk("[TSP][ERROR] 14 !!\n");
+        // dprintk("[TSP][ERROR] 14 !!\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
 
     /* Store command processor address. */
     command_processor_address = get_object_address(GEN_COMMANDPROCESSOR_T6, 0);
     if (command_processor_address == 0) {
-        ;//dprintk("[TSP][ERROR] 15\n");
+        // dprintk("[TSP][ERROR] 15\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
 
@@ -1987,7 +1987,7 @@ uint8_t init_touch_driver(uint8_t I2C_address)
 
 
     if (read_id_block(id) != 1) {
-        ;//dprintk("[TSP][ERROR] 2\n");
+        // dprintk("[TSP][ERROR] 2\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }  
 
@@ -1995,7 +1995,7 @@ uint8_t init_touch_driver(uint8_t I2C_address)
 
     object_table = (object_t *) kmalloc(id->num_declared_objects * sizeof(object_t), GFP_KERNEL | GFP_ATOMIC);
     if (object_table == NULL) {
-        ;//dprintk("[TSP][ERROR] 3\n");
+        // dprintk("[TSP][ERROR] 3\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
 
@@ -2010,35 +2010,35 @@ uint8_t init_touch_driver(uint8_t I2C_address)
     for (i = 0; i < id->num_declared_objects; i++) {
         status = read_mem(current_address, 1, &(object_table[i]).object_type);
         if (status != READ_MEM_OK) {
-            ;//dprintk("[TSP][ERROR] 4\n");
+            // dprintk("[TSP][ERROR] 4\n");
             return(DRIVER_SETUP_INCOMPLETE);
         }
         current_address++;
 
         status = read_U16(current_address, &object_table[i].i2c_address);
         if (status != READ_MEM_OK) {
-            ;//dprintk("[TSP][ERROR] 5\n");
+            // dprintk("[TSP][ERROR] 5\n");
             return(DRIVER_SETUP_INCOMPLETE);
         }
         current_address += 2;
 
         status = read_mem(current_address, 1, (U8*)&object_table[i].size);
         if (status != READ_MEM_OK) {
-            ;//dprintk("[TSP][ERROR] 6\n");
+            // dprintk("[TSP][ERROR] 6\n");
             return(DRIVER_SETUP_INCOMPLETE);
         }
         current_address++;
 
         status = read_mem(current_address, 1, &object_table[i].instances);
         if (status != READ_MEM_OK) {
-            ;//dprintk("[TSP][ERROR] 7\n");
+            // dprintk("[TSP][ERROR] 7\n");
             return(DRIVER_SETUP_INCOMPLETE);
         }
         current_address++;
 
         status = read_mem(current_address, 1, &object_table[i].num_report_ids);
         if (status != READ_MEM_OK) {
-            ;//dprintk("[TSP][ERROR] 8\n");
+            // dprintk("[TSP][ERROR] 8\n");
             return(DRIVER_SETUP_INCOMPLETE);
         }
         current_address++;
@@ -2053,7 +2053,7 @@ uint8_t init_touch_driver(uint8_t I2C_address)
 
     /* Check that message processor was found. */
     if (max_message_length == 0) {
-        ;//dprintk("[TSP][ERROR] 9\n");
+        // dprintk("[TSP][ERROR] 9\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
 
@@ -2061,7 +2061,7 @@ uint8_t init_touch_driver(uint8_t I2C_address)
 
     CRC = (uint32_t *) kmalloc(sizeof(info_id_t), GFP_KERNEL | GFP_ATOMIC);
     if (CRC == NULL) {
-        ;//dprintk("[TSP][ERROR] 10\n");
+        // dprintk("[TSP][ERROR] 10\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
 
@@ -2069,7 +2069,7 @@ uint8_t init_touch_driver(uint8_t I2C_address)
 
     info_block = kmalloc(sizeof(info_block_t), GFP_KERNEL | GFP_ATOMIC);
     if (info_block == NULL) {
-        ;//dprintk("err\n");
+        // dprintk("err\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
 
@@ -2083,21 +2083,21 @@ uint8_t init_touch_driver(uint8_t I2C_address)
 
     status = read_mem(crc_address, 1u, &tmp);
     if (status != READ_MEM_OK) {
-        ;//dprintk("[TSP][ERROR] 11\n");
+        // dprintk("[TSP][ERROR] 11\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
     info_block->CRC = tmp;
 
     status = read_mem(crc_address + 1u, 1u, &tmp);
     if (status != READ_MEM_OK) {
-        ;//dprintk("[TSP][ERROR] 12\n");
+        // dprintk("[TSP][ERROR] 12\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
     info_block->CRC |= (tmp << 8u);
 
     status = read_mem(crc_address + 2, 1, &info_block->CRC_hi);
     if (status != READ_MEM_OK) {
-        ;//dprintk("[TSP][ERROR] 13\n");
+        // dprintk("[TSP][ERROR] 13\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
 
@@ -2105,20 +2105,20 @@ uint8_t init_touch_driver(uint8_t I2C_address)
     message_processor_address = get_object_address(GEN_MESSAGEPROCESSOR_T5, 0);
 
     if (message_processor_address == 0) {
-        ;//dprintk("[TSP][ERROR] 14 !!\n");
+        // dprintk("[TSP][ERROR] 14 !!\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
 
     /* Store command processor address. */
     command_processor_address = get_object_address(GEN_COMMANDPROCESSOR_T6, 0);
     if (command_processor_address == 0) {
-        ;//dprintk("[TSP][ERROR] 15\n");
+        // dprintk("[TSP][ERROR] 15\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
 
     quantum_msg = kmalloc(max_message_length, GFP_KERNEL | GFP_ATOMIC);
     if (quantum_msg == NULL) {
-        ;//dprintk("[TSP][ERROR] 16\n");
+        // dprintk("[TSP][ERROR] 16\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
 
@@ -2128,7 +2128,7 @@ uint8_t init_touch_driver(uint8_t I2C_address)
     report_id_map = kmalloc(sizeof(report_id_map_t) * max_report_id, GFP_KERNEL | GFP_ATOMIC);
 
     if (report_id_map == NULL) {
-        ;//dprintk("[TSP][ERROR] 17\n");
+        // dprintk("[TSP][ERROR] 17\n");
         return(DRIVER_SETUP_INCOMPLETE);
     }
 
@@ -2170,14 +2170,14 @@ void read_all_register(void)
         calc_addr = addr;
 
         if(read_mem(addr, 1, &msg) == READ_MEM_OK) {
-            ;//dprintk("(0x%2x)", msg);
+            // dprintk("(0x%2x)", msg);
             if( (addr+1) % 10 == 0) {
-                ;//dprintk("\n");
-                ;//dprintk("%2d : ", addr+1);
+                // dprintk("\n");
+                // dprintk("%2d : ", addr+1);
             }
 
         } else {
-            ;//dprintk("\n\n[TSP][ERROR] %s() read fail !! \n", __FUNCTION__);
+            // dprintk("\n\n[TSP][ERROR] %s() read fail !! \n", __FUNCTION__);
         }
     }
 }
@@ -2185,39 +2185,39 @@ void read_all_register(void)
 #if DEBUG_PRESS
 void print_msg(void)
 {
-    ;//dprintk("[TSP] msg = ");
+    // dprintk("[TSP] msg = ");
     if ((quantum_msg[1] & 0x80) == 0x80 )
-        ;//dprintk("1");    
+        // dprintk("1");    
     else
-        ;//dprintk("0");    
+        // dprintk("0");    
     if ((quantum_msg[1] & 0x40) == 0x40 )
-        ;//dprintk("1");    
+        // dprintk("1");    
     else
-        ;//dprintk("0");    
+        // dprintk("0");    
     if ((quantum_msg[1] & 0x20) == 0x20 )
-        ;//dprintk("1");    
+        // dprintk("1");    
     else
-        ;//dprintk("0");    
+        // dprintk("0");    
     if ((quantum_msg[1] & 0x10) == 0x10 )
-        ;//dprintk("1");    
+        // dprintk("1");    
     else
-        ;//dprintk("0");    
+        // dprintk("0");    
     if ((quantum_msg[1] & 0x08) == 0x08 )
-        ;//dprintk("1");    
+        // dprintk("1");    
     else
-        ;//dprintk("0");    
+        // dprintk("0");    
     if ((quantum_msg[1] & 0x04) == 0x04 )
-        ;//dprintk("1");    
+        // dprintk("1");    
     else
-        ;//dprintk("0");    
+        // dprintk("0");    
     if ((quantum_msg[1] & 0x02) == 0x02 )
-        ;//dprintk("1");    
+        // dprintk("1");    
     else
-        ;//dprintk("0");    
+        // dprintk("0");    
     if ((quantum_msg[1] & 0x01) == 0x01 )
-        ;//dprintk("1");    
+        // dprintk("1");    
     else
-        ;//dprintk("0");    
+        // dprintk("0");    
 
 }
 #endif
@@ -2277,7 +2277,7 @@ void check_chip_calibration(unsigned char one_touch_input_flag)
             if(try_ctr > 10) //0318 hugh 100-> 10
             {
                 /* Failed! */
-                ;//dprintk("[TSP] Diagnostic Data did not update!!\n");
+                // dprintk("[TSP] Diagnostic Data did not update!!\n");
                 qt_timer_state = 0;//0430 hugh
                 break;
             }
@@ -2348,17 +2348,17 @@ void check_chip_calibration(unsigned char one_touch_input_flag)
 
                 if(qt_timer_state == 1) {
                     if(qt_time_diff > 500) {
-                        ;//dprintk("[TSP] calibration was good\n");
+                        // dprintk("[TSP] calibration was good\n");
                         cal_check_flag = 0;
                         good_check_flag = 0;
                         qt_timer_state =0;
                         qt_time_point = jiffies_to_msecs(jiffies);
 
-                        ;//dprintk("[TSP] reset acq atchcalst=%d, atchcalsthr=%d\n", acquisition_config.atchcalst, acquisition_config.atchcalsthr );
+                        // dprintk("[TSP] reset acq atchcalst=%d, atchcalsthr=%d\n", acquisition_config.atchcalst, acquisition_config.atchcalsthr );
                         /* Write normal acquisition config back to the chip. */
                         if (write_acquisition_config(acquisition_config) != CFG_WRITE_OK) {
                             /* "Acquisition config write failed!\n" */
-                           ;//printk(KERN_DEBUG "\n[TSP][ERROR] line : %d\n", __LINE__);
+                            printk(KERN_DEBUG "\n[TSP][ERROR] line : %d\n", __LINE__);
                             // MUST be fixed
                         }
 
@@ -2407,27 +2407,27 @@ static int set_tsp_threshhold(void)
 	object_address = get_object_address(TOUCH_MULTITOUCHSCREEN_T9, 0);
 
         if (object_address == 0) {
-            ;//dprintk("\n[TSP][ERROR] TOUCH_MULTITOUCHSCREEN_T9 object_address : %d\n", __LINE__);
+            // dprintk("\n[TSP][ERROR] TOUCH_MULTITOUCHSCREEN_T9 object_address : %d\n", __LINE__);
             return -1;
         }
         tmp= &touchscreen_config.tchthr;
         status = write_mem(object_address+7, 1, tmp);    
         
         if (status == WRITE_MEM_FAILED) {
-            ;//dprintk("\n[TSP][ERROR] TOUCH_MULTITOUCHSCREEN_T9 write_mem : %d\n", __LINE__);
+            // dprintk("\n[TSP][ERROR] TOUCH_MULTITOUCHSCREEN_T9 write_mem : %d\n", __LINE__);
         }
 
         object_address = get_object_address(PROCG_NOISESUPPRESSION_T22, 0);
 
         if (object_address == 0) {
-            ;//dprintk("\n[TSP][ERROR] PROCG_NOISESUPPRESSION_T22 object_address : %d\n", __LINE__);
+            // dprintk("\n[TSP][ERROR] PROCG_NOISESUPPRESSION_T22 object_address : %d\n", __LINE__);
             return -1;
         }
         tmp= &noise_suppression_config.noisethr ;
         status = write_mem(object_address+8, 1, tmp);    
         
         if (status == WRITE_MEM_FAILED) {
-            ;//dprintk("\n[TSP][ERROR] PROCG_NOISESUPPRESSION_T22 write_mem : %d\n", __LINE__);
+            // dprintk("\n[TSP][ERROR] PROCG_NOISESUPPRESSION_T22 write_mem : %d\n", __LINE__);
         }    
         
 	return 1;
@@ -2570,14 +2570,14 @@ void  get_message(void)
             
             if(quantum_msg[0] < 2  || quantum_msg[0] >= 12) {
             
-                ;//dprintk("[TSP] msg id =  %x %x %x %x %x %x %x %x %x\n", quantum_msg[0], quantum_msg[1], quantum_msg[2],\
+                // dprintk("[TSP] msg id =  %x %x %x %x %x %x %x %x %x\n", quantum_msg[0], quantum_msg[1], quantum_msg[2],\
                      quantum_msg[3], quantum_msg[4], quantum_msg[5], quantum_msg[6], quantum_msg[7], quantum_msg[8]);
 
                 if((quantum_msg[0] == 1)&&((quantum_msg[1]&0x10) == 0x10)) {
-                    ;//dprintk(" [TSP] quantum_msg[0] = 1 and quantum_msg[1] = 0x10  cal_check_flag=1\n");
+                    // dprintk(" [TSP] quantum_msg[0] = 1 and quantum_msg[1] = 0x10  cal_check_flag=1\n");
                 }
                 else if((quantum_msg[0] == 1) && ((quantum_msg[1]&0x10)==0)) {
-                    ;//dprintk(" [TSP] quantum_msg[0] = 1 and quantum_msg[1] = 0x00  cal_check_flag=2\n");
+                    // dprintk(" [TSP] quantum_msg[0] = 1 and quantum_msg[1] = 0x00  cal_check_flag=2\n");
                     if(touch_message_flag && (cal_check_flag/*==2*/)) {
                         check_chip_calibration(1);
                     }
@@ -2662,16 +2662,16 @@ void  get_message(void)
 #endif            
             else {
                 press = 3;
-                ;//dprintk("[TSP]Unknown state 0x%x 0x%x!\n ", quantum_msg[0], quantum_msg[1]);
+                // dprintk("[TSP]Unknown state 0x%x 0x%x!\n ", quantum_msg[0], quantum_msg[1]);
                 //print_msg();
-                //;//dprintk("\n");
+                //// dprintk("\n");
             }
 
             ret_val = MESSAGE_READ_OK;
         }
 
-        else
-            ;//dprintk("\n [TSP] read_mem is failed -- check your TSP chip!!\n\n");
+        // else
+            // dprintk("\n [TSP] read_mem is failed -- check your TSP chip!!\n\n");
     }
 	
 #ifdef _SUPPORT_MULTITOUCH_
@@ -2702,12 +2702,12 @@ void  get_message(void)
 
         input_sync(qt602240->input_dev);
         amplitude = quantum_msg[6];
-        ;//dprintk("[TSP]%s x=%3d, y=%3d, BTN=%d, size=%d, amp=%d\n",__FUNCTION__, x, y,press, size , amplitude);
+        // dprintk("[TSP]%s x=%3d, y=%3d, BTN=%d, size=%d, amp=%d\n",__FUNCTION__, x, y,press, size , amplitude);
     }
     else if(press == 0) {
         input_sync(qt602240->input_dev);
         amplitude = quantum_msg[6];
-        ;//dprintk("[TSP]%s x=%3d, y=%3d, BTN=%d, size=%d, amp=%d\n",__FUNCTION__, x, y,press, size , amplitude);
+        // dprintk("[TSP]%s x=%3d, y=%3d, BTN=%d, size=%d, amp=%d\n",__FUNCTION__, x, y,press, size , amplitude);
     }
 #endif
 
@@ -2739,7 +2739,7 @@ int qt602240_i2c_write(u16 reg, u8 *read_val, unsigned int len)
     address_pointer = reg;
 
     if(len+2 > I2C_MAX_SEND_LENGTH) {
-        ;//dprintk("[TSP][ERROR] %s() data length error\n", __FUNCTION__);
+        // dprintk("[TSP][ERROR] %s() data length error\n", __FUNCTION__);
         return -ENODEV;
     }
 
@@ -2766,7 +2766,7 @@ int boot_qt602240_i2c_write(u16 reg, u8 *read_val, unsigned int len)
     int ret,i;
 
     if(len+2 > I2C_MAX_SEND_LENGTH) {
-        ;//dprintk("[TSP][ERROR] %s() data length error\n", __FUNCTION__);
+        // dprintk("[TSP][ERROR] %s() data length error\n", __FUNCTION__);
         return -ENODEV;
     }
 
@@ -2827,7 +2827,7 @@ int qt602240_i2c_read(u16 reg,unsigned char *rbuf, int buf_size)
 U8 init_I2C(U8 I2C_address_arg)
 {
 
-    ;//dprintk("[QT] %s start\n",__func__);   
+    // dprintk("[QT] %s start\n",__func__);   
     return (I2C_INIT_OK);
 }
 
@@ -2853,7 +2853,7 @@ U8 read_mem(U16 start, U8 size, U8 *mem)
     memset(mem,0xFF,size);
     ret = qt602240_i2c_read(start,mem,size);
     if(ret < 0) {
-        ;//dprintk("%s : i2c read failed\n",__func__);
+        // dprintk("%s : i2c read failed\n",__func__);
         return(READ_MEM_FAILED);
     } 
 
@@ -2900,7 +2900,7 @@ U8 boot_write_mem(U16 start, U16 size, U8 *mem)
 
     ret = boot_qt602240_i2c_write(start,mem,size);
     if(ret < 0){
-        ;//dprintk("boot write mem fail: %d \n",ret);
+        // dprintk("boot write mem fail: %d \n",ret);
         return(WRITE_MEM_FAILED);
     }
     else
@@ -2923,9 +2923,9 @@ void write_message_to_usart(uint8_t msg[], uint8_t length)
 {
     int i;
     for (i=0; i < length; i++) {
-        ;//dprintk("0x%02x ", msg[i]);
+        // dprintk("0x%02x ", msg[i]);
     }
-    ;//dprintk("\n\r");
+    // dprintk("\n\r");
 }
 
 /*
@@ -2956,12 +2956,12 @@ int qt602240_probe(struct i2c_client *client,
     qt602240->client = client;
     qt602240->client->irq = IRQ_TOUCH_INT;
 
-    ;//dprintk("qt602240_i2c is attached..\n");
+    // dprintk("qt602240_i2c is attached..\n");
 
 //    DEBUG;
-   ;//printk(KERN_DEBUG"+-----------------------------------------+\n");
-   ;//printk(KERN_DEBUG "|  Quantum Touch Driver Probe!            |\n");
-   ;//printk(KERN_DEBUG"+-----------------------------------------+\n");
+    printk(KERN_DEBUG"+-----------------------------------------+\n");
+    printk(KERN_DEBUG "|  Quantum Touch Driver Probe!            |\n");
+    printk(KERN_DEBUG"+-----------------------------------------+\n");
 
     gpio_set_value(GPIO_TOUCH_EN, 1);
     msleep(70);
@@ -2971,7 +2971,7 @@ int qt602240_probe(struct i2c_client *client,
     qt602240->input_dev = input_allocate_device();
     if (qt602240->input_dev == NULL) {
         ret = -ENOMEM;
-       ;//printk(KERN_DEBUG "qt602240_probe: Failed to allocate input device\n");
+        printk(KERN_DEBUG "qt602240_probe: Failed to allocate input device\n");
         goto err_input_dev_alloc_failed;
     }
     qt602240->input_dev->name = "qt602240_ts_input";
@@ -3000,7 +3000,7 @@ int qt602240_probe(struct i2c_client *client,
 
     ret = input_register_device(qt602240->input_dev);
     if (ret) {
-       ;//printk(KERN_DEBUG "qt602240_probe: Unable to register %s input device\n", qt602240->input_dev->name);
+        printk(KERN_DEBUG "qt602240_probe: Unable to register %s input device\n", qt602240->input_dev->name);
         goto err_input_register_device_failed;
     }
 
@@ -3020,14 +3020,14 @@ int qt602240_probe(struct i2c_client *client,
 
     ret = request_threaded_irq(qt602240->client->irq, NULL,  qt602240_irq_handler,  IRQF_TRIGGER_LOW | IRQF_ONESHOT, "qt602240 irq", qt602240);
     if (ret == 0) {
-        ;//dprintk("[TSP] qt602240_probe: Start touchscreen %s\n", qt602240->input_dev->name);
+        // dprintk("[TSP] qt602240_probe: Start touchscreen %s\n", qt602240->input_dev->name);
     }
     else {
-        ;//dprintk("[TSP] request_irq failed\n");
+        // dprintk("[TSP] request_irq failed\n");
     }
 
 
-    ;//dprintk("%s ,  %d\n",__FUNCTION__, __LINE__ );
+    // dprintk("%s ,  %d\n",__FUNCTION__, __LINE__ );
 #ifdef USE_TSP_EARLY_SUSPEND
     qt602240->early_suspend.level = EARLY_SUSPEND_LEVEL_BLANK_SCREEN + 1;
     qt602240->early_suspend.suspend = qt602240_early_suspend;
@@ -3082,7 +3082,7 @@ static int qt602240_suspend(struct i2c_client *client, pm_message_t mesg)
     /* Write power config to chip. */
     if (write_power_config(power_config_sleep) != CFG_WRITE_OK) {
         /* "Power config write failed!\n" */
-        ;//dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
+        // dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
     }
 
 #ifdef _SUPPORT_MULTITOUCH_
@@ -3102,7 +3102,7 @@ static int qt602240_resume(struct i2c_client *client)
     if ( (ret = write_power_config(power_config)) != CFG_WRITE_OK) {
         /* "Power config write failed!\n" */
         for(i=0;i<10;i++) {
-            ;//dprintk("\n[TSP][ERROR] config error %d,  line : %d i %d\n",ret, __LINE__,i);
+            // dprintk("\n[TSP][ERROR] config error %d,  line : %d i %d\n",ret, __LINE__,i);
             msleep(20);
             if ( (ret = write_power_config(power_config)) == CFG_WRITE_OK)
                 break;
@@ -3141,7 +3141,7 @@ static void qt602240_early_suspend(struct early_suspend *h)
     /* Write power config to chip. */
     if (write_power_config(power_config_sleep) != CFG_WRITE_OK) {
         /* "Power config write failed!\n" */
-        ;//dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
+        // dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
     }
 
 #ifdef _SUPPORT_MULTITOUCH_
@@ -3175,7 +3175,7 @@ static void qt602240_late_resume(struct early_suspend *h)
     if ( (ret = write_power_config(power_config)) != CFG_WRITE_OK) {
         /* "Power config write failed!\n" */
         for(i=0;i<10;i++) {
-            ;//dprintk("\n[TSP][ERROR] config error %d,  line : %d i %d\n",ret, __LINE__,i);
+            // dprintk("\n[TSP][ERROR] config error %d,  line : %d i %d\n",ret, __LINE__,i);
             msleep(20);
             if ( (ret = write_power_config(power_config)) == CFG_WRITE_OK)
                 break;
@@ -3227,9 +3227,9 @@ static ssize_t i2c_show(struct device *dev, struct device_attribute *attr, char 
 
     ret = qt602240_i2c_read(0,read_buf, 5);
     if (ret < 0) {
-        ;//dprintk("qt602240 i2c read failed.\n");
+        // dprintk("qt602240 i2c read failed.\n");
     }
-    ;//dprintk("qt602240 read: %x, %x, %x, %x, %x\n", read_buf[0], read_buf[1], read_buf[2], read_buf[3], read_buf[4]);
+    // dprintk("qt602240 read: %x, %x, %x, %x, %x\n", read_buf[0], read_buf[1], read_buf[2], read_buf[3], read_buf[4]);
 
     return sprintf(buf, "%s\n", buf);
 }
@@ -3243,11 +3243,11 @@ static ssize_t i2c_store(
 
 static ssize_t gpio_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
-    ;//dprintk("qt602240 GPIO Status\n");
-    ;//dprintk("TOUCH_EN  : %s\n", gpio_get_value(GPIO_TOUCH_EN)? "High":"Low");
-    //;//dprintk("TOUCH_RST : %s\n", gpio_get_value(GPIO_TOUCH_RST)? "High":"Low");
-    ;//dprintk("TOUCH_RST is NC\n");
-    ;//dprintk("TOUCH_INT : %s\n", gpio_get_value(GPIO_TOUCH_INT)? "High":"Low");
+    // dprintk("qt602240 GPIO Status\n");
+    // dprintk("TOUCH_EN  : %s\n", gpio_get_value(GPIO_TOUCH_EN)? "High":"Low");
+    //// dprintk("TOUCH_RST : %s\n", gpio_get_value(GPIO_TOUCH_RST)? "High":"Low");
+    // dprintk("TOUCH_RST is NC\n");
+    // dprintk("TOUCH_INT : %s\n", gpio_get_value(GPIO_TOUCH_INT)? "High":"Low");
 
     return sprintf(buf, "%s\n", buf);
 }
@@ -3258,23 +3258,23 @@ static ssize_t gpio_store(
 {
     if(strncmp(buf, "ENHIGH", 6) == 0 || strncmp(buf, "enhigh", 6) == 0) {
         gpio_set_value(GPIO_TOUCH_EN, 1);
-        ;//dprintk("set TOUCH_EN High.\n");
+        // dprintk("set TOUCH_EN High.\n");
         msleep(100);
     }
     if(strncmp(buf, "ENLOW", 5) == 0 || strncmp(buf, "enlow", 5) == 0) {
         gpio_set_value(GPIO_TOUCH_EN, 0);
-        ;//dprintk("set TOUCH_EN Low.\n");
+        // dprintk("set TOUCH_EN Low.\n");
         msleep(100);
     }
 
     if(strncmp(buf, "RSTHIGH", 7) == 0 || strncmp(buf, "rsthigh", 7) == 0) {
 //        gpio_set_value(GPIO_TOUCH_RST, 1);
-        ;//dprintk("TOUCH_RST is NC.\n");
+        // dprintk("TOUCH_RST is NC.\n");
         msleep(100);
     }
     if(strncmp(buf, "RSTLOW", 6) == 0 || strncmp(buf, "rstlow", 6) == 0) {
 //        gpio_set_value(GPIO_TOUCH_RST, 0);
-        ;//dprintk("TOUCH_RST is NC\n");
+        // dprintk("TOUCH_RST is NC\n");
         msleep(100);
     }
 
@@ -3309,10 +3309,10 @@ static ssize_t key_threshold_store(
     int i;
     if(sscanf(buf,"%d",&i)==1) {
             touchscreen_config.tchthr = i;    //basically,40;
-        ;//dprintk("threshold is changed to %d\n",i);
+        // dprintk("threshold is changed to %d\n",i);
     }
     else
-        ;//dprintk("threshold write error\n");
+        // dprintk("threshold write error\n");
 
     return 0;
 }
@@ -3331,7 +3331,7 @@ uint8_t boot_unlock(void)
     
     ret = boot_qt602240_i2c_write(0,data,2);
     if(ret < 0) {
-        ;//dprintk("%s : i2c write failed\n",__func__);
+        // dprintk("%s : i2c write failed\n",__func__);
         return(WRITE_MEM_FAILED);
     } 
 
@@ -3383,7 +3383,7 @@ uint8_t QT_Boot(void)
 
     }
     if (reset_result == WRITE_MEM_OK)
-        ;//dprintk("Boot reset OK\r\n");
+        // dprintk("Boot reset OK\r\n");
 
     msleep(100);
 
@@ -3408,15 +3408,15 @@ uint8_t QT_Boot(void)
 
                 if(read_status_flag==1)     {
                     retry_cnt  = 0;
-                    ;//dprintk("TSP boot status is %x        stage 2 \n", boot_status);
+                    // dprintk("TSP boot status is %x        stage 2 \n", boot_status);
                     if((boot_status & QT_WAITING_BOOTLOAD_COMMAND) == QT_WAITING_BOOTLOAD_COMMAND) {
                         if(boot_unlock() == WRITE_MEM_OK) {
                             msleep(10);
 
-                            ;//dprintk("Unlock OK\n");
+                            // dprintk("Unlock OK\n");
 
                         } else {
-                            ;//dprintk("Unlock fail\n");
+                            // dprintk("Unlock fail\n");
                         }
                     }
                     else if((boot_status & 0xC0) == QT_WAITING_FRAME_DATA) {
@@ -3425,33 +3425,33 @@ uint8_t QT_Boot(void)
                         size2 =  *(firmware_data+character_position+1)+2;
                         frame_size = (size1<<8) + size2;
 
-                        ;//dprintk("Frame size:%d\n", frame_size);
-                        ;//dprintk("Firmware pos:%lu\n", character_position);
+                        // dprintk("Frame size:%d\n", frame_size);
+                        // dprintk("Firmware pos:%lu\n", character_position);
                         /* Exit if frame data size is zero */
                         if( 0 == frame_size ) {
                             if(QT_i2c_address == I2C_BOOT_ADDR_0) {
                                 QT_i2c_address = I2C_APPL_ADDR_0;
                             }
-                            ;//dprintk("0 == frame_size\n");
+                            // dprintk("0 == frame_size\n");
                             return 1;
                         }
                         next_frame = 1;
                         boot_write_mem(0,frame_size, (firmware_data +character_position));
                         msleep(10);
-                        ;//dprintk(".");
+                        // dprintk(".");
 
                     } else if(boot_status == QT_FRAME_CRC_CHECK) {
-                        ;//dprintk("CRC Check\n");
+                        // dprintk("CRC Check\n");
                     } else if(boot_status == QT_FRAME_CRC_PASS) {
                         if( next_frame == 1) {
-                            ;//dprintk("CRC Ok\n");
+                            // dprintk("CRC Ok\n");
                             character_position += frame_size;
                             next_frame = 0;
                         } else {
-                            ;//dprintk("next_frame != 1\n");
+                            // dprintk("next_frame != 1\n");
                         }
                     }  else if(boot_status  == QT_FRAME_CRC_FAIL) {
-                        ;//dprintk("CRC Fail\n");
+                        // dprintk("CRC Fail\n");
                         crc_error_count++;
                     }
                     if(crc_error_count > 10) {
@@ -3463,11 +3463,11 @@ uint8_t QT_Boot(void)
                 }
             }
         } else {
-            ;//dprintk("[TSP] read_boot_state() or (boot_status & 0xC0) == 0xC0) is fail!!!\n");
+            // dprintk("[TSP] read_boot_state() or (boot_status & 0xC0) == 0xC0) is fail!!!\n");
         }
     }
 
-    ;//dprintk("QT_Boot end \n");
+    // dprintk("QT_Boot end \n");
     return 0;
 }
 
@@ -3513,15 +3513,15 @@ uint8_t QT_Boot_no_reset(void)
 
                 if(read_status_flag==1)     {
                     retry_cnt  = 0;
-                    ;//dprintk("TSP boot status is %x        stage 2 \n", boot_status);
+                    // dprintk("TSP boot status is %x        stage 2 \n", boot_status);
                     if((boot_status & QT_WAITING_BOOTLOAD_COMMAND) == QT_WAITING_BOOTLOAD_COMMAND) {
                         if(boot_unlock() == WRITE_MEM_OK) {
                             msleep(10);
 
-                            ;//dprintk("Unlock OK\n");
+                            // dprintk("Unlock OK\n");
 
                         } else {
-                            ;//dprintk("Unlock fail\n");
+                            // dprintk("Unlock fail\n");
                         }
                     } else if((boot_status & 0xC0) == QT_WAITING_FRAME_DATA) {
                         /* Add 2 to frame size, as the CRC bytes are not included */
@@ -3529,33 +3529,33 @@ uint8_t QT_Boot_no_reset(void)
                         size2 =  *(firmware_data+character_position+1)+2;
                         frame_size = (size1<<8) + size2;
 
-                        ;//dprintk("Frame size:%d\n", frame_size);
-                        ;//dprintk("Firmware pos:%d\n", character_position);
+                        // dprintk("Frame size:%d\n", frame_size);
+                        // dprintk("Firmware pos:%d\n", character_position);
                         /* Exit if frame data size is zero */
                         if( 0 == frame_size ) {
                             if(QT_i2c_address == I2C_BOOT_ADDR_0) {
                                 QT_i2c_address = I2C_APPL_ADDR_0;
                             }
-                            ;//dprintk("0 == frame_size\n");
+                            // dprintk("0 == frame_size\n");
                             return 1;
                         }
                         next_frame = 1;
                         boot_write_mem(0,frame_size, (firmware_data +character_position));
                         msleep(10);
-                        ;//dprintk(".");
+                        // dprintk(".");
 
                     } else if(boot_status == QT_FRAME_CRC_CHECK) {
-                        ;//dprintk("CRC Check\n");
+                        // dprintk("CRC Check\n");
                     } else if(boot_status == QT_FRAME_CRC_PASS) {
                         if( next_frame == 1) {
-                            ;//dprintk("CRC Ok\n");
+                            // dprintk("CRC Ok\n");
                             character_position += frame_size;
                             next_frame = 0;
                         } else {
-                            ;//dprintk("next_frame != 1\n");
+                            // dprintk("next_frame != 1\n");
                         }
                     } else if(boot_status  == QT_FRAME_CRC_FAIL) {
-                        ;//dprintk("CRC Fail\n");
+                        // dprintk("CRC Fail\n");
                         crc_error_count++;
                     }
                     if(crc_error_count > 10) {
@@ -3567,11 +3567,11 @@ uint8_t QT_Boot_no_reset(void)
                 }
             }
         } else {
-            ;//dprintk("[TSP] read_boot_state() or (boot_status & 0xC0) == 0xC0) is fail!!!\n");
+            // dprintk("[TSP] read_boot_state() or (boot_status & 0xC0) == 0xC0) is fail!!!\n");
         }
     }
 
-    ;//dprintk("QT_Boot_no_reset end \n");
+    // dprintk("QT_Boot_no_reset end \n");
     return 0;
 
 }
@@ -3590,14 +3590,14 @@ void QT_reprogram(void)
     unsigned char rxdata;
 
 
-    ;//dprintk("QT_reprogram check\n");
+    // dprintk("QT_reprogram check\n");
 
     if(boot_read_mem(0,1,&rxdata) == READ_MEM_OK)
     {
-        ;//dprintk("Enter to new firmware : boot mode\n");
+        // dprintk("Enter to new firmware : boot mode\n");
             if(QT_Boot_no_reset())
                 TSP_Restart();
-            ;//dprintk("Reprogram done : boot mode\n");
+            // dprintk("Reprogram done : boot mode\n");
     }
 
     quantum_touch_probe();  /* find and initialise QT device */
@@ -3607,13 +3607,13 @@ void QT_reprogram(void)
 
     if(((version != 0x14)&&(version < 0x16))||((version == 0x16)&&(build == 0xAA)))
     {
-            ;//dprintk("Enter to new firmware : ADDR = Other Version\n");
+            // dprintk("Enter to new firmware : ADDR = Other Version\n");
             if(!QT_Boot())
             {
                 TSP_Restart();
                 quantum_touch_probe();
             }
-            ;//dprintk("Reprogram done : ADDR = Other Version\n");
+            // dprintk("Reprogram done : ADDR = Other Version\n");
     }
 
 }
@@ -3622,7 +3622,7 @@ void QT_reprogram(void)
 
 static ssize_t setup_show(struct device *dev, struct device_attribute *attr, char *buf)
 {    
-    ;//dprintk("qt602240 Setup Status\n");
+    // dprintk("qt602240 Setup Status\n");
 
 
     return 0;
@@ -3650,7 +3650,7 @@ static DEVICE_ATTR(key_threshold, S_IRUGO | S_IWUSR, key_threshold_show, key_thr
    */
 static ssize_t set_power_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
-   ;//printk(KERN_INFO "[TSP] %s : operate nothing\n", __FUNCTION__);
+    printk(KERN_INFO "[TSP] %s : operate nothing\n", __FUNCTION__);
 
     return 0;
 }
@@ -3660,33 +3660,33 @@ static ssize_t set_power_store(struct device *dev, struct device_attribute *attr
     char *after;
 
     unsigned long value = simple_strtoul(buf, &after, 10);    
-   ;//printk(KERN_DEBUG "[TSP] %s\n", __FUNCTION__);
+    printk(KERN_DEBUG "[TSP] %s\n", __FUNCTION__);
     cmd_no = (int) (value / 1000);
     config_value = ( int ) (value % 1000 );
 
     if (cmd_no == 0)
     {
-        ;//dprintk("[%s] CMD 0 , power_config.idleacqint = %d\n", __func__,config_value );
+        // dprintk("[%s] CMD 0 , power_config.idleacqint = %d\n", __func__,config_value );
         power_config.idleacqint = config_value;
     }        
     else if(cmd_no == 1)
     {
-        ;//dprintk("[%s] CMD 1 , power_config.actvacqint = %d\n", __func__, config_value);
+        // dprintk("[%s] CMD 1 , power_config.actvacqint = %d\n", __func__, config_value);
         power_config.actvacqint = config_value;
     }
     else if(cmd_no == 2)
     {
-        ;//dprintk("[%s] CMD 2 , power_config.actv2idleto= %d\n", __func__, config_value);
+        // dprintk("[%s] CMD 2 , power_config.actv2idleto= %d\n", __func__, config_value);
         power_config.actv2idleto = config_value;
     }
     else 
     {
-        ;//dprintk("[%s] unknown CMD\n", __func__);
+        // dprintk("[%s] unknown CMD\n", __func__);
     }
 
     if (write_power_config(power_config) != CFG_WRITE_OK)
     {
-        ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+        // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
     }
 
     return size;
@@ -3705,7 +3705,7 @@ static DEVICE_ATTR(set_power, 0664, set_power_show, set_power_store);
    */
 static ssize_t set_acquisition_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
-   ;//printk(KERN_DEBUG "[TSP] %s : operate nothing\n", __FUNCTION__);
+    printk(KERN_DEBUG "[TSP] %s : operate nothing\n", __FUNCTION__);
 
     return 0;
 }
@@ -3715,42 +3715,42 @@ static ssize_t set_acquisition_store(struct device *dev, struct device_attribute
     char *after;
 
     unsigned long value = simple_strtoul(buf, &after, 10);    
-   ;//printk(KERN_DEBUG "[TSP] %s\n", __FUNCTION__);
+    printk(KERN_DEBUG "[TSP] %s\n", __FUNCTION__);
     cmd_no = (int) (value / 1000);
     config_value = ( int ) (value % 1000 );
 
     if (cmd_no == 0) {
-        ;//dprintk("[%s] CMD 0 , acquisition_config.chrgtime = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 0 , acquisition_config.chrgtime = %d\n", __func__, config_value );
         acquisition_config.chrgtime = config_value;
     } else if(cmd_no == 1) {
-        ;//dprintk("[%s] CMD 1 , acquisition_config.tchdrift = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 1 , acquisition_config.tchdrift = %d\n", __func__, config_value );
         acquisition_config.tchdrift = config_value;
 
     } else if(cmd_no == 2) {
-        ;//dprintk("[%s] CMD 2 , acquisition_config.driftst = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 2 , acquisition_config.driftst = %d\n", __func__, config_value );
         acquisition_config.driftst = config_value;
     } else if(cmd_no == 3) {
-        ;//dprintk("[%s] CMD 3 , acquisition_config.tchautocal = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 3 , acquisition_config.tchautocal = %d\n", __func__, config_value );
         acquisition_config.tchautocal= config_value;
 
     } else if(cmd_no == 4) {
-        ;//dprintk("[%s] CMD 4 , acquisition_config.sync = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 4 , acquisition_config.sync = %d\n", __func__, config_value );
         acquisition_config.sync = config_value;
 
     } else if(cmd_no == 5) {
-        ;//dprintk("[%s] CMD 5 , acquisition_config.atchcalst = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 5 , acquisition_config.atchcalst = %d\n", __func__, config_value );
         acquisition_config.atchcalst = config_value;
 
     } else if(cmd_no == 6) {
-        ;//dprintk("[%s] CMD 6 , acquisition_config.atchcalsthr = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 6 , acquisition_config.atchcalsthr = %d\n", __func__, config_value );
         acquisition_config.atchcalsthr = config_value;
 
     } else{
-        ;//dprintk("[%s] unknown CMD\n", __func__);
+        // dprintk("[%s] unknown CMD\n", __func__);
     }
 
     if (write_acquisition_config(acquisition_config) != CFG_WRITE_OK) {
-        ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+        // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
     }
 
     return size;
@@ -3784,7 +3784,7 @@ static DEVICE_ATTR(set_acquisition, 0664, set_acquisition_show, set_acquisition_
    touchscreen_config.yhiclip = 0; */
 static ssize_t set_touchscreen_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
-   ;//printk(KERN_DEBUG "[TSP] %s : operate nothing\n", __FUNCTION__);
+    printk(KERN_DEBUG "[TSP] %s : operate nothing\n", __FUNCTION__);
 
     return 0;
 }
@@ -3794,107 +3794,107 @@ static ssize_t set_touchscreen_store(struct device *dev, struct device_attribute
     char *after;
 
     unsigned long value = simple_strtoul(buf, &after, 10);    
-   ;//printk(KERN_DEBUG "[TSP] %s\n", __FUNCTION__);
+    printk(KERN_DEBUG "[TSP] %s\n", __FUNCTION__);
     cmd_no = (int) (value / 1000);
     config_value = ( int ) (value % 1000 );
 
     if (cmd_no == 0) {
-        ;//dprintk("[%s] CMD 0 , touchscreen_config.ctrl = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 0 , touchscreen_config.ctrl = %d\n", __func__, config_value );
         touchscreen_config.ctrl = config_value;
     } else if(cmd_no == 1) {
-        ;//dprintk("[%s] CMD 1 , touchscreen_config.xorigin  = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 1 , touchscreen_config.xorigin  = %d\n", __func__, config_value );
         touchscreen_config.xorigin = config_value;
     } else if(cmd_no == 2) {
-        ;//dprintk("[%s] CMD 2 , touchscreen_config.yorigin = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 2 , touchscreen_config.yorigin = %d\n", __func__, config_value );
         touchscreen_config.yorigin  = config_value;
     } else if(cmd_no == 3) {
-        ;//dprintk("[%s] CMD 3 , touchscreen_config.xsize = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 3 , touchscreen_config.xsize = %d\n", __func__, config_value );
         touchscreen_config.xsize =  config_value;
     } else if(cmd_no == 4) {
-        ;//dprintk("[%s] CMD 4 , touchscreen_config.ysize = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 4 , touchscreen_config.ysize = %d\n", __func__, config_value );
         touchscreen_config.ysize =  config_value;
     } else if(cmd_no == 5) {
-        ;//dprintk("[%s] CMD 5 , touchscreen_config.akscfg = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 5 , touchscreen_config.akscfg = %d\n", __func__, config_value );
         touchscreen_config.akscfg = config_value;
     } else if(cmd_no == 6) {
-        ;//dprintk("[%s] CMD 6 , touchscreen_config.blen = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 6 , touchscreen_config.blen = %d\n", __func__, config_value );
         touchscreen_config.blen = config_value;
     } else if(cmd_no == 7) {
-        ;//dprintk("[%s] CMD 7 , touchscreen_config.tchthr = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 7 , touchscreen_config.tchthr = %d\n", __func__, config_value );
         touchscreen_config.tchthr = config_value;
     } else if(cmd_no == 8) {
-        ;//dprintk("[%s] CMD 8 , touchscreen_config.tchdi = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 8 , touchscreen_config.tchdi = %d\n", __func__, config_value );
         touchscreen_config.tchdi= config_value;
     } else if(cmd_no == 9) {
-        ;//dprintk("[%s] CMD 9 , touchscreen_config.orient = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 9 , touchscreen_config.orient = %d\n", __func__, config_value );
         touchscreen_config.orient = config_value;
     } else if(cmd_no == 10) {
-        ;//dprintk("[%s] CMD 10 , touchscreen_config.mrgtimeout = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 10 , touchscreen_config.mrgtimeout = %d\n", __func__, config_value );
         touchscreen_config.mrgtimeout = config_value;
     } else if(cmd_no == 11) {
-        ;//dprintk("[%s] CMD 11 , touchscreen_config.movhysti = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 11 , touchscreen_config.movhysti = %d\n", __func__, config_value );
         touchscreen_config.movhysti = config_value;
     } else if(cmd_no == 12) {
-        ;//dprintk("[%s] CMD 12 , touchscreen_config.movhystn = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 12 , touchscreen_config.movhystn = %d\n", __func__, config_value );
         touchscreen_config.movhystn = config_value;
     } else if(cmd_no == 13) {
-        ;//dprintk("[%s] CMD 13 , touchscreen_config.movfilter = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 13 , touchscreen_config.movfilter = %d\n", __func__, config_value );
         touchscreen_config.movfilter = config_value;
     } else if(cmd_no == 14) {
-        ;//dprintk("[%s] CMD 14 , touchscreen_config.numtouch = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 14 , touchscreen_config.numtouch = %d\n", __func__, config_value );
         touchscreen_config.numtouch = config_value;
     } else if(cmd_no == 15) {
-        ;//dprintk("[%s] CMD 15 , touchscreen_config.mrghyst = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 15 , touchscreen_config.mrghyst = %d\n", __func__, config_value );
         touchscreen_config.mrghyst = config_value;
     } else if(cmd_no == 16) {
-        ;//dprintk("[%s] CMD 16 , touchscreen_config.mrgthr = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 16 , touchscreen_config.mrgthr = %d\n", __func__, config_value );
         touchscreen_config.mrgthr = config_value;
     } else if(cmd_no == 17) {
-        ;//dprintk("[%s] CMD 17 , touchscreen_config.tchamphyst = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 17 , touchscreen_config.tchamphyst = %d\n", __func__, config_value );
         touchscreen_config.amphyst = config_value;
     } else if(cmd_no == 18) {
-        ;//dprintk("[%s] CMD 18 , touchscreen_config.xrange = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 18 , touchscreen_config.xrange = %d\n", __func__, config_value );
         touchscreen_config.xrange= config_value;
     } else if(cmd_no == 19) {
-        ;//dprintk("[%s] CMD 19 , touchscreen_config.yrange = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 19 , touchscreen_config.yrange = %d\n", __func__, config_value );
         touchscreen_config.yrange= config_value;
     } else if(cmd_no == 20) {
-        ;//dprintk("[%s] CMD 20 , touchscreen_config.xloclip = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 20 , touchscreen_config.xloclip = %d\n", __func__, config_value );
         touchscreen_config.xloclip = config_value;
     } else if(cmd_no == 21) {
-        ;//dprintk("[%s] CMD 21 , touchscreen_config.xhiclip = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 21 , touchscreen_config.xhiclip = %d\n", __func__, config_value );
         touchscreen_config.xhiclip = config_value;
     } else if(cmd_no == 22) {
-        ;//dprintk("[%s] CMD 22 , touchscreen_config.yloclip = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 22 , touchscreen_config.yloclip = %d\n", __func__, config_value );
         touchscreen_config.yloclip = config_value;
     } else if(cmd_no == 23) {
-        ;//dprintk("[%s] CMD 23 , touchscreen_config.yhiclip = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 23 , touchscreen_config.yhiclip = %d\n", __func__, config_value );
         touchscreen_config.yhiclip = config_value;
     } else if(cmd_no == 24) {
-        ;//dprintk("[%s] CMD 24 , touchscreen_config.xedgectrl  = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 24 , touchscreen_config.xedgectrl  = %d\n", __func__, config_value );
         touchscreen_config.xedgectrl  = config_value;
     } else if(cmd_no == 25) {
-        ;//dprintk("[%s] CMD 25 , touchscreen_config.xedgedist   = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 25 , touchscreen_config.xedgedist   = %d\n", __func__, config_value );
         touchscreen_config.xedgedist   = config_value;
     } else if(cmd_no == 26) {
-        ;//dprintk("[%s] CMD 26 , touchscreen_config.yedgectrl    = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 26 , touchscreen_config.yedgectrl    = %d\n", __func__, config_value );
         touchscreen_config.yedgectrl    = config_value;
     } else if(cmd_no == 27) {
-        ;//dprintk("[%s] CMD 27 , touchscreen_config.yedgedist     = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 27 , touchscreen_config.yedgedist     = %d\n", __func__, config_value );
         touchscreen_config.yedgedist     = config_value;
     } else if(cmd_no == 28) {
         if(tsp_version >= 0x16) {
-            ;//dprintk("[%s] CMD 28 , touchscreen_config.jumplimit      = %d\n", __func__, config_value );
+            // dprintk("[%s] CMD 28 , touchscreen_config.jumplimit      = %d\n", __func__, config_value );
             touchscreen_config.jumplimit      = config_value;
         } else {
-            ;//dprintk("[%s] CMD 28 , touchscreen_config.jumplimit  is not supported in this version.\n", __func__ );
+            // dprintk("[%s] CMD 28 , touchscreen_config.jumplimit  is not supported in this version.\n", __func__ );
         }
     } else  {
-        ;//dprintk("[%s] unknown CMD\n", __func__);
+        // dprintk("[%s] unknown CMD\n", __func__);
     }
 
     if (write_multitouchscreen_config(0, touchscreen_config) != CFG_WRITE_OK) {
-        ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+        // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
     }
 
     return size;
@@ -3913,7 +3913,7 @@ static DEVICE_ATTR(set_touchscreen, 0664, set_touchscreen_show, set_touchscreen_
    keyarray_config.tchdi = 0; */
 static ssize_t set_keyarray_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
-   ;//printk(KERN_DEBUG "[TSP] %s : operate nothing\n", __FUNCTION__);
+    printk(KERN_DEBUG "[TSP] %s : operate nothing\n", __FUNCTION__);
 
     return 0;
 }
@@ -3923,39 +3923,39 @@ static ssize_t set_keyarray_store(struct device *dev, struct device_attribute *a
     char *after;
 
     unsigned long value = simple_strtoul(buf, &after, 10);    
-   ;//printk(KERN_DEBUG "[TSP] %s\n", __FUNCTION__);
+    printk(KERN_DEBUG "[TSP] %s\n", __FUNCTION__);
     cmd_no = (int) (value / 1000);
     config_value = ( int ) (value % 1000 );
 
     if (cmd_no == 0) {
-        ;//dprintk("[%s] CMD 0 , keyarray_config.ctrl = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 0 , keyarray_config.ctrl = %d\n", __func__, config_value );
         keyarray_config.ctrl = config_value;
     } else if(cmd_no == 1) {
-        ;//dprintk("[%s] CMD 1 , keyarray_config.xorigin = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 1 , keyarray_config.xorigin = %d\n", __func__, config_value );
         keyarray_config.xorigin = config_value;
     } else if(cmd_no == 2) {
-        ;//dprintk("[%s] CMD 2 , keyarray_config.xsize = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 2 , keyarray_config.xsize = %d\n", __func__, config_value );
         keyarray_config.xsize = config_value;
     } else if(cmd_no == 3) {
-        ;//dprintk("[%s] CMD 3 , keyarray_config.yorigin = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 3 , keyarray_config.yorigin = %d\n", __func__, config_value );
         keyarray_config.yorigin = config_value;
     } else if(cmd_no == 4) {
-        ;//dprintk("[%s] CMD 4 , keyarray_config.ysize = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 4 , keyarray_config.ysize = %d\n", __func__, config_value );
         keyarray_config.ysize  = config_value;
     } else if(cmd_no == 5) {
-        ;//dprintk("[%s] CMD 5 , keyarray_config.akscfg = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 5 , keyarray_config.akscfg = %d\n", __func__, config_value );
         keyarray_config.akscfg  = config_value;
     } else if(cmd_no == 6) {
-        ;//dprintk("[%s] CMD 6 , keyarray_config.blen = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 6 , keyarray_config.blen = %d\n", __func__, config_value );
         keyarray_config.blen = config_value;
     } else if(cmd_no == 7) {
-        ;//dprintk("[%s] CMD 7 , keyarray_config.tchthr = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 7 , keyarray_config.tchthr = %d\n", __func__, config_value );
         keyarray_config.tchthr = config_value;
     } else if(cmd_no == 8) {
-        ;//dprintk("[%s] CMD 8 , keyarray_config.tchdi = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 8 , keyarray_config.tchdi = %d\n", __func__, config_value );
         keyarray_config.tchdi = config_value;
     } else {
-        ;//dprintk("[%s] unknown CMD\n", __func__);
+        // dprintk("[%s] unknown CMD\n", __func__);
     }
 
     return size;
@@ -3964,7 +3964,7 @@ static DEVICE_ATTR(set_keyarray, 0664, set_keyarray_show, set_keyarray_store);
 
 static ssize_t set_noise_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
-   ;//printk(KERN_DEBUG "[TSP] %s : operate nothing\n", __FUNCTION__);
+    printk(KERN_DEBUG "[TSP] %s : operate nothing\n", __FUNCTION__);
 
     return 0;
 }
@@ -3974,68 +3974,68 @@ static ssize_t set_noise_store(struct device *dev, struct device_attribute *attr
     char *after;
 
     unsigned long value = simple_strtoul(buf, &after, 10);    
-   ;//printk(KERN_DEBUG "[TSP] %s\n", __FUNCTION__);
+    printk(KERN_DEBUG "[TSP] %s\n", __FUNCTION__);
     cmd_no = (int) (value / 1000);
     config_value = ( int ) (value % 1000 );
     
     if(cmd_no == 0) {
-        ;//dprintk("[%s] CMD 0 , noise_suppression_config.ctrl = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 0 , noise_suppression_config.ctrl = %d\n", __func__, config_value );
         noise_suppression_config.ctrl = config_value;
     } else if(cmd_no == 1) {
-        ;//dprintk("[%s] CMD 1 , noise_suppression_config.reserved = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 1 , noise_suppression_config.reserved = %d\n", __func__, config_value );
     #if defined(__VER_1_2__)
         noise_suppression_config.outflen = config_value;
     #elif defined(__VER_1_4__)
         noise_suppression_config.reserved = config_value;
     #endif
     } else if(cmd_no == 2) {
-        ;//dprintk("[%s] CMD 2 , noise_suppression_config.reserved1 = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 2 , noise_suppression_config.reserved1 = %d\n", __func__, config_value );
         noise_suppression_config.reserved1  = config_value;
     } else if(cmd_no == 3) {
-        ;//dprintk("[%s] CMD 3 , noise_suppression_config.gcaful = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 3 , noise_suppression_config.gcaful = %d\n", __func__, config_value );
         noise_suppression_config.gcaful = config_value;
     } else if(cmd_no == 4) {
-        ;//dprintk("[%s] CMD 4 , noise_suppression_config.gcafll = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 4 , noise_suppression_config.gcafll = %d\n", __func__, config_value );
         noise_suppression_config.gcafll  = config_value;
     } else if(cmd_no == 5) {
-        ;//dprintk("[%s] CMD 5 , noise_suppression_config.actvgcafvalid = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 5 , noise_suppression_config.actvgcafvalid = %d\n", __func__, config_value );
     #if defined(__VER_1_2__)
         noise_suppression_config.gcaflcount = config_value;
     #elif defined(__VER_1_4__)
         noise_suppression_config.actvgcafvalid = config_value;
     #endif
     } else if(cmd_no == 6) {
-        ;//dprintk("[%s] CMD 6 , noise_suppression_config.noisethr = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 6 , noise_suppression_config.noisethr = %d\n", __func__, config_value );
         noise_suppression_config.noisethr  = config_value;
     } else if(cmd_no == 7) {
-        ;//dprintk("[%s] CMD 7 , noise_suppression_config.freqhopscale = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 7 , noise_suppression_config.freqhopscale = %d\n", __func__, config_value );
         noise_suppression_config.freqhopscale  = config_value;
     } else if(cmd_no == 8) {
-        ;//dprintk("[%s] CMD 8 , noise_suppression_config.freq[0] = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 8 , noise_suppression_config.freq[0] = %d\n", __func__, config_value );
         noise_suppression_config.freq[0]  = config_value;
     } else if(cmd_no == 9) {
-        ;//dprintk("[%s] CMD 9 , noise_suppression_config.freq[1] = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 9 , noise_suppression_config.freq[1] = %d\n", __func__, config_value );
         noise_suppression_config.freq[1]  = config_value;
     } else if(cmd_no == 10) {
-        ;//dprintk("[%s] CMD 10 , noise_suppression_config.freq[2] = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 10 , noise_suppression_config.freq[2] = %d\n", __func__, config_value );
         noise_suppression_config.freq[2]  = config_value;
     } else if(cmd_no == 11) {
-        ;//dprintk("[%s] CMD 11 , noise_suppression_config.freq[3] = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 11 , noise_suppression_config.freq[3] = %d\n", __func__, config_value );
         noise_suppression_config.freq[3]  = config_value;
     } else if(cmd_no == 12) {
-        ;//dprintk("[%s] CMD 12 , noise_suppression_config.freq[4] = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 12 , noise_suppression_config.freq[4] = %d\n", __func__, config_value );
         noise_suppression_config.freq[4]  = config_value;
     } else if(cmd_no == 13) {
-        ;//dprintk("[%s] CMD 13 , noise_suppression_config.idlegcafvalid = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 13 , noise_suppression_config.idlegcafvalid = %d\n", __func__, config_value );
         noise_suppression_config.idlegcafvalid  = config_value;
     } else{
-        ;//dprintk("[%s] unknown CMD\n", __func__);
+        // dprintk("[%s] unknown CMD\n", __func__);
     }
     
     /* Write Noise suppression config to chip. */
     if (get_object_address(PROCG_NOISESUPPRESSION_T22, 0) != OBJECT_NOT_FOUND) {
         if (write_noisesuppression_config(0,noise_suppression_config) != CFG_WRITE_OK) {
-            ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+            // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
         }
     }
 
@@ -4043,7 +4043,7 @@ static ssize_t set_noise_store(struct device *dev, struct device_attribute *attr
     /* Write grip suppression config to chip. */
     if (get_object_address(PROCI_GRIPFACESUPPRESSION_T20, 0) != OBJECT_NOT_FOUND) {
         if (write_gripsuppression_config(0, gripfacesuppression_config) != CFG_WRITE_OK) {
-            ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+            // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
         }
     }
 
@@ -4053,7 +4053,7 @@ static DEVICE_ATTR(set_noise, 0664, set_noise_show, set_noise_store);
 
 static ssize_t set_grip_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
-   ;//printk(KERN_DEBUG "[TSP] %s : operate nothing\n", __FUNCTION__);
+    printk(KERN_DEBUG "[TSP] %s : operate nothing\n", __FUNCTION__);
 
     return 0;
 }
@@ -4067,46 +4067,46 @@ static ssize_t set_grip_store(struct device *dev, struct device_attribute *attr,
     config_value = ( int ) (value % 1000 );
     
     if(cmd_no == 0) {
-        ;//dprintk("[%s] CMD 0 , gripfacesuppression_config.ctrl = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 0 , gripfacesuppression_config.ctrl = %d\n", __func__, config_value );
         gripfacesuppression_config.ctrl  = config_value;
     } else if(cmd_no == 1) {
-        ;//dprintk("[%s] CMD 1 , gripfacesuppression_config.xlogrip = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 1 , gripfacesuppression_config.xlogrip = %d\n", __func__, config_value );
         gripfacesuppression_config.xlogrip  = config_value;
     } else if(cmd_no == 2) {
-        ;//dprintk("[%s] CMD 2 , gripfacesuppression_config.xhigrip is not set = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 2 , gripfacesuppression_config.xhigrip is not set = %d\n", __func__, config_value );
         gripfacesuppression_config.xhigrip  = config_value;
     } else if(cmd_no == 3) {
-        ;//dprintk("[%s] CMD 3 , gripfacesuppression_config.ylogrip = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 3 , gripfacesuppression_config.ylogrip = %d\n", __func__, config_value );
         gripfacesuppression_config.ylogrip  = config_value;
     } else if(cmd_no == 4) {
-        ;//dprintk("[%s] CMD 4 , gripfacesuppression_config.yhigrip = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 4 , gripfacesuppression_config.yhigrip = %d\n", __func__, config_value );
         gripfacesuppression_config.yhigrip  =  config_value;
     } else if(cmd_no == 5) {
-        ;//dprintk("[%s] CMD 5 , gripfacesuppression_config.maxtchs = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 5 , gripfacesuppression_config.maxtchs = %d\n", __func__, config_value );
         gripfacesuppression_config.maxtchs  = config_value;
     } else if(cmd_no == 6) {
-        ;//dprintk("[%s] CMD 6 , gripfacesuppression_config.reserved = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 6 , gripfacesuppression_config.reserved = %d\n", __func__, config_value );
         gripfacesuppression_config.reserved   = config_value;
     } else if(cmd_no == 7) {
-        ;//dprintk("[%s] CMD 7 , gripfacesuppression_config.szthr1 = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 7 , gripfacesuppression_config.szthr1 = %d\n", __func__, config_value );
         gripfacesuppression_config.szthr1   = config_value;
     } else if(cmd_no == 8) {
-        ;//dprintk("[%s] CMD 8 , gripfacesuppression_config.szthr2 = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 8 , gripfacesuppression_config.szthr2 = %d\n", __func__, config_value );
         gripfacesuppression_config.szthr2   = config_value;
     } else if(cmd_no == 9) {
-        ;//dprintk("[%s] CMD 9 , gripfacesuppression_config.shpthr1 = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 9 , gripfacesuppression_config.shpthr1 = %d\n", __func__, config_value );
         gripfacesuppression_config.shpthr1   = config_value;
     } else if(cmd_no == 10) {
-        ;//dprintk("[%s] CMD 10 , gripfacesuppression_config.shpthr2 = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 10 , gripfacesuppression_config.shpthr2 = %d\n", __func__, config_value );
         gripfacesuppression_config.shpthr2   = config_value;
     } else{
-        ;//dprintk("[%s] unknown CMD\n", __func__);
+        // dprintk("[%s] unknown CMD\n", __func__);
     }
 
     /* Write grip suppression config to chip. */
     if (get_object_address(PROCI_GRIPFACESUPPRESSION_T20, 0) != OBJECT_NOT_FOUND) {
         if (write_gripsuppression_config(0, gripfacesuppression_config) != CFG_WRITE_OK) {
-            ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+            // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
         }
     }
 
@@ -4126,7 +4126,7 @@ static DEVICE_ATTR(set_grip, 0664, set_grip_show, set_grip_store);
    cte_config.ctrl = 0;    */
 static ssize_t set_total_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
-   ;//printk(KERN_DEBUG "[TSP] %s : operate nothing\n", __FUNCTION__);
+    printk(KERN_DEBUG "[TSP] %s : operate nothing\n", __FUNCTION__);
 
     return 0;
 }
@@ -4136,36 +4136,36 @@ static ssize_t set_total_store(struct device *dev, struct device_attribute *attr
     char *after;
 
     unsigned long value = simple_strtoul(buf, &after, 10);    
-   ;//printk(KERN_DEBUG "[TSP] %s\n", __FUNCTION__);
+    printk(KERN_DEBUG "[TSP] %s\n", __FUNCTION__);
     cmd_no = (int) (value / 1000);
     config_value = ( int ) (value % 1000 );
 
     if(cmd_no == 0) {
-        ;//dprintk("[%s] CMD 0 , twotouch_gesture_config.ctrl = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 0 , twotouch_gesture_config.ctrl = %d\n", __func__, config_value );
         twotouch_gesture_config.ctrl = config_value;
     } else if(cmd_no == 1) {
-        ;//dprintk("[%s] CMD 1 , onetouch_gesture_config.ctrl = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 1 , onetouch_gesture_config.ctrl = %d\n", __func__, config_value );
         onetouch_gesture_config.ctrl = config_value;
     } else if(cmd_no == 2) {
-        ;//dprintk("[%s] CMD 2 , noise_suppression_config.ctrl is not set = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 2 , noise_suppression_config.ctrl is not set = %d\n", __func__, config_value );
         noise_suppression_config.ctrl = config_value;
     } else if(cmd_no == 3) {
-        ;//dprintk("[%s] CMD 3 , selftest_config.ctrl = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 3 , selftest_config.ctrl = %d\n", __func__, config_value );
         selftest_config.ctrl = config_value;
     } else if(cmd_no == 4) {
-        ;//dprintk("[%s] CMD 4 , gripfacesuppression_config.ctrl = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 4 , gripfacesuppression_config.ctrl = %d\n", __func__, config_value );
         gripfacesuppression_config.ctrl =  config_value;
     } else if(cmd_no == 5) {
-        ;//dprintk("[%s] CMD 5 , cte_config.ctrl = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 5 , cte_config.ctrl = %d\n", __func__, config_value );
         cte_config.ctrl = config_value;
     } else if(cmd_no == 6) {
-        ;//dprintk("[%s] CMD 6 , cte_config.idlegcafdepth= %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 6 , cte_config.idlegcafdepth= %d\n", __func__, config_value );
         cte_config.idlegcafdepth=config_value;
     } else if(cmd_no == 7) {
-        ;//dprintk("[%s] CMD 7 , cte_config.actvgcafdepth = %d\n", __func__, config_value );
+        // dprintk("[%s] CMD 7 , cte_config.actvgcafdepth = %d\n", __func__, config_value );
         cte_config.actvgcafdepth= config_value;
     } else {
-        ;//dprintk("[%s] unknown CMD\n", __func__);
+        // dprintk("[%s] unknown CMD\n", __func__);
     }
 
     return size;
@@ -4175,105 +4175,105 @@ static DEVICE_ATTR(set_total, 0664, set_total_show, set_total_store);
 static ssize_t set_write_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
 
-    ;//dprintk("power_config.idleacqint = %d\n", power_config.idleacqint ); 
-    ;//dprintk("power_config.actvacqint = %d\n", power_config.actvacqint ); 
-    ;//dprintk("power_config.actv2idleto= %d\n", power_config.actv2idleto); 
+    // dprintk("power_config.idleacqint = %d\n", power_config.idleacqint ); 
+    // dprintk("power_config.actvacqint = %d\n", power_config.actvacqint ); 
+    // dprintk("power_config.actv2idleto= %d\n", power_config.actv2idleto); 
 
     if (write_power_config(power_config) != CFG_WRITE_OK) {
         /* "Power config write failed!\n" */
-        ;//dprintk("\n[TSP][ERROR] config erroe line : %d\n", __LINE__);
+        // dprintk("\n[TSP][ERROR] config erroe line : %d\n", __LINE__);
         return CFG_WRITE_FAILED;
     }
 
 
 
-    ;//dprintk("acquisition_config.chrgtime = %d\n", acquisition_config.chrgtime); 
-    ;//dprintk("acquisition_config.tchdrift = %d\n", acquisition_config.tchdrift ); 
-    ;//dprintk("acquisition_config.driftst = %d\n", acquisition_config.driftst ); 
-    ;//dprintk("acquisition_config.tchautocal = %d\n", acquisition_config.tchautocal ); 
-    ;//dprintk("acquisition_config.sync = %d\n", acquisition_config.sync ); 
-    ;//dprintk("acquisition_config.atchcalst = %d\n", acquisition_config.atchcalst ); 
-    ;//dprintk("acquisition_config.atchcalsthr = %d\n", acquisition_config.atchcalsthr ); 
+    // dprintk("acquisition_config.chrgtime = %d\n", acquisition_config.chrgtime); 
+    // dprintk("acquisition_config.tchdrift = %d\n", acquisition_config.tchdrift ); 
+    // dprintk("acquisition_config.driftst = %d\n", acquisition_config.driftst ); 
+    // dprintk("acquisition_config.tchautocal = %d\n", acquisition_config.tchautocal ); 
+    // dprintk("acquisition_config.sync = %d\n", acquisition_config.sync ); 
+    // dprintk("acquisition_config.atchcalst = %d\n", acquisition_config.atchcalst ); 
+    // dprintk("acquisition_config.atchcalsthr = %d\n", acquisition_config.atchcalsthr ); 
 
     /* Write acquisition config to chip. */
     if (write_acquisition_config(acquisition_config) != CFG_WRITE_OK) {
         /* "Acquisition config write failed!\n" */
-        ;//dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
+        // dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
         return CFG_WRITE_FAILED;
     }
 
-    ;//dprintk("0 , touchscreen_config.ctrl = %d\n",  touchscreen_config.ctrl );
-    ;//dprintk("1 , touchscreen_config.xorigin  = %d\n", touchscreen_config.xorigin   );
-    ;//dprintk("2 , touchscreen_config.yorigin = %d\n",  touchscreen_config.yorigin  );
-    ;//dprintk("3 , touchscreen_config.xsize = %d\n",touchscreen_config.xsize  );
-    ;//dprintk("4 , touchscreen_config.ysize = %d\n", touchscreen_config.ysize  );
-    ;//dprintk("5 , touchscreen_config.akscfg = %d\n", touchscreen_config.akscfg  );
-    ;//dprintk("6 , touchscreen_config.blen = %d\n", touchscreen_config.blen );
-    ;//dprintk("7 , touchscreen_config.tchthr = %d\n",  touchscreen_config.tchthr );
-    ;//dprintk("8 , touchscreen_config.tchdi = %d\n",touchscreen_config.tchdi  );
-    ;//dprintk("9 , touchscreen_config.orient = %d\n", touchscreen_config.orient );
-    ;//dprintk("10 , touchscreen_config.mrgtimeout = %d\n",touchscreen_config.mrgtimeout  );
-    ;//dprintk("11 , touchscreen_config.movhysti = %d\n",touchscreen_config.movhysti  );
-    ;//dprintk("12 , touchscreen_config.movhystn = %d\n",touchscreen_config.movhystn  );
-    ;//dprintk("13 , touchscreen_config.movfilter = %d\n",touchscreen_config.movfilter  );
-    ;//dprintk("14 , touchscreen_config.numtouch = %d\n",touchscreen_config.numtouch  );
-    ;//dprintk("15 , touchscreen_config.mrghyst = %d\n",touchscreen_config.mrghyst  );
-    ;//dprintk("16 , touchscreen_config.mrgthr = %d\n",touchscreen_config.mrgthr );
-    ;//dprintk("17 , touchscreen_config.amphyst = %d\n",touchscreen_config.amphyst  );
-    ;//dprintk("18 , touchscreen_config.xrange = %d\n",touchscreen_config.xrange  );
-    ;//dprintk("19 , touchscreen_config.yrange = %d\n",touchscreen_config.yrange  );
-    ;//dprintk("20 , touchscreen_config.xloclip = %d\n",touchscreen_config.xloclip );
-    ;//dprintk("21 , touchscreen_config.xhiclip = %d\n",touchscreen_config.xhiclip  );
-    ;//dprintk("22 , touchscreen_config.yloclip = %d\n",touchscreen_config.yloclip  );
-    ;//dprintk("23 , touchscreen_config.yhiclip = %d\n",touchscreen_config.yhiclip );
-    ;//dprintk("24 , touchscreen_config.xedgectrl  = %d\n",touchscreen_config.xedgectrl   );
-    ;//dprintk("25 , touchscreen_config.xedgedist  = %d\n",touchscreen_config.xedgedist  );
-    ;//dprintk("26 , touchscreen_config.yedgectrl  = %d\n",touchscreen_config.yedgectrl   );
-    ;//dprintk("27 , touchscreen_config.yedgedist  = %d\n",touchscreen_config.yedgedist   );
-    if(tsp_version >= 0x16)
-        ;//dprintk("28 , touchscreen_config.jumplimit  = %d\n",touchscreen_config.jumplimit  );
-    else
-        ;//dprintk("28 , touchscreen_config.jumplimit is not supported in this version.\n" );
+    // dprintk("0 , touchscreen_config.ctrl = %d\n",  touchscreen_config.ctrl );
+    // dprintk("1 , touchscreen_config.xorigin  = %d\n", touchscreen_config.xorigin   );
+    // dprintk("2 , touchscreen_config.yorigin = %d\n",  touchscreen_config.yorigin  );
+    // dprintk("3 , touchscreen_config.xsize = %d\n",touchscreen_config.xsize  );
+    // dprintk("4 , touchscreen_config.ysize = %d\n", touchscreen_config.ysize  );
+    // dprintk("5 , touchscreen_config.akscfg = %d\n", touchscreen_config.akscfg  );
+    // dprintk("6 , touchscreen_config.blen = %d\n", touchscreen_config.blen );
+    // dprintk("7 , touchscreen_config.tchthr = %d\n",  touchscreen_config.tchthr );
+    // dprintk("8 , touchscreen_config.tchdi = %d\n",touchscreen_config.tchdi  );
+    // dprintk("9 , touchscreen_config.orient = %d\n", touchscreen_config.orient );
+    // dprintk("10 , touchscreen_config.mrgtimeout = %d\n",touchscreen_config.mrgtimeout  );
+    // dprintk("11 , touchscreen_config.movhysti = %d\n",touchscreen_config.movhysti  );
+    // dprintk("12 , touchscreen_config.movhystn = %d\n",touchscreen_config.movhystn  );
+    // dprintk("13 , touchscreen_config.movfilter = %d\n",touchscreen_config.movfilter  );
+    // dprintk("14 , touchscreen_config.numtouch = %d\n",touchscreen_config.numtouch  );
+    // dprintk("15 , touchscreen_config.mrghyst = %d\n",touchscreen_config.mrghyst  );
+    // dprintk("16 , touchscreen_config.mrgthr = %d\n",touchscreen_config.mrgthr );
+    // dprintk("17 , touchscreen_config.amphyst = %d\n",touchscreen_config.amphyst  );
+    // dprintk("18 , touchscreen_config.xrange = %d\n",touchscreen_config.xrange  );
+    // dprintk("19 , touchscreen_config.yrange = %d\n",touchscreen_config.yrange  );
+    // dprintk("20 , touchscreen_config.xloclip = %d\n",touchscreen_config.xloclip );
+    // dprintk("21 , touchscreen_config.xhiclip = %d\n",touchscreen_config.xhiclip  );
+    // dprintk("22 , touchscreen_config.yloclip = %d\n",touchscreen_config.yloclip  );
+    // dprintk("23 , touchscreen_config.yhiclip = %d\n",touchscreen_config.yhiclip );
+    // dprintk("24 , touchscreen_config.xedgectrl  = %d\n",touchscreen_config.xedgectrl   );
+    // dprintk("25 , touchscreen_config.xedgedist  = %d\n",touchscreen_config.xedgedist  );
+    // dprintk("26 , touchscreen_config.yedgectrl  = %d\n",touchscreen_config.yedgectrl   );
+    // dprintk("27 , touchscreen_config.yedgedist  = %d\n",touchscreen_config.yedgedist   );
+    // if(tsp_version >= 0x16)
+        // dprintk("28 , touchscreen_config.jumplimit  = %d\n",touchscreen_config.jumplimit  );
+    // else
+        // dprintk("28 , touchscreen_config.jumplimit is not supported in this version.\n" );
 
     /* Write touchscreen (1st instance) config to chip. */
     if (write_multitouchscreen_config(0, touchscreen_config) != CFG_WRITE_OK) {
         /* "Multitouch screen config write failed!\n" */
-        ;//dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
+        // dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
         return CFG_WRITE_FAILED;
     }
 
-    ;//dprintk("0 , keyarray_config.ctrl = %d\n", keyarray_config.ctrl );
-    ;//dprintk("1 , keyarray_config.xorigin = %d\n", keyarray_config.xorigin );
-    ;//dprintk("2 , keyarray_config.xsize = %d\n",keyarray_config.xsize);
-    ;//dprintk("3 , keyarray_config.yorigin = %d\n", keyarray_config.yorigin); 
-    ;//dprintk("4 ,    keyarray_config.ysize = %d\n", keyarray_config.ysize );
-    ;//dprintk("5 ,    keyarray_config.akscfg = %d\n", keyarray_config.akscfg );
-    ;//dprintk("6 ,    keyarray_config.blen = %d\n", keyarray_config.blen );
-    ;//dprintk("7 ,    keyarray_config.tchthr = %d\n", keyarray_config.tchthr );
-    ;//dprintk("8 ,    keyarray_config.tchdi = %d\n", keyarray_config.tchdi  );
+    // dprintk("0 , keyarray_config.ctrl = %d\n", keyarray_config.ctrl );
+    // dprintk("1 , keyarray_config.xorigin = %d\n", keyarray_config.xorigin );
+    // dprintk("2 , keyarray_config.xsize = %d\n",keyarray_config.xsize);
+    // dprintk("3 , keyarray_config.yorigin = %d\n", keyarray_config.yorigin); 
+    // dprintk("4 ,    keyarray_config.ysize = %d\n", keyarray_config.ysize );
+    // dprintk("5 ,    keyarray_config.akscfg = %d\n", keyarray_config.akscfg );
+    // dprintk("6 ,    keyarray_config.blen = %d\n", keyarray_config.blen );
+    // dprintk("7 ,    keyarray_config.tchthr = %d\n", keyarray_config.tchthr );
+    // dprintk("8 ,    keyarray_config.tchdi = %d\n", keyarray_config.tchdi  );
 
     /* Write key array (1st instance) config to chip. */
     if (write_keyarray_config(0, keyarray_config) != CFG_WRITE_OK) {
         /* "Key array config write failed!\n" */
-        ;//dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
+        // dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
         return CFG_WRITE_FAILED;
     }
 
-    //;//dprintk("0 , linearization_config.ctrl = %d\n", linearization_config.ctrl );
-    ;//dprintk("0 , twotouch_gesture_config.ctrl = %d\n", twotouch_gesture_config.ctrl );
-    ;//dprintk("1 , onetouch_gesture_config.ctrl = %d\n",onetouch_gesture_config.ctrl );
-    ;//dprintk("2 , noise_suppression_config.ctrl is not set = %d\n", noise_suppression_config.ctrl); 
-    ;//dprintk("3 ,    selftest_config.ctrl is not set = %d\n", selftest_config.ctrl);
-    ;//dprintk("4 ,    gripfacesuppression_config.ctrl = %d\n", gripfacesuppression_config.ctrl);
-    ;//dprintk("5 ,    cte_config.ctrl = %d\n", cte_config.ctrl);
-    ;//dprintk("6 ,    cte_config.idlegcafdepth = %d\n", cte_config.idlegcafdepth);
-    ;//dprintk("7 ,    cte_config.actvgcafdepth = %d\n", cte_config.actvgcafdepth);
+    //// dprintk("0 , linearization_config.ctrl = %d\n", linearization_config.ctrl );
+    // dprintk("0 , twotouch_gesture_config.ctrl = %d\n", twotouch_gesture_config.ctrl );
+    // dprintk("1 , onetouch_gesture_config.ctrl = %d\n",onetouch_gesture_config.ctrl );
+    // dprintk("2 , noise_suppression_config.ctrl is not set = %d\n", noise_suppression_config.ctrl); 
+    // dprintk("3 ,    selftest_config.ctrl is not set = %d\n", selftest_config.ctrl);
+    // dprintk("4 ,    gripfacesuppression_config.ctrl = %d\n", gripfacesuppression_config.ctrl);
+    // dprintk("5 ,    cte_config.ctrl = %d\n", cte_config.ctrl);
+    // dprintk("6 ,    cte_config.idlegcafdepth = %d\n", cte_config.idlegcafdepth);
+    // dprintk("7 ,    cte_config.actvgcafdepth = %d\n", cte_config.actvgcafdepth);
 
     /* Write twotouch gesture config to chip. */
     if (get_object_address(PROCI_TWOTOUCHGESTUREPROCESSOR_T27, 0) != OBJECT_NOT_FOUND) {
         if (write_twotouchgesture_config(0, twotouch_gesture_config) != CFG_WRITE_OK) {
             /* "Two touch gesture config write failed!\n" */
-            ;//dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
+            // dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
             return CFG_WRITE_FAILED;
         }
     }
@@ -4282,51 +4282,51 @@ static ssize_t set_write_show(struct device *dev, struct device_attribute *attr,
     if (get_object_address(PROCI_ONETOUCHGESTUREPROCESSOR_T24, 0) != OBJECT_NOT_FOUND) {
         if (write_onetouchgesture_config(0, onetouch_gesture_config) != CFG_WRITE_OK) {
             /* "One touch gesture config write failed!\n" */
-            ;//dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
+            // dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
             return CFG_WRITE_FAILED;
         }
     }
 
-    ;//dprintk("gripfacesuppression_config.ctrl  = %d\n", gripfacesuppression_config.ctrl); 
-    ;//dprintk("gripfacesuppression_config.xlogrip  = %d\n", gripfacesuppression_config.xlogrip ); 
-    ;//dprintk("gripfacesuppression_config.xhigrip  = %d\n", gripfacesuppression_config.xhigrip ); 
-    ;//dprintk("gripfacesuppression_config.ylogrip  = %d\n", gripfacesuppression_config.ylogrip ); 
-    ;//dprintk("gripfacesuppression_config.yhigrip  = %d\n", gripfacesuppression_config.yhigrip ); 
-    ;//dprintk("gripfacesuppression_config.maxtchs  = %d\n", gripfacesuppression_config.maxtchs ); 
-    ;//dprintk("gripfacesuppression_config.reserved  = %d\n", gripfacesuppression_config.reserved ); 
-    ;//dprintk("gripfacesuppression_config.szthr1   = %d\n", gripfacesuppression_config.szthr1 ); 
-    ;//dprintk("gripfacesuppression_config.szthr2   = %d\n", gripfacesuppression_config.szthr2 ); 
-    ;//dprintk("gripfacesuppression_config.shpthr1   = %d\n", gripfacesuppression_config.shpthr1 ); 
-    ;//dprintk("gripfacesuppression_config.shpthr2   = %d\n", gripfacesuppression_config.shpthr2 ); 
+    // dprintk("gripfacesuppression_config.ctrl  = %d\n", gripfacesuppression_config.ctrl); 
+    // dprintk("gripfacesuppression_config.xlogrip  = %d\n", gripfacesuppression_config.xlogrip ); 
+    // dprintk("gripfacesuppression_config.xhigrip  = %d\n", gripfacesuppression_config.xhigrip ); 
+    // dprintk("gripfacesuppression_config.ylogrip  = %d\n", gripfacesuppression_config.ylogrip ); 
+    // dprintk("gripfacesuppression_config.yhigrip  = %d\n", gripfacesuppression_config.yhigrip ); 
+    // dprintk("gripfacesuppression_config.maxtchs  = %d\n", gripfacesuppression_config.maxtchs ); 
+    // dprintk("gripfacesuppression_config.reserved  = %d\n", gripfacesuppression_config.reserved ); 
+    // dprintk("gripfacesuppression_config.szthr1   = %d\n", gripfacesuppression_config.szthr1 ); 
+    // dprintk("gripfacesuppression_config.szthr2   = %d\n", gripfacesuppression_config.szthr2 ); 
+    // dprintk("gripfacesuppression_config.shpthr1   = %d\n", gripfacesuppression_config.shpthr1 ); 
+    // dprintk("gripfacesuppression_config.shpthr2   = %d\n", gripfacesuppression_config.shpthr2 ); 
 
     /* Write grip suppression config to chip. */
     if (get_object_address(PROCI_GRIPFACESUPPRESSION_T20, 0) != OBJECT_NOT_FOUND) {
         if (write_gripsuppression_config(0, gripfacesuppression_config) != CFG_WRITE_OK) {
             /* "Grip suppression config write failed!\n" */
-            ;//dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
+            // dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
             return CFG_WRITE_FAILED;
         }
     }
 
-    ;//dprintk("noise_suppression_config.ctrl   = %d\n", noise_suppression_config.ctrl); 
-    ;//dprintk("noise_suppression_config.reserved   = %d\n", noise_suppression_config.reserved ); 
-    ;//dprintk("noise_suppression_config.reserved1   = %d\n", noise_suppression_config.reserved1 ); 
-    ;//dprintk("noise_suppression_config.gcaful   = %d\n", noise_suppression_config.gcaful ); 
-    ;//dprintk("noise_suppression_config.gcafll   = %d\n", noise_suppression_config.gcafll ); 
-    ;//dprintk("noise_suppression_config.actvgcafvalid   = %d\n", noise_suppression_config.actvgcafvalid ); 
-    ;//dprintk("noise_suppression_config.noisethr   = %d\n", noise_suppression_config.noisethr ); 
-    ;//dprintk("noise_suppression_config.freqhopscale    = %d\n", noise_suppression_config.freqhopscale ); 
-    ;//dprintk("noise_suppression_config.freq[0]   = %d\n", noise_suppression_config.freq[0] ); 
-    ;//dprintk("noise_suppression_config.freq[1]   = %d\n", noise_suppression_config.freq[1] ); 
-    ;//dprintk("noise_suppression_config.freq[2]   = %d\n", noise_suppression_config.freq[2] ); 
-    ;//dprintk("noise_suppression_config.freq[3]   = %d\n", noise_suppression_config.freq[3] ); 
-    ;//dprintk("noise_suppression_config.freq[4]   = %d\n", noise_suppression_config.freq[4] ); 
-    ;//dprintk("noise_suppression_config.idlegcafvalid  = %d\n", noise_suppression_config.idlegcafvalid );     
+    // dprintk("noise_suppression_config.ctrl   = %d\n", noise_suppression_config.ctrl); 
+    // dprintk("noise_suppression_config.reserved   = %d\n", noise_suppression_config.reserved ); 
+    // dprintk("noise_suppression_config.reserved1   = %d\n", noise_suppression_config.reserved1 ); 
+    // dprintk("noise_suppression_config.gcaful   = %d\n", noise_suppression_config.gcaful ); 
+    // dprintk("noise_suppression_config.gcafll   = %d\n", noise_suppression_config.gcafll ); 
+    // dprintk("noise_suppression_config.actvgcafvalid   = %d\n", noise_suppression_config.actvgcafvalid ); 
+    // dprintk("noise_suppression_config.noisethr   = %d\n", noise_suppression_config.noisethr ); 
+    // dprintk("noise_suppression_config.freqhopscale    = %d\n", noise_suppression_config.freqhopscale ); 
+    // dprintk("noise_suppression_config.freq[0]   = %d\n", noise_suppression_config.freq[0] ); 
+    // dprintk("noise_suppression_config.freq[1]   = %d\n", noise_suppression_config.freq[1] ); 
+    // dprintk("noise_suppression_config.freq[2]   = %d\n", noise_suppression_config.freq[2] ); 
+    // dprintk("noise_suppression_config.freq[3]   = %d\n", noise_suppression_config.freq[3] ); 
+    // dprintk("noise_suppression_config.freq[4]   = %d\n", noise_suppression_config.freq[4] ); 
+    // dprintk("noise_suppression_config.idlegcafvalid  = %d\n", noise_suppression_config.idlegcafvalid );     
 
     /* Write Noise suppression config to chip. */
     if (get_object_address(PROCG_NOISESUPPRESSION_T22, 0) != OBJECT_NOT_FOUND) {
         if (write_noisesuppression_config(0,noise_suppression_config) != CFG_WRITE_OK) {
-            ;//dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
+            // dprintk("[TSP] Configuration Fail!!! , Line %d \n\r", __LINE__);
         }
     }
 
@@ -4335,7 +4335,7 @@ static ssize_t set_write_show(struct device *dev, struct device_attribute *attr,
     if (get_object_address(SPT_CTECONFIG_T28, 0) != OBJECT_NOT_FOUND) {
         if (write_CTE_config(cte_config) != CFG_WRITE_OK) {
             /* "CTE config write failed!\n" */
-            ;//dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
+            // dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
             return CFG_WRITE_FAILED;
         }
     }
@@ -4347,19 +4347,19 @@ static ssize_t set_write_show(struct device *dev, struct device_attribute *attr,
     }
     /* Calibrate the touch IC. */
     if (calibrate_chip() != WRITE_MEM_OK) {
-        ;//dprintk("Failed to calibrate, exiting...\n");
+        // dprintk("Failed to calibrate, exiting...\n");
         return WRITE_MEM_FAILED;
     }
 
 
-    ;//dprintk("\n[TSP] configs saved : %d\n", __LINE__);
+    // dprintk("\n[TSP] configs saved : %d\n", __LINE__);
 
     return 0;
 }
 static ssize_t set_write_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)
 {
 
-   ;//printk(KERN_DEBUG "[TSP] %s : operate nothing\n", __FUNCTION__);
+    printk(KERN_DEBUG "[TSP] %s : operate nothing\n", __FUNCTION__);
 
     return size;
 }
@@ -4415,7 +4415,7 @@ uint8_t read_dbg_data(uint8_t dbg_mode , uint8_t node, uint16_t * dbg_data)
                 break;
             }
         } else {
-           ;//printk(KERN_DEBUG "[TSP] READ_MEM_FAILED \n");            
+            printk(KERN_DEBUG "[TSP] READ_MEM_FAILED \n");            
             return READ_MEM_FAILED;
         }
     }
@@ -4646,10 +4646,10 @@ void set_qt_update_exe(struct work_struct * p)
 
     if(!QT_Boot()) {                
         qt_firm_status_data=2;        // firmware update success
-        ;//dprintk("Reprogram done : Firmware update Success~~~~~~~~~~\n");
+        // dprintk("Reprogram done : Firmware update Success~~~~~~~~~~\n");
     } else {
         qt_firm_status_data=3;        // firmware update Fail
-         ;//dprintk("[QT]Reprogram done : Firmware update Fail~~~~~~~~~~\n");
+         // dprintk("[QT]Reprogram done : Firmware update Fail~~~~~~~~~~\n");
     }
     TSP_Restart();
     quantum_touch_probe();
@@ -4717,10 +4717,10 @@ static DEVICE_ATTR(set_qt_firm_version_read, 0664, set_qt_firm_version_read_show
 #ifdef QT_STYLUS_ENABLE
 static ssize_t qt602240_config_mode_show(struct device *dev,    struct device_attribute *attr, char *buf)
 {
-    if(config_mode_val)
-        ;//dprintk("config: stylus mode\n");
-    else
-        ;//dprintk("config: normal mode\n");
+    // if(config_mode_val)
+        // dprintk("config: stylus mode\n");
+    // else
+        // dprintk("config: normal mode\n");
     
     return snprintf(buf, PAGE_SIZE, "%d\n", config_mode_val);
 }
@@ -4743,13 +4743,13 @@ static ssize_t qt602240_config_mode_store(struct device *dev,    struct device_a
         case 1: {
             if(mode != config_mode_val)
             {
-                ;//dprintk("set stylus mode\n");
+                // dprintk("set stylus mode\n");
                 qt_Multitouchscreen_stylus_Init();
                 calibrate_chip();
             }
             else
             {
-                ;//dprintk("already stylus mode\n");
+                // dprintk("already stylus mode\n");
             }
 
             config_mode_val = mode;
@@ -4757,20 +4757,20 @@ static ssize_t qt602240_config_mode_store(struct device *dev,    struct device_a
         }
         case 0: {
             if(mode != config_mode_val) {
-                ;//dprintk("set normal mode\n");
+                // dprintk("set normal mode\n");
                 qt_Multitouchscreen_normal_Init();
                 calibrate_chip();
             }
             else
             {
-                ;//dprintk("already normal mode\n");
+                // dprintk("already normal mode\n");
             }
 
             config_mode_val = mode;
             break;
         }
         default:
-            ;//dprintk("invalid mode\n");
+            // dprintk("invalid mode\n");
             break;
     }
 
@@ -4805,40 +4805,40 @@ int __init qt602240_init(void)
     qt_time_point = jiffies_to_msecs(jiffies);
 
     ret = i2c_add_driver(&qt602240_i2c_driver);
-    if(ret) ;//dprintk("[%s], i2c_add_driver failed...(%d)\n", __func__, ret);
+    if(ret) // dprintk("[%s], i2c_add_driver failed...(%d)\n", __func__, ret);
 
-    ;//dprintk("[QT] ret : %d, qt602240->client name : %s\n",ret,qt602240->client->name);
+    // dprintk("[QT] ret : %d, qt602240->client name : %s\n",ret,qt602240->client->name);
 
     if(!(qt602240->client)) {
-        ;//dprintk("[%s],slave address changed try to firmware reprogram \n",__func__);
+        // dprintk("[%s],slave address changed try to firmware reprogram \n",__func__);
         i2c_del_driver(&qt602240_i2c_driver);
 
         ret = i2c_add_driver(&qt602240_i2c_driver);
-        if(ret) ;//dprintk("[%s], i2c_add_driver failed...(%d)\n", __func__, ret);
-        ;//dprintk("[QT] ret : %d, qt602240->client name : %s\n",ret,qt602240->client->name);
+        if(ret) // dprintk("[%s], i2c_add_driver failed...(%d)\n", __func__, ret);
+        // dprintk("[QT] ret : %d, qt602240->client name : %s\n",ret,qt602240->client->name);
 
         if(qt602240->client) {
             QT_reprogram();
             i2c_del_driver(&qt602240_i2c_driver);
 
             ret = i2c_add_driver(&qt602240_i2c_driver);
-            if(ret) ;//dprintk("[%s], i2c_add_driver failed...(%d)\n", __func__, ret);
-            ;//dprintk("[QT] ret : %d, qt602240->client name : %s\n",ret,qt602240->client->name);
+            // if(ret) // dprintk("[%s], i2c_add_driver failed...(%d)\n", __func__, ret);
+            // dprintk("[QT] ret : %d, qt602240->client name : %s\n",ret,qt602240->client->name);
         }
     }
 
     if(!(qt602240->client)){
-        ;//dprintk("###################################################\n");
-        ;//dprintk("##                                               ##\n");
-        ;//dprintk("##    WARNING! TOUCHSCREEN DRIVER CAN'T WORK.    ##\n");
-        ;//dprintk("##    PLEASE CHECK YOUR TOUCHSCREEN CONNECTOR!   ##\n");
-        ;//dprintk("##                                               ##\n");
-        ;//dprintk("###################################################\n");
+        // dprintk("###################################################\n");
+        // dprintk("##                                               ##\n");
+        // dprintk("##    WARNING! TOUCHSCREEN DRIVER CAN'T WORK.    ##\n");
+        // dprintk("##    PLEASE CHECK YOUR TOUCHSCREEN CONNECTOR!   ##\n");
+        // dprintk("##                                               ##\n");
+        // dprintk("###################################################\n");
         i2c_del_driver(&qt602240_i2c_driver);
         return 0;
     }
     
-    ;//dprintk("[QT] %s/%d\n",__func__,__LINE__);
+    // dprintk("[QT] %s/%d\n",__func__,__LINE__);
     if (sec_class == NULL)
         sec_class = class_create(THIS_MODULE, "sec");
 
@@ -4861,7 +4861,7 @@ int __init qt602240_init(void)
     if (device_create_file(ts_dev, &dev_attr_key_threshold) < 0)
         pr_err("Failed to create device file(%s)!\n", dev_attr_key_threshold.attr.name);
 
-    ;//dprintk("[QT] %s/%d, platform_driver_register!!\n",__func__,__LINE__);
+    // dprintk("[QT] %s/%d, platform_driver_register!!\n",__func__,__LINE__);
 
     /*------------------------------ for tunning ATmel - start ----------------------------*/
     touch_class = class_create(THIS_MODULE, "touch");
@@ -4893,35 +4893,35 @@ int __init qt602240_init(void)
 #if ENABLE_NOISE_TEST_MODE
     qt602240_noise_test = device_create(sec_class, NULL, 0, NULL, "qt602240_noise_test");
     if (IS_ERR(qt602240_noise_test))
-        ;//dprintk("Failed to create device(qt602240_noise_test)!\n");
+        // dprintk("Failed to create device(qt602240_noise_test)!\n");
 
     if (device_create_file(qt602240_noise_test, &dev_attr_set_refer0)< 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_refer0.attr.name);
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_refer0.attr.name);
     if (device_create_file(qt602240_noise_test, &dev_attr_set_delta0) < 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_delta0.attr.name);
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_delta0.attr.name);
     if (device_create_file(qt602240_noise_test, &dev_attr_set_refer1)< 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_refer1.attr.name);
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_refer1.attr.name);
     if (device_create_file(qt602240_noise_test, &dev_attr_set_delta1) < 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_delta1.attr.name);
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_delta1.attr.name);
     if (device_create_file(qt602240_noise_test, &dev_attr_set_refer2)< 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_refer2.attr.name);
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_refer2.attr.name);
     if (device_create_file(qt602240_noise_test, &dev_attr_set_delta2) < 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_delta2.attr.name);
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_delta2.attr.name);
     if (device_create_file(qt602240_noise_test, &dev_attr_set_refer3)< 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_refer3.attr.name);
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_refer3.attr.name);
     if (device_create_file(qt602240_noise_test, &dev_attr_set_delta3) < 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_delta3.attr.name);
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_delta3.attr.name);
     if (device_create_file(qt602240_noise_test, &dev_attr_set_refer4)< 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_refer4.attr.name);
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_refer4.attr.name);
     if (device_create_file(qt602240_noise_test, &dev_attr_set_delta4) < 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_delta4.attr.name);    
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_delta4.attr.name);    
 	if (device_create_file(qt602240_noise_test, &dev_attr_set_referminmax)< 0)
         	printk("Failed to create device file(%s)!\n", 
         	dev_attr_set_referminmax.attr.name);
 	if (device_create_file(qt602240_noise_test, &dev_attr_set_deltaminmax) < 0)
 		printk("Failed to create device file(%s)!\n", dev_attr_set_deltaminmax.attr.name);
     if (device_create_file(qt602240_noise_test, &dev_attr_set_threshould) < 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_threshould.attr.name);
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_threshould.attr.name);
 #endif
 
     /*------------------------------ for Noise APP - end ----------------------------*/
@@ -4930,16 +4930,16 @@ int __init qt602240_init(void)
 #ifdef QT_ATCOM_TEST
     qt602240_atcom_test = device_create(sec_class, NULL, 0, NULL, "qt602240_atcom_test");
     if (IS_ERR(qt602240_atcom_test))
-        ;//dprintk("Failed to create device(qt602240_atcom_test)!\n");
+        // dprintk("Failed to create device(qt602240_atcom_test)!\n");
 
     if (device_create_file(qt602240_atcom_test, &dev_attr_set_qt_update)< 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_qt_update.attr.name);
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_qt_update.attr.name);
     if (device_create_file(qt602240_atcom_test, &dev_attr_set_qt_firm_version)< 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_qt_firm_version.attr.name);
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_qt_firm_version.attr.name);
     if (device_create_file(qt602240_atcom_test, &dev_attr_set_qt_firm_status)< 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_qt_firm_status.attr.name);
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_qt_firm_status.attr.name);
     if (device_create_file(qt602240_atcom_test, &dev_attr_set_qt_firm_version_read)< 0)
-        ;//dprintk("Failed to create device file(%s)!\n", dev_attr_set_qt_firm_version_read.attr.name);
+        // dprintk("Failed to create device file(%s)!\n", dev_attr_set_qt_firm_version_read.attr.name);
 #endif
     /*------------------------------     AT COMMAND TEST         ---------------------*/
 
