@@ -353,13 +353,9 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
-		   -fno-delete-null-pointer-checks \
-		   -mcpu=cortex-a8 -mfpu=neon -mfloat-abi=softfp
-#		   -Wno-unused-but-set-variable \
-#		   -mcpu=cortex-a8 -mfpu=vfpv3 -mfloat-abi=hard 
-#          --param l2-cache-size=256 --param l1-cache-size=16 --param simultaneous-prefetches=8 --param prefetch-latency=200 --param l1-cache-line-size=32 \
-#          -floop-interchange -floop-strip-mine -floop-block
-
+		   -fno-delete-null-pointer-checks
+		   -mtune=cortex-a8 -mfpu=neon -ftree-vectorize -mfloat-abi=softfp \
+		   --param l2-cache-size=512 --param l1-cache-size=64 --param simultaneous-prefetches=8
 KBUILD_AFLAGS   := -D__ASSEMBLY__
 
 # Read KERNELRELEASE from include/config/kernel.release (if it exists)
