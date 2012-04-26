@@ -41,7 +41,8 @@
 
 //int hacky_v1_offset[3] = {-52, -55, -46};
 int hacky_v1_offset[3] = {-15, -15, -17};
-int min_brightness = 1;
+static unsigned int min_brightness = 1;
+static unsigned int gamma = 15;
 
 // MIDNIGHT lower-brightness adjustments 
 // 0 = driver default, 3 = Midnight default, 4 = lowest
@@ -263,7 +264,8 @@ static void setup_gamma_regs(struct s5p_lcd *lcd, u16 gamma_regs[])
      */ 
     u8 brightness_orig = lcd->bl; 
     brightness = (brightness <= 0) ? 1 : brightness; // just to be sure...
-    brightness = brightness - ((255 / brightness) * bmult) + bmult;
+    //brightness = brightness - ((255 / brightness) * bmult) + bmult;
+    brightness = brightness - (255/brightness) * ( bmult*2 / (5-bmult+1) ) / bmult *2;
     brightness = (brightness > brightness_orig || brightness < min_brightness) ? min_brightness : brightness;
     
     const struct tl2796_gamma_adj_points *bv = lcd->gamma_adj_points;
@@ -775,10 +777,10 @@ static ssize_t brightness_multiplier_show(struct device *dev, struct device_attr
 
 static ssize_t brightness_multiplier_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)
 {
-	u32 value;
+	u8 value;
 	if (sscanf(buf, "%u", &value) == 1)
 	{
-		bmult = value;
+        bmult = (value < 1) ? 1 : value;
 		update_brightness(lcd_);
 	}
 	return size;
@@ -832,8 +834,28 @@ static ssize_t blue_multiplier_store(struct device *dev, struct device_attribute
 	return size;
 }
 
+static ssize_t gamma_show(struct device *dev, struct device_attribute *attr, char *buf)
+{
+	return sprintf(buf, "%u\n", gamma);
+}
+
+static ssize_t gamma_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t size)
+{
+	u8 value;
+	if (sscanf(buf, "%u", &value) == 1)
+	{
+		gamma = value;
+        hacky_v1_offset[0] = gamma * (-1);
+        hacky_v1_offset[1] = gamma * (-1);
+        hacky_v1_offset[2] = (gamma * (-1)) - 2;
+		update_brightness(lcd_);
+	}
+	return size;
+}
+
 static DEVICE_ATTR(min_brightness, S_IRUGO | S_IWUGO, min_brightness_show, min_brightness_store);
 static DEVICE_ATTR(brightness_multiplier, S_IRUGO | S_IWUGO, brightness_multiplier_show, brightness_multiplier_store);
+static DEVICE_ATTR(gamma, S_IRUGO | S_IWUGO, gamma_show, gamma_store);
 static DEVICE_ATTR(red_multiplier, S_IRUGO | S_IWUGO, red_multiplier_show, red_multiplier_store);
 static DEVICE_ATTR(green_multiplier, S_IRUGO | S_IWUGO, green_multiplier_show, green_multiplier_store);
 static DEVICE_ATTR(blue_multiplier, S_IRUGO | S_IWUGO, blue_multiplier_show, blue_multiplier_store);
@@ -841,6 +863,7 @@ static DEVICE_ATTR(blue_multiplier, S_IRUGO | S_IWUGO, blue_multiplier_show, blu
 static struct attribute *midnight_color_attributes[] = {
 	&dev_attr_min_brightness.attr,
 	&dev_attr_brightness_multiplier.attr,
+	&dev_attr_gamma.attr,
 	&dev_attr_red_multiplier.attr,
 	&dev_attr_green_multiplier.attr,
 	&dev_attr_blue_multiplier.attr,
