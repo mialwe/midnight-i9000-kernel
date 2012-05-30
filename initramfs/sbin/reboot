@@ -1,0 +1,7 @@
+#!/sbin/busybox sh
+
+if test "$1" = ''; then
+	/sbin/reboot normal
+else
+	/sbin/reboot $*
+fi;

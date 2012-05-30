@@ -1,0 +1,7 @@
+#!/system/bin/sh
+MMODE=`cat /proc/mounts | grep "/system" | grep " rw,"`
+if [ -z "$MMODE" ];then
+    /sbin/busybox_disabled mount -o remount,rw /system
+    return
+fi
+/sbin/busybox_disabled mount -o remount,ro /system

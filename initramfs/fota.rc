@@ -43,12 +43,14 @@ on early-fs
 
 on fs
     mount tmpfs tmpfs /tmp
+    mount ext4 /dev/block/stl9 /system
     mount rfs /dev/block/stl9 /system check=no
     #mount rfs /dev/block/stl9 /system ro remount
 
     mkdir /data
     #mount rfs /dev/block/mmcblk0p2 /data nosuid nodev check=no
-    mount rfs /dev/block/mmcblk0p2 /data nosuid nodev crypt check=no
+    mount ext4 /dev/block/mmcblk0p2 /data nosuid nodev
+    mount rfs /dev/block/mmcblk0p2 /data nosuid nodev check=no
     
     mount vfat /dev/block/mmcblk0p1 /sdcard 
     chown system system /data

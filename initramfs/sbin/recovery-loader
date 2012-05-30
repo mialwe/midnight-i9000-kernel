@@ -1,0 +1,23 @@
+#!/sbin/busybox sh
+
+/sbin/busybox mount -t rootfs -o remount,rw rootfs
+/sbin/busybox ln -s /sbin/recovery /sbin/busybox
+
+/sbin/busybox mount -t rfs -o rw,noatime,nodiratime,check=no /dev/block/stl11 /cache >> /dev/null 2>&1
+/sbin/busybox mount -t ext4 -o rw,noatime,nodiratime,noauto_da_alloc,barrier=1 /dev/block/stl11 /cache >> /dev/null 2>&1
+
+/sbin/busybox ln -s /sbin/busybox /sbin/sh
+
+/sbin/busybox rm /mnt/sdcard 
+/sbin/busybox ln -s /sdcard /mnt/sdcard
+
+start adbd
+stop tvout
+
+if [ -f /cache/recovery/command ];
+then
+  /sbin/busybox cp /res/keys-samsung /res/keys
+  recovery-samsung
+else
+  recovery
+fi;
