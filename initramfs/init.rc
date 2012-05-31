@@ -113,9 +113,9 @@ loglevel 3
     insmod /lib/modules/vibrator.ko
 
     # ko files for bthid
-    #insmod /lib/modules/bthid.ko
+#    insmod /lib/modules/bthid.ko
 
-    insmod /lib/modules/cpufreq_stats.ko
+#    insmod /lib/modules/cpufreq_stats.ko
 
     #temp
     chown root root /sbin/fat.format
